@@ -8,7 +8,7 @@ export default function Home() {
       <Header />
       <div className="pt-32">
         <BusinessRow title="For You" businesses={TRENDING_BUSINESSES} cta="View All Trending" />
-        <BusinessRow title="Nearby Favorites" businesses={NEARBY_FAVORITES} cta="View All Favorites" />
+        <BusinessRow title="Trending Now" businesses={NEARBY_FAVORITES} cta="View All Favorites" />
       </div>
     </div>
   );

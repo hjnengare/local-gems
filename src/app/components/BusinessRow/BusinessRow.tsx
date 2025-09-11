@@ -1,23 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import BusinessCard, { Business } from "../BusinessCard/BusinessCard";
 
 export default function BusinessRow({
   title,
   businesses,
   cta = "View All",
-  href = "#",
+  href = "/listings",
 }: {
   title: string;
   businesses: Business[];
   cta?: string;
   href?: string;
 }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const router = useRouter();
 
-  const handleToggleExpanded = () => {
-    setIsExpanded(!isExpanded);
+  const handleSeeMore = () => {
+    router.push(href);
   };
   return (
     <section className="py-[60px] bg-gradient-to-b from-off-white to-off-white/95 relative" aria-label="businesses" data-section>
@@ -34,38 +34,19 @@ export default function BusinessRow({
             <div className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-sage to-coral rounded-full" />
           </h2>
           <button 
-            onClick={handleToggleExpanded}
-            className="group flex items-center gap-2 font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage hover:scale-105 text-2xl"
+            onClick={handleSeeMore}
+            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage hover:scale-105 text-2xl"
           >
             <span className="transition-transform duration-300 group-hover:translate-x-[-1px]">
-              {isExpanded ? "Show Less" : "See More..."}
+              See More...
             </span>
-            <ion-icon 
-              name={isExpanded ? "chevron-up" : "chevron-down"} 
-              class={`transition-all duration-300 text-xl ${isExpanded ? 'group-hover:-translate-y-0.5' : 'group-hover:translate-y-0.5'} group-hover:text-sage`} 
-            />
           </button>
         </div>
 
         <div className="overflow-hidden">
-          <ul className={`transition-all duration-1000 ease-out ${
-            isExpanded 
-              ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 opacity-100 translate-y-0' 
-              : 'flex snap-x gap-6 overflow-x-auto pb-6 -mb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth opacity-100 translate-y-0'
-          }`}>
-            {businesses.map((business, index) => (
-              <div 
-                key={business.id} 
-                className={`transition-all duration-700 ease-out ${
-                  isExpanded 
-                    ? 'animate-fade-in-up opacity-100 scale-100' 
-                    : 'opacity-100 scale-100'
-                }`} 
-                style={{ 
-                  animationDelay: isExpanded ? `${index * 50}ms` : '0ms',
-                  transitionDelay: isExpanded ? `${index * 30}ms` : '0ms'
-                }}
-              >
+          <ul className="flex snap-x gap-6 overflow-x-auto pb-6 -mb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth">
+            {businesses.map((business) => (
+              <div key={business.id}>
                 <BusinessCard business={business} />
               </div>
             ))}
