@@ -371,6 +371,9 @@
   .top-12 {
     top: calc(var(--spacing) * 12);
   }
+  .top-14 {
+    top: calc(var(--spacing) * 14);
+  }
   .top-16 {
     top: calc(var(--spacing) * 16);
   }
@@ -2751,6 +2754,11 @@
       line-height: var(--tw-leading, var(--text-3xl--line-height));
     }
   }
+  .md\:top-12 {
+    @media (width >= 48rem) {
+      top: calc(var(--spacing) * 12);
+    }
+  }
   .md\:mx-4 {
     @media (width >= 48rem) {
       margin-inline: calc(var(--spacing) * 4);
@@ -2784,6 +2792,16 @@
   .md\:mb-16 {
     @media (width >= 48rem) {
       margin-bottom: calc(var(--spacing) * 16);
+    }
+  }
+  .md\:block {
+    @media (width >= 48rem) {
+      display: block;
+    }
+  }
+  .md\:hidden {
+    @media (width >= 48rem) {
+      display: none;
     }
   }
   .md\:h-5 {

@@ -121,14 +121,20 @@ export default function Header({ showSearch = true, showProfile = true }: Header
     <>
       {/* Static Alert Banner with Dynamic Text */}
       <div className="fixed top-0 left-0 right-0 z-60 bg-gradient-to-r from-sage/90 to-sage/80 backdrop-blur-sm">
-        <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
+        <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4 md:block hidden">
           <p className={`text-center font-urbanist text-md sm:text-md md:text-xl font-600 text-white transition-opacity duration-300 ${textVisible ? 'opacity-100' : 'opacity-0'}`}>
+            {bannerTexts[currentTextIndex]}
+          </p>
+        </div>
+        {/* Mobile-specific banner with fixed dimensions */}
+        <div className="md:hidden block px-4 py-3">
+          <p className={`text-center font-urbanist text-sm font-600 text-white transition-opacity duration-300 ${textVisible ? 'opacity-100' : 'opacity-0'}`}>
             {bannerTexts[currentTextIndex]}
           </p>
         </div>
       </div>
 
-      <header className={`fixed top-12 left-0 right-0 z-50 bg-off-white/80 backdrop-blur-sm overflow-hidden transition-all duration-300 ease-in-out hover:shadow-sm ${isVisible ? 'translate-y-0' : '-translate-y-full'
+      <header className={`fixed md:top-12 top-14 left-0 right-0 z-50 bg-off-white/80 backdrop-blur-sm overflow-hidden transition-all duration-300 ease-in-out hover:shadow-sm ${isVisible ? 'translate-y-0' : '-translate-y-full'
         }`}>
         {/* Subtle background decorative elements */}
         <div className="absolute inset-0 opacity-30">
