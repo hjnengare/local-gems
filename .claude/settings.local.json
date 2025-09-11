@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(sed:*)",
+      "Read(//c/Users/HilarioNengare/OneDrive - rain/Pictures/Screenshots/**)",
+      "Read(//c/Users/HilarioNengare/OneDrive - rain/Desktop/reviews-app/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

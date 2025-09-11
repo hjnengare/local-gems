@@ -1,0 +1,7 @@
+{
+  "/subcategories/page": "app/subcategories/page.js",
+  "/deal-breakers/page": "app/deal-breakers/page.js",
+  "/home/page": "app/home/page.js",
+  "/complete/page": "app/complete/page.js",
+  "/profile/page": "app/profile/page.js"
+}
