@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white">
       <Header />
-      <div className="pt-32">
+      <div className="pt-[124px] md:pt-[144px]">
         <BusinessRow title="For You" businesses={TRENDING_BUSINESSES} cta="View All Trending" />
         <BusinessRow title="Trending Now" businesses={NEARBY_FAVORITES} cta="View All Favorites" />
       </div>

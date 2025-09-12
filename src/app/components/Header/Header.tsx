@@ -23,21 +23,21 @@ export default function Header({ showSearch = true, showProfile = true }: Header
     const controlNavbar = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY < 10) {
-        // Always show navbar when near top
+      if (currentScrollY <= 10) {
+        // Always show navbar when at top
         setIsVisible(true);
       } else if (currentScrollY < lastScrollY) {
         // Show navbar when scrolling up
         setIsVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Hide navbar when scrolling down and past 100px
+      } else if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        // Hide navbar when scrolling down
         setIsVisible(false);
       }
 
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', controlNavbar);
+    window.addEventListener('scroll', controlNavbar, { passive: true });
     return () => window.removeEventListener('scroll', controlNavbar);
   }, [lastScrollY]);
 
@@ -132,7 +132,7 @@ export default function Header({ showSearch = true, showProfile = true }: Header
 
   const headerClassName = `fixed md:top-12 top-14 left-0 right-0 z-50 bg-off-white/80 backdrop-blur-sm overflow-hidden transition-all duration-300 ease-in-out hover:shadow-sm ${isVisible ? 'translate-y-0' : '-translate-y-full'}`;
   
-  const searchOverlayClassName = `fixed left-0 right-0 z-70 bg-gradient-to-b from-white/98 to-off-white/98 backdrop-blur-lg border-b border-sage/20 shadow-2xl transition-all duration-500 ease-out ${isSearchOpen ? 'top-0 translate-y-0 opacity-100' : '-top-32 -translate-y-full opacity-0'}`;
+  const searchOverlayClassName = `fixed left-0 right-0 z-70 bg-gradient-to-b from-white/98 to-off-white/98 backdrop-blur-lg border-b border-sage/20 shadow-2xl transition-all duration-500 ease-out ${isSearchOpen ? 'top-[48px] md:top-[64px] translate-y-0 opacity-100' : 'top-0 -translate-y-full opacity-0'}`;
 
   return (
     <>
@@ -160,7 +160,7 @@ export default function Header({ showSearch = true, showProfile = true }: Header
 
         <div className="max-w-[1300px] mx-auto relative z-10">
           {/* Header Top - Logo + Icons */}
-          <div className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-4">
+          <div className="flex items-center justify-between px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
             {/* Logo - mobile first */}
             <Link href="/home" className="flex items-center group">
               <span className="font-urbanist text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative">
@@ -170,7 +170,7 @@ export default function Header({ showSearch = true, showProfile = true }: Header
             </Link>
 
             {/* Right side icons - mobile first */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3">
               {/* Search toggle icon */}
               {showSearch && (
                 <button
@@ -218,7 +218,7 @@ export default function Header({ showSearch = true, showProfile = true }: Header
             />
           </button>
 
-          <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-6 pt-24">
+          <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-6 pt-16">
             <SearchInput
               variant="header"
               onSearch={handleSearch}
