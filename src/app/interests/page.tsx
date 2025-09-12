@@ -112,20 +112,20 @@ export default function InterestsPage() {
         </div>
 
         {/* Premium Interests Card */}
-        <div className="bg-off-white/95 backdrop-blur-lg rounded-3 p-6 md:p-16 mb-8 relative overflow-hidden md:py-10">
+        <div className="bg-off-white/95 backdrop-blur-lg rounded-3 p-6 md:p-16 mb-8 relative overflow-visible md:py-10">
           {/* Card decorative elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
 
-          <div className="relative z-10">
+          <div className="relative z-10 py-8">
             {/* Interests Grid - Preserving Wireframe Style */}
-            <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12 ">
+            <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12 overflow-visible">
               {interests.map((interest) => (
                 <button
                   key={interest.id}
                   onClick={() => handleInterestToggle(interest.id)}
                   className={`
-                    relative z-20 z-11 w-full aspect-square rounded-full border-2 transition-all duration-300 ease-cubic-out
+                    relative z-30 w-[85%] aspect-square rounded-full border-2 transition-all duration-300 ease-cubic-out mx-auto
                     ${selectedInterests.includes(interest.id)
                       ? 'bg-coral border-coral text-white shadow-lg animate-bounce'
                       : 'bg-sage border-sage text-white hover:bg-sage/90'
