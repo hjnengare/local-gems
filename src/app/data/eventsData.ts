@@ -1,0 +1,90 @@
+export type Event = {
+  id: string;
+  title: string;
+  type: "event" | "special";
+  image?: string;
+  alt?: string;
+  icon?: string; // SVG icon identifier
+  location: string;
+  rating: number;
+  startDate: string; // Running date
+  endDate?: string; // Optional end date for multi-day events
+  price?: string;
+  description?: string;
+  href?: string;
+};
+
+export const EVENTS_AND_SPECIALS: Event[] = [
+  {
+    id: "event-1",
+    title: "Sip & Paint Class",
+    type: "event",
+    icon: "paint-brush-outline",
+    location: "Cavendish Square",
+    rating: 4.9,
+    startDate: "Dec 15",
+    endDate: "Dec 22",
+    description: "Creative evening with wine and painting",
+    href: "/events/1",
+  },
+  {
+    id: "special-1", 
+    title: "2 for 1 Pizza Night",
+    type: "special",
+    icon: "pizza-outline",
+    location: "Tony's Milk Caramel",
+    rating: 5.0,
+    startDate: "Every Tue",
+    description: "Every Tuesday night special",
+    href: "/specials/1",
+  },
+  {
+    id: "event-2",
+    title: "Free Blowdry",
+    type: "event",
+    icon: "cut-outline",
+    location: "Cavendish Hairdresser",
+    rating: 4.8,
+    startDate: "Dec 18",
+    endDate: "Dec 31",
+    price: "Free",
+    description: "Complimentary blowdry with any service",
+    href: "/events/2",
+  },
+  {
+    id: "event-3",
+    title: "Rihanna Cover Night",
+    type: "event",
+    icon: "musical-notes-outline",
+    location: "DHL Stadium",
+    rating: 4.4,
+    startDate: "Dec 20",
+    price: "£45",
+    description: "Live tribute performance",
+    href: "/events/3",
+  },
+  {
+    id: "special-2",
+    title: "Happy Hour",
+    type: "special",
+    icon: "wine-outline",
+    location: "The Rooftop Bar",
+    rating: 4.6,
+    startDate: "Daily 5-7pm",
+    price: "50% Off",
+    description: "Half price drinks 5-7pm daily",
+    href: "/specials/2",
+  },
+  {
+    id: "event-4",
+    title: "Yoga in the Park",
+    type: "event",
+    icon: "body-outline",
+    location: "Hyde Park",
+    rating: 4.7,
+    startDate: "Weekends",
+    price: "£10",
+    description: "Morning outdoor yoga session",
+    href: "/events/4",
+  },
+];

@@ -3,35 +3,38 @@
 import Link from "next/link";
 import { useMemo } from "react";
 import Stars from "../Stars/Stars";
-import PercentileChip from "../PercentileChip/PercentileChip";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
+import { BusinessOfTheMonth } from "../../data/communityHighlightsData";
 
-type Percentiles = {
-  service: number;   // percentile 0-100
-  price: number;     // percentile 0-100
-  ambience: number;  // percentile 0-100
-};
+export default function BusinessOfTheMonthCard({ business }: { business: BusinessOfTheMonth }) {
+  const idForSnap = useMemo(() => `business-month-${business.id}`, [business.id]);
+  
+  const getBadgeStyle = (badge: string) => {
+    switch (badge) {
+      case "winner":
+        return "bg-gradient-to-r from-amber-500 to-yellow-600 text-white";
+      case "runner-up":
+        return "bg-gradient-to-r from-gray-400 to-gray-500 text-white";
+      case "featured":
+        return "bg-gradient-to-r from-sage to-sage/80 text-white";
+      default:
+        return "bg-sage/10 text-sage";
+    }
+  };
 
-type Business = {
-  id: string;
-  name: string;
-  image: string;
-  alt: string;
-  category: string;
-  location: string;
-  rating: number;      // 0-5 stars
-  totalRating: number; // numeric (e.g., 4.7)
-  reviews: number;
-  badge?: string;      // e.g., "Trending", "New"
-  href?: string;
-  percentiles?: Percentiles;
-  verified?: boolean;
-  distance?: string;   // e.g., "0.3 mi"
-  priceRange?: string; // e.g., "$$"
-};
+  const getBadgeIcon = (badge: string) => {
+    switch (badge) {
+      case "winner":
+        return "🏆";
+      case "runner-up":
+        return "🥈";
+      case "featured":
+        return "⭐";
+      default:
+        return "";
+    }
+  };
 
-export default function BusinessCard({ business }: { business: Business }) {
-  const idForSnap = useMemo(() => `business-${business.id}`, [business.id]);
   return (
     <li id={idForSnap} className="snap-start w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%]">
       <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] group cursor-pointer">
@@ -44,9 +47,17 @@ export default function BusinessCard({ business }: { business: Business }) {
           {/* Silver shimmer effect on hover */}
           <div className="absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform skew-x-12 group-hover:left-full transition-transform duration-700 ease-out" />
           
-          {/* Instagram-style verified badge - positioned above image */}
+          {/* Achievement badge - positioned above image */}
+          <div className="absolute left-2 top-2 z-20">
+            <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-urbanist font-700 shadow-xl ${getBadgeStyle(business.badge)}`}>
+              <span>{getBadgeIcon(business.badge)}</span>
+              <span className="drop-shadow-sm">{business.monthAchievement}</span>
+            </span>
+          </div>
+          
+          {/* Instagram-style verified badge */}
           {business.verified && (
-            <div className="absolute left-2 top-2 z-20">
+            <div className="absolute left-2 bottom-2 z-20">
               <VerifiedBadge />
             </div>
           )}
@@ -83,7 +94,7 @@ export default function BusinessCard({ business }: { business: Business }) {
 
           {/* Category line - left aligned and subtle */}
           <p className="mb-3 font-urbanist text-8 font-400 text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
-            {business.category} - {business.location}
+            {business.category} • {business.location}
           </p>
 
           {/* Stars + reviews - left aligned */}
@@ -92,18 +103,14 @@ export default function BusinessCard({ business }: { business: Business }) {
             <p className="font-urbanist text-8 font-400 leading-none text-charcoal/70 transition-colors duration-200">{business.reviews} reviews</p>
           </div>
 
-          {/* Percentiles row at bottom - left aligned */}
-          {business.percentiles && (
-            <div className="flex items-center gap-2">
-              <PercentileChip label="Speed" value={business.percentiles.service} />
-              <PercentileChip label="Hospitality" value={business.percentiles.price} />
-              <PercentileChip label="Quality" value={business.percentiles.ambience} />
+          {/* Month achievement at bottom */}
+          <div className="flex items-center gap-2">
+            <div className="px-2 py-1 rounded-full bg-coral/10 text-coral text-xs font-urbanist font-600">
+              September Winner
             </div>
-          )}
+          </div>
         </div>
       </div>
     </li>
   );
 }
-
-export type { Business };

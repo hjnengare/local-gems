@@ -1,0 +1,76 @@
+interface ProfilePictureProps {
+  src: string;
+  alt: string;
+  size?: "sm" | "md" | "lg";
+  badge?: "top" | "verified" | "local";
+}
+
+export default function ProfilePicture({ 
+  src, 
+  alt, 
+  size = "md", 
+  badge 
+}: ProfilePictureProps) {
+  const sizeClasses = {
+    sm: "w-10 h-10",
+    md: "w-12 h-12", 
+    lg: "w-16 h-16"
+  };
+
+  const getBadgeIcon = (badgeType: string) => {
+    switch (badgeType) {
+      case "top":
+        return "trophy";
+      case "verified":
+        return "checkmark-circle";
+      case "local":
+        return "location";
+      default:
+        return "";
+    }
+  };
+
+  const getBadgeColor = (badgeType: string) => {
+    switch (badgeType) {
+      case "top":
+        return "text-amber-500";
+      case "verified": 
+        return "text-blue-500";
+      case "local":
+        return "text-sage";
+      default:
+        return "";
+    }
+  };
+
+  // If no src provided, just return the badge
+  if (!src && badge) {
+    return (
+      <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
+        <ion-icon
+          name={getBadgeIcon(badge)}
+          class={`text-lg ${getBadgeColor(badge)}`}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative inline-block">
+      <img
+        src={src}
+        alt={alt}
+        className={`${sizeClasses[size]} rounded-full object-cover border-2 border-white shadow-md`}
+      />
+      
+      {badge && (
+        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
+          <ion-icon
+            name={getBadgeIcon(badge)}
+            class={`text-sm ${getBadgeColor(badge)}`}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
