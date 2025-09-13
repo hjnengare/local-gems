@@ -53,8 +53,8 @@ export default function SubcategoriesPage() {
   // typing headline
   useEffect(() => {
     let i = 0;
-    let typeId: any;
-    let cursorId: any;
+    let typeId: NodeJS.Timeout;
+    let cursorId: NodeJS.Timeout;
 
     cursorId = setInterval(() => setShowCursor((p) => !p), 500);
     typeId = setInterval(() => {

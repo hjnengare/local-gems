@@ -20,7 +20,13 @@ const topReviewers: LeaderboardUser[] = [
   { rank: 8, username: "ReviewMaster", reviews: 6 }
 ];
 
-const businessOfMonth: any[] = [
+interface BusinessOfMonth {
+  name: string;
+  rating: number;
+  category: string;
+}
+
+const businessOfMonth: BusinessOfMonth[] = [
   { name: "Mama's Kitchen", rating: 4.9, category: "Restaurant" },
   { name: "Bella's Hair", rating: 4.8, category: "Beauty" },
   { name: "Fresh Flowers", rating: 4.9, category: "Florist" },

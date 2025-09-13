@@ -2,6 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import BusinessCard, { Business } from "../BusinessCard/BusinessCard";
+import StaggerContainer, { staggerItemVariants } from "../Animations/StaggerContainer";
+import MagneticButton from "../Animations/MagneticButton";
+import { motion } from "framer-motion";
 
 export default function BusinessRow({
   title,
@@ -33,24 +36,25 @@ export default function BusinessRow({
             {title}
             <div className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-sage to-coral rounded-full" />
           </h2>
-          <button 
+          <MagneticButton
             onClick={handleSeeMore}
-            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage hover:scale-105 text-2xl"
+            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-2xl"
+            strength={0.4}
           >
             <span className="transition-transform duration-300 group-hover:translate-x-[-1px]">
               See More...
             </span>
-          </button>
+          </MagneticButton>
         </div>
 
         <div className="overflow-hidden">
-          <ul className="flex snap-x gap-6 overflow-x-auto pb-6 -mb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth">
+          <StaggerContainer className="flex snap-x gap-6 overflow-x-auto pb-6 -mb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth" staggerDelay={0.15}>
             {businesses.map((business) => (
-              <div key={business.id}>
+              <motion.div key={business.id} variants={staggerItemVariants}>
                 <BusinessCard business={business} />
-              </div>
+              </motion.div>
             ))}
-          </ul>
+          </StaggerContainer>
         </div>
       </div>
     </section>

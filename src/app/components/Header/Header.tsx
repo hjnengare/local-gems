@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
+import FadeInUp from "../Animations/FadeInUp";
+import { motion } from "framer-motion";
 
 interface HeaderProps {
   showSearch?: boolean;
@@ -151,11 +153,39 @@ export default function Header({ showSearch = true, showProfile = true }: Header
         </div>
       </div>
 
-      <header className={headerClassName}>
+      <motion.header
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.25, 0.25, 0.25, 0.75] }}
+        className={headerClassName}
+      >
         {/* Subtle background decorative elements */}
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-2 right-10 w-8 h-8 bg-gradient-to-br from-sage/20 to-sage/5 rounded-full blur-xl animate-pulse"></div>
-          <div className="absolute bottom-1 left-16 w-6 h-6 bg-gradient-to-br from-coral/15 to-coral/3 rounded-full blur-lg animate-pulse delay-1000"></div>
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute top-2 right-10 w-8 h-8 bg-gradient-to-br from-sage/20 to-sage/5 rounded-full blur-xl"
+          />
+          <motion.div
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.2, 0.5, 0.2],
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+            className="absolute bottom-1 left-16 w-6 h-6 bg-gradient-to-br from-coral/15 to-coral/3 rounded-full blur-lg"
+          />
         </div>
 
         <div className="max-w-[1300px] mx-auto relative z-10">
@@ -202,7 +232,7 @@ export default function Header({ showSearch = true, showProfile = true }: Header
 
         {/* Bottom gradient accent line */}
         <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-sage/30 to-transparent"></div>
-      </header>
+      </motion.header>
 
       {/* Search Overlay - slides from top */}
       {showSearch && (

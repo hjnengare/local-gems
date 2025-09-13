@@ -1,9 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import BusinessCard, { Business } from "../components/BusinessCard/BusinessCard";
-import FilterModal, { FilterState } from "../components/FilterModal/FilterModal";
 import SearchInput from "../components/SearchInput/SearchInput";
+
+// Dynamic import for FilterModal to reduce initial bundle size
+const FilterModal = dynamic(() => import("../components/FilterModal/FilterModal"), {
+  loading: () => null,
+});
+
+type FilterState = {
+  categories: string[];
+  minRating: number | null;
+  distance: string | null;
+};
 
 // Mock data - replace with actual data fetching
 const mockBusinesses: Business[] = [

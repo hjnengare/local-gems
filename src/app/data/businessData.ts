@@ -4,7 +4,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "1",
     name: "The Green Table",
-    image: "/images/product-01.jpg",
+    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=400&fit=crop&crop=center&auto=format",
     alt: "The Green Table restaurant",
     category: "Restaurant",
     location: "Downtown",
@@ -21,7 +21,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "2",
     name: "Artisan Coffee Co.",
-    image: "/images/product-02.jpg",
+    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=400&fit=crop&crop=center&auto=format",
     alt: "Artisan Coffee Co.",
     category: "Coffee Shop",
     location: "Arts District",
@@ -37,7 +37,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "3",
     name: "Bloom Yoga Studio",
-    image: "/images/product-03.jpg",
+    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop&crop=center&auto=format",
     alt: "Bloom Yoga Studio",
     category: "Wellness",
     location: "Riverside",
@@ -53,7 +53,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "4",
     name: "Vintage & Vine",
-    image: "/images/product-04.jpg",
+    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=400&fit=crop&crop=center&auto=format",
     alt: "Vintage & Vine bookstore",
     category: "Bookstore",
     location: "Old Town",
@@ -69,7 +69,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "5",
     name: "Sunset Ceramics",
-    image: "/images/product-05.jpg",
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center&auto=format",
     alt: "Sunset Ceramics studio",
     category: "Art Studio",
     location: "Westside",
@@ -86,7 +86,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "6",
     name: "Morning Glory Bakery",
-    image: "/images/product-06.jpg",
+    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=400&fit=crop&crop=center&auto=format",
     alt: "Morning Glory Bakery",
     category: "Bakery",
     location: "Main Street",
@@ -105,7 +105,7 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "7",
     name: "Rustic Reads",
-    image: "/images/product-07.jpg",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=center&auto=format",
     alt: "Rustic Reads bookstore",
     category: "Bookstore",
     location: "Historic Quarter",
@@ -121,7 +121,7 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "8",
     name: "Harmony Healing",
-    image: "/images/product-08.jpg",
+    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=center&auto=format",
     alt: "Harmony Healing spa",
     category: "Wellness",
     location: "Spa District",
@@ -137,7 +137,7 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "9",
     name: "Corner Deli & More",
-    image: "/images/production-09.jpg",
+    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&h=400&fit=crop&crop=center&auto=format",
     alt: "Corner Deli & More",
     category: "Deli",
     location: "Neighborhood",
@@ -153,7 +153,7 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "10",
     name: "Sketch & Sip Studio",
-    image: "/images/production-10.jpg",
+    image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=400&fit=crop&crop=center&auto=format",
     alt: "Sketch & Sip Studio",
     category: "Art Studio",
     location: "Creative District",
@@ -169,7 +169,7 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "11",
     name: "Peak Performance Gym",
-    image: "/images/profile-1.jpg",
+    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=center&auto=format",
     alt: "Peak Performance Gym",
     category: "Fitness",
     location: "Sports Complex",
@@ -186,7 +186,7 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "12",
     name: "Golden Hour Cafe",
-    image: "/images/profile-2.jpg",
+    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=400&fit=crop&crop=center&auto=format",
     alt: "Golden Hour Cafe",
     category: "Coffee Shop",
     location: "Sunset Boulevard",

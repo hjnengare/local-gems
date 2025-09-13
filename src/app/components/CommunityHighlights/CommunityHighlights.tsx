@@ -75,7 +75,6 @@ export default function CommunityHighlights({
           <div className="mb-6 sm:mb-7 md:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-[18px]">
             <h3 className="font-urbanist text-xl sm:text-2xl font-700 text-charcoal relative">
               Top Reviewers This Month In Claremont
-              <div className="absolute -bottom-2 left-0 w-6 sm:w-8 h-0.5 bg-gradient-to-r from-sage to-coral rounded-full" />
             </h3>
             
           </div>
@@ -100,7 +99,6 @@ export default function CommunityHighlights({
             <div className="mb-6 sm:mb-7 md:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-[18px]">
               <h3 className="font-urbanist text-xl sm:text-2xl font-700 text-charcoal relative">
                 Businesses of the Month
-                <div className="absolute -bottom-2 left-0 w-6 sm:w-8 h-0.5 bg-gradient-to-r from-coral to-sage rounded-full" />
               </h3>
               <button 
                 onClick={() => router.push('/awards')}

@@ -1,53 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import FadeInUp from "../components/Animations/FadeInUp";
+import PremiumHover from "../components/Animations/PremiumHover";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [displayedText, setDisplayedText] = useState("");
-  const [showCursor, setShowCursor] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const fullText = "Welcome back";
-  
+
   const { login, isLoading } = useAuth();
 
-  useEffect(() => {
-    let currentIndex = 0;
-    let typingInterval: NodeJS.Timeout;
-    let cursorInterval: NodeJS.Timeout;
-    
-    // Start cursor blinking immediately
-    cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 500);
-    
-    // Start typing after a small delay
-    const startTyping = () => {
-      typingInterval = setInterval(() => {
-        if (currentIndex <= fullText.length) {
-          setDisplayedText(fullText.slice(0, currentIndex));
-          currentIndex++;
-        } else {
-          // Typing completed - hide cursor permanently
-          clearInterval(typingInterval);
-          clearInterval(cursorInterval);
-          setShowCursor(false);
-        }
-      }, 80);
-    };
-    
-    // Start typing immediately
-    startTyping();
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
 
-    return () => {
-      clearInterval(typingInterval);
-      clearInterval(cursorInterval);
-    };
-  }, []);
+  // Advanced parallax transforms with GPU acceleration
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "45%"]);
+  const orbSlowY = useTransform(scrollYProgress, [0, 1], ["0%", "-25%"]);
+  const orbFastY = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const cardY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
+
+  // Spring physics for smooth motion
+  const springConfig = { damping: 15, stiffness: 100, mass: 0.8 };
+  const smoothBackgroundY = useSpring(backgroundY, springConfig);
+  const smoothOrbY = useSpring(orbSlowY, springConfig);
+  const smoothContentY = useSpring(contentY, springConfig);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,59 +50,146 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
-      {/* Back button - top left */}
-      <div className="absolute top-6 left-6 z-20">
-        <Link href="/onboarding" className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full">
-          <ion-icon name="arrow-back-outline" size="small"></ion-icon>
-        </Link>
-      </div>
+    <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+      {/* Back button with entrance animation */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="absolute top-6 left-6 z-20"
+      >
+        <PremiumHover scale={1.1} duration={0.2}>
+          <Link href="/onboarding" className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-3 hover:bg-charcoal/5 rounded-full block">
+            <ion-icon name="arrow-back-outline" size="small"></ion-icon>
+          </Link>
+        </PremiumHover>
+      </motion.div>
 
-      {/* Enhanced background decorative elements */}
-      <div className="absolute inset-0 opacity-4">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sage/20 to-sage/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-coral/15 to-coral/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-gradient-to-br from-charcoal/10 to-charcoal/3 rounded-full blur-2xl animate-pulse delay-500"></div>
-        
-        {/* Subtle geometric accents */}
-        <div className="absolute top-16 right-20 w-1 h-1 bg-sage/30 rounded-full animate-ping delay-2000"></div>
-        <div className="absolute bottom-20 left-20 w-1 h-1 bg-coral/30 rounded-full animate-ping delay-1500"></div>
-      </div>
-      
-      {/* Subtle mesh gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-off-white/30 via-transparent to-off-white/20 pointer-events-none"></div>
+      {/* Enhanced background decorative elements with advanced parallax */}
+      <motion.div
+        style={{ y: smoothOrbY }}
+        className="absolute inset-0 opacity-4 will-change-transform"
+      >
+        {/* Layered orbs with independent motion */}
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.4, delay: 0.2, type: "spring", stiffness: 180 }}
+          style={{ y: orbFastY }}
+          className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sage/22 to-sage/6 rounded-full blur-3xl will-change-transform"
+        />
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.6, delay: 0.4, type: "spring", stiffness: 160 }}
+          className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-coral/18 to-coral/6 rounded-full blur-3xl will-change-transform"
+        />
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.1, delay: 0.6, type: "spring", stiffness: 220 }}
+          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "-70%"]) }}
+          className="absolute top-1/2 right-1/4 w-24 h-24 bg-gradient-to-br from-charcoal/12 to-charcoal/4 rounded-full blur-2xl will-change-transform"
+        />
 
-      <div className="w-[90%] max-w-[700px] mx-auto relative z-10">
-        {/* Header with premium styling */}
+        {/* Animated geometric accents with different patterns */}
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.7, delay: 1.0, type: "spring", stiffness: 450 }}
+          className="absolute top-16 right-20 w-2 h-2 bg-sage/35 rounded-full"
+          animate={{
+            scale: [1, 1.4, 1],
+            opacity: [0.35, 0.7, 0.35],
+          }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.7, delay: 1.2, type: "spring", stiffness: 450 }}
+          className="absolute bottom-20 left-20 w-2 h-2 bg-coral/35 rounded-full"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.65, 0.3],
+          }}
+          transition={{
+            duration: 3.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.8,
+          }}
+        />
+      </motion.div>
+
+      {/* Multi-layer gradient overlays with parallax */}
+      <motion.div
+        style={{ y: smoothBackgroundY }}
+        className="absolute inset-0 bg-gradient-to-t from-off-white/35 via-transparent to-off-white/25 pointer-events-none will-change-transform"
+      />
+      <motion.div
+        style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "-25%"]) }}
+        className="absolute inset-0 bg-gradient-to-r from-sage/3 via-transparent to-coral/3 pointer-events-none will-change-transform"
+      />
+
+      <motion.div
+        style={{ y: smoothContentY }}
+        className="w-[90%] max-w-[700px] mx-auto relative z-10 will-change-transform"
+      >
+        {/* Header with premium styling and animations */}
         <div className="text-center mb-12 md:mb-16">
-          <div className="inline-block relative mb-6">
-            <h1 className="font-urbanist text-2 md:text-6xl lg:text-5xl font-700 text-charcoal mb-4 relative min-h-[3rem] md:min-h-[5rem] flex items-center justify-center">
-              <span className="relative">
-                {displayedText}
-                <span 
-                  className={`inline-block w-1 md:w-2 h-6 md:h-12 bg-sage ml-1 transition-opacity duration-100 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
-                  style={{ animation: showCursor ? 'blink 1s infinite' : 'none' }}
-                ></span>
-              </span>
-            </h1>
-            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-sage via-coral to-sage rounded-full"></div>
-          </div>
-          <p className="font-urbanist text-6 md:text-5 font-400 text-charcoal/70 max-w-md mx-auto leading-relaxed">
-            Sign in to continue discovering local gems
-          </p>
+          <FadeInUp delay={0.4} duration={1} distance={60}>
+            <div className="inline-block relative mb-6">
+              <h1 className="font-urbanist text-2 md:text-6xl lg:text-5xl font-700 text-charcoal mb-4 relative">
+                Welcome back
+              </h1>
+              <motion.div
+                initial={{ width: "0%" }}
+                animate={{ width: ["0%", "100%", "50%"] }}
+                transition={{
+                  duration: 2.4,
+                  delay: 1.4,
+                  ease: [0.25, 0.25, 0.25, 0.75],
+                  times: [0, 0.5, 1]
+                }}
+                className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-sage via-coral to-sage rounded-full"
+              />
+            </div>
+          </FadeInUp>
+          <FadeInUp delay={0.7} duration={0.8} distance={30}>
+            <p className="font-urbanist text-6 md:text-5 font-400 text-charcoal/70 max-w-md mx-auto leading-relaxed">
+              Sign in to continue discovering local gems
+            </p>
+          </FadeInUp>
         </div>
 
-        {/* Demo Credentials Info */}
-        <div className="bg-sage/5 border border-sage/20 rounded-xl p-4 mb-8 text-center">
-          <p className="font-urbanist text-sm font-600 text-sage mb-2">Demo Login Credentials</p>
-          <p className="font-urbanist text-xs text-charcoal/70">
-            Email: <span className="font-mono bg-white px-2 py-1 rounded">test@example.com</span> | 
-            Password: <span className="font-mono bg-white px-2 py-1 rounded">password123</span>
-          </p>
-        </div>
+        {/* Demo Credentials Info with animation */}
+        <FadeInUp delay={1.0} duration={0.6} distance={20}>
+          <motion.div
+            className="bg-sage/5 border border-sage/20 rounded-xl p-4 mb-8 text-center"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+          >
+            <p className="font-urbanist text-sm font-600 text-sage mb-2">Demo Login Credentials</p>
+            <p className="font-urbanist text-xs text-charcoal/70">
+              Email: <span className="font-mono bg-white px-2 py-1 rounded">test@example.com</span> |
+              Password: <span className="font-mono bg-white px-2 py-1 rounded">password123</span>
+            </p>
+          </motion.div>
+        </FadeInUp>
 
-        {/* Premium Form Card */}
-        <div className="bg-off-white/95 backdrop-blur-lg rounded-3 shadow-xl p-6 md:p-16 mb-8 relative overflow-hidden">
+        {/* Premium Form Card with parallax */}
+        <motion.div
+          style={{ y: cardY }}
+          className="bg-off-white/95 backdrop-blur-lg rounded-3 shadow-xl p-6 md:p-16 mb-8 relative overflow-hidden will-change-transform"
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, delay: 1.2, type: "spring", stiffness: 200 }}
+        >
           {/* Card decorative elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
@@ -172,24 +244,30 @@ export default function LoginPage() {
             <div className="text-right">
               <Link
                 href="#"
-                className="font-urbanist text-sm font-500 text-coral hover:text-coral/80 transition-colors duration-300"
+                className="font-urbanist text-base font-500 text-coral hover:text-coral/80 transition-colors duration-300"
               >
                 Forgot password?
               </Link>
             </div>
 
-            {/* Sign In Button */}
-            <div className="pt-4">
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="group block w-full bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2 relative overflow-hidden text-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-              >
-                <span className="relative z-10">
-                  {isLoading ? "Signing in..." : "Sign In"}
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-sage/80 to-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </button>
+            {/* Sign In Button with premium effects */}
+            <div className="pt-4 flex justify-center">
+              <div className="w-1/2">
+                <PremiumHover scale={1.02} shadowIntensity="strong">
+                  <motion.button
+                    type="submit"
+                    disabled={isLoading}
+                    className="group block w-full bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/30 hover:focus:ring-coral/30 focus:ring-offset-2 relative overflow-hidden text-center disabled:opacity-50 disabled:cursor-not-allowed will-change-transform"
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.1 }}
+                  >
+                    <span className="relative z-10">
+                      {isLoading ? "Signing in..." : "Sign In"}
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </motion.button>
+                </PremiumHover>
+              </div>
             </div>
 
             {/* Divider */}
@@ -198,7 +276,7 @@ export default function LoginPage() {
                 <div className="w-full border-t border-light-gray/50"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-off-white/90 text-charcoal/60 font-urbanist text-8 font-400">or continue with</span>
+                <span className="px-4 bg-off-white/90 text-charcoal/60 font-urbanist text-7 font-400">or continue with</span>
               </div>
             </div>
 
@@ -231,7 +309,7 @@ export default function LoginPage() {
           {/* Enhanced footer */}
           <div className="text-center mt-8 pt-6 border-t border-light-gray/30">
             <p className="font-urbanist text-7 font-400 text-charcoal/70">
-              Don't have an account?{" "}
+              {"Don't have an account? "}
               <Link
                 href="/register"
                 className="text-coral font-600 hover:text-coral/80 transition-colors duration-300 relative group"
@@ -241,32 +319,59 @@ export default function LoginPage() {
               </Link>
             </p>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Premium Trust Indicators */}
+        {/* Premium Trust Indicators with spring animations */}
         <div className="flex justify-center items-center space-x-8 md:space-x-12 text-charcoal/60 text-center">
-          <div className="flex flex-col items-center space-y-2">
-            <div className="w-12 h-12 md:w-14 md:h-14 bg-sage/10 rounded-full flex items-center justify-center">
-              <ion-icon name="shield-checkmark-outline" style={{ color: "#749176" }} size="small"></ion-icon>
-            </div>
-            <span className="font-urbanist text-8 md:text-7 font-500">Secure</span>
-          </div>
-          
-          <div className="flex flex-col items-center space-y-2">
-            <div className="w-12 h-12 md:w-14 md:h-14 bg-coral/10 rounded-full flex items-center justify-center">
-              <ion-icon name="people-outline" style={{ color: "#d67469" }} size="small"></ion-icon>
-            </div>
-            <span className="font-urbanist text-8 md:text-7 font-500">Community</span>
-          </div>
-          
-          <div className="flex flex-col items-center space-y-2">
-            <div className="w-12 h-12 md:w-14 md:h-14 bg-charcoal/10 rounded-full flex items-center justify-center">
-              <ion-icon name="star-outline" style={{ color: "#211e1d" }} size="small"></ion-icon>
-            </div>
-            <span className="font-urbanist text-8 md:text-7 font-500">Quality</span>
-          </div>
+          <FadeInUp delay={1.5} duration={0.6} distance={20}>
+            <PremiumHover scale={1.1} duration={0.3}>
+              <div className="flex flex-col items-center space-y-2">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.6, delay: 1.7, type: "spring", stiffness: 300 }}
+                  className="w-12 h-12 md:w-14 md:h-14 bg-sage/10 rounded-full flex items-center justify-center"
+                >
+                  <ion-icon name="shield-checkmark-outline" style={{ color: "#749176" }} size="small"></ion-icon>
+                </motion.div>
+                <span className="font-urbanist text-8 md:text-7 font-500">Secure</span>
+              </div>
+            </PremiumHover>
+          </FadeInUp>
+
+          <FadeInUp delay={1.7} duration={0.6} distance={20}>
+            <PremiumHover scale={1.1} duration={0.3}>
+              <div className="flex flex-col items-center space-y-2">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.6, delay: 1.9, type: "spring", stiffness: 300 }}
+                  className="w-12 h-12 md:w-14 md:h-14 bg-coral/10 rounded-full flex items-center justify-center"
+                >
+                  <ion-icon name="people-outline" style={{ color: "#d67469" }} size="small"></ion-icon>
+                </motion.div>
+                <span className="font-urbanist text-8 md:text-7 font-500">Community</span>
+              </div>
+            </PremiumHover>
+          </FadeInUp>
+
+          <FadeInUp delay={1.9} duration={0.6} distance={20}>
+            <PremiumHover scale={1.1} duration={0.3}>
+              <div className="flex flex-col items-center space-y-2">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.6, delay: 2.1, type: "spring", stiffness: 300 }}
+                  className="w-12 h-12 md:w-14 md:h-14 bg-charcoal/10 rounded-full flex items-center justify-center"
+                >
+                  <ion-icon name="star-outline" style={{ color: "#211e1d" }} size="small"></ion-icon>
+                </motion.div>
+                <span className="font-urbanist text-8 md:text-7 font-500">Quality</span>
+              </div>
+            </PremiumHover>
+          </FadeInUp>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

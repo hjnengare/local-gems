@@ -1,11 +1,26 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
+import { useState } from "react";
+
+// Dynamic imports for premium animations
+const FadeInUp = dynamic(() => import("../components/Animations/FadeInUp"), {
+  ssr: false,
+});
+
+const PremiumHover = dynamic(() => import("../components/Animations/PremiumHover"), {
+  ssr: false,
+});
 
 export default function ProfilePage() {
+  const [isStatsExpanded, setIsStatsExpanded] = useState(false);
+
   const user = {
     username: "JessClLeigh",
-    profilePicture: null,
+    profilePicture: "/images/profile-1.jpg",
     title: "Top Reviewer in Cape Town this Month",
     stats: {
       reviews: 124,
@@ -23,76 +38,245 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-off-white">
-      {/* Header */}
-      <header className="bg-white border-b border-light-gray px-4 py-4">
+    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
+      {/* Ambient background elements */}
+      <div className="absolute inset-0 opacity-20">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+          className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sage/30 to-sage/10 rounded-full blur-3xl"
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 1.2 }}
+          animate={{ opacity: 1, scale: 0.8 }}
+          transition={{ duration: 3, delay: 1, repeat: Infinity, repeatType: "reverse" }}
+          className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-coral/20 to-coral/5 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-1/2 right-1/4 w-24 h-24 bg-gradient-to-br from-charcoal/5 to-transparent rounded-full blur-2xl"
+        />
+      </div>
+
+      {/* Premium Header */}
+      <motion.header
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="relative z-10 bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm"
+      >
         <div className="flex items-center justify-between max-w-6xl mx-auto">
-          <Link href="/home" className="text-hoockers-green">
-            <ion-icon name="arrow-back-outline" size="small"></ion-icon>
-          </Link>
-          <h1 className="font-urbanist text-5 font-700 text-black">Profile</h1>
-          <Link href="/profile/edit" className="text-hoockers-green">
-            <ion-icon name="create-outline" size="small"></ion-icon>
-          </Link>
-        </div>
-      </header>
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Link href="/home" className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full">
+              <ion-icon name="arrow-back-outline" size="small"></ion-icon>
+            </Link>
+          </motion.div>
 
-      <div className="max-w-4xl mx-auto px-4 py-6">
-        {/* Profile Header */}
-        <div className="bg-white rounded-3 shadow-1 p-6 mb-6">
-          <div className="flex items-start space-x-4 mb-4">
-            {/* Profile Picture */}
-            <div className="w-20 h-20 bg-hoockers-green rounded-full flex items-center justify-center flex-shrink-0">
-              <span className="font-urbanist text-4 font-700 text-white">
-                {user.username[0]}
-              </span>
-            </div>
-            
-            {/* User Info */}
-            <div className="flex-1">
-              <div className="flex items-center space-x-2 mb-1">
-                <h2 className="font-urbanist text-4 font-700 text-black">@{user.username}</h2>
-              </div>
-              <div className="flex items-center space-x-2 mb-3">
-                <ion-icon name="trophy" style={{ color: "#589f6a" }} size="small"></ion-icon>
-                <span className="font-urbanist text-7 font-500 text-hoockers-green">
-                  {user.title}
-                </span>
-              </div>
-            </div>
-          </div>
+          <motion.h1
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="font-urbanist text-2xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal"
+          >
+            Profile
+          </motion.h1>
 
-          {/* Stats Overview */}
-          <div className="bg-cultured-1 rounded-3 p-4">
-            <h3 className="font-urbanist text-6 font-600 text-black mb-3">Stats Overview</h3>
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div>
-                <div className="flex items-center justify-center space-x-1 mb-1">
-                  <ion-icon name="star-outline" style={{ color: "#589f6a" }} size="small"></ion-icon>
-                  <span className="font-urbanist text-6 font-700 text-black">{user.stats.reviews}</span>
+          <motion.div
+            whileHover={{ scale: 1.1, rotate: 10 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-10 h-10 rounded-full bg-gradient-to-br from-coral/20 to-coral/10 flex items-center justify-center"
+          >
+            <Link href="/profile/edit" className="text-coral">
+              <ion-icon name="create-outline" size="small"></ion-icon>
+            </Link>
+          </motion.div>
+        </div>
+      </motion.header>
+
+      <div className="max-w-4xl mx-auto px-4 py-6 relative z-10">
+        {/* Premium Profile Header */}
+        <FadeInUp delay={0.2}>
+          <PremiumHover scale={1.02} shadowIntensity="medium" duration={0.4}>
+            <div className="bg-off-white/90 backdrop-blur-lg rounded-3xl shadow-xl border border-sage/10 p-8 mb-8 relative overflow-hidden">
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
+
+              <div className="relative z-10">
+                <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6 mb-6">
+                  {/* Premium Profile Picture */}
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    whileHover={{ scale: 1.05 }}
+                    className="relative group"
+                  >
+                    <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden ring-4 ring-sage/20 group-hover:ring-sage/40 transition-all duration-500 relative">
+                      <Image
+                        src={user.profilePicture}
+                        alt={`${user.username} profile picture`}
+                        width={112}
+                        height={112}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        priority
+                      />
+                      {/* Shimmer overlay on hover */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 group-hover:translate-x-full"></div>
+                    </div>
+
+                    {/* Online status indicator */}
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.8, duration: 0.4 }}
+                      className="absolute -bottom-1 -right-1 w-6 h-6 bg-sage rounded-full border-3 border-white flex items-center justify-center"
+                    >
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                    </motion.div>
+                  </motion.div>
+
+                  {/* Premium User Info */}
+                  <div className="flex-1 text-center md:text-left">
+                    <motion.h2
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.5, duration: 0.6 }}
+                      className="font-urbanist text-3xl md:text-4xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-2"
+                    >
+                      @{user.username}
+                    </motion.h2>
+
+                    <motion.div
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.6, duration: 0.6 }}
+                      className="flex items-center justify-center md:justify-start space-x-3 mb-4"
+                    >
+                      <motion.div
+                        animate={{ rotate: [0, 10, -10, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                        className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full shadow-lg"
+                      >
+                        <ion-icon name="trophy" style={{ color: 'white', fontSize: '18px' }} />
+                      </motion.div>
+                      <span className="font-urbanist text-lg font-600 text-sage">
+                        {user.title}
+                      </span>
+                    </motion.div>
+                  </div>
                 </div>
-                <span className="font-urbanist text-8 font-400 text-gray-web">reviews</span>
-              </div>
-              <div>
-                <div className="flex items-center justify-center space-x-1 mb-1">
-                  <ion-icon name="trophy-outline" style={{ color: "#589f6a" }} size="small"></ion-icon>
-                  <span className="font-urbanist text-6 font-700 text-black">{user.stats.badges}</span>
-                </div>
-                <span className="font-urbanist text-8 font-400 text-gray-web">badges</span>
-              </div>
-              <div>
-                <div className="flex items-center justify-center space-x-1 mb-1">
-                  <ion-icon name="calendar-outline" style={{ color: "#589f6a" }} size="small"></ion-icon>
-                  <span className="font-urbanist text-8 font-400 text-black">{user.stats.memberSince}</span>
-                </div>
-                <span className="font-urbanist text-8 font-400 text-gray-web">Member since</span>
               </div>
             </div>
-          </div>
-        </div>
+          </PremiumHover>
+        </FadeInUp>
+
+        {/* Premium Stats Overview */}
+        <FadeInUp delay={0.4}>
+          <motion.div
+            initial={{ scale: 0.95 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
+            onClick={() => setIsStatsExpanded(!isStatsExpanded)}
+            className="cursor-pointer bg-off-white/90 backdrop-blur-lg rounded-2xl p-6 border border-sage/20 relative overflow-hidden group"
+          >
+            {/* Hover effect background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-sage/5 to-coral/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="font-urbanist text-xl font-600 text-charcoal">Stats Overview</h3>
+                <motion.div
+                  animate={{ rotate: isStatsExpanded ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-sage"
+                >
+                  <ion-icon name="chevron-down-outline" size="small"></ion-icon>
+                </motion.div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-6 text-center">
+                {[
+                  { icon: "star", value: user.stats.reviews, label: "reviews", color: "sage" },
+                  { icon: "trophy", value: user.stats.badges, label: "badges", color: "coral" },
+                  { icon: "calendar", value: user.stats.memberSince, label: "Member since", color: "sage" }
+                ].map((stat, index) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1 + (index * 0.1), duration: 0.5 }}
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    className="group/stat"
+                  >
+                    <div className="relative">
+                      <motion.div
+                        whileHover={{ rotate: [0, -10, 10, 0] }}
+                        transition={{ duration: 0.5 }}
+                        className={`w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br ${
+                          stat.color === 'sage' ? 'from-sage/20 to-sage/10' : 'from-coral/20 to-coral/10'
+                        } flex items-center justify-center group-hover/stat:shadow-lg transition-shadow duration-300`}
+                      >
+                        <ion-icon
+                          name={`${stat.icon}-outline`}
+                          style={{
+                            color: stat.color === 'sage' ? 'var(--sage)' : 'var(--coral)',
+                            fontSize: '24px'
+                          }}
+                        />
+                      </motion.div>
+
+                      <motion.div
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                        className="font-urbanist text-2xl font-700 text-charcoal mb-1"
+                      >
+                        {stat.value}
+                      </motion.div>
+
+                      <span className="font-urbanist text-sm font-400 text-charcoal/60 capitalize">
+                        {stat.label}
+                      </span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{
+                  height: isStatsExpanded ? 'auto' : 0,
+                  opacity: isStatsExpanded ? 1 : 0
+                }}
+                transition={{ duration: 0.4 }}
+                className="overflow-hidden"
+              >
+                <div className="pt-6 mt-6 border-t border-sage/10">
+                  <div className="grid grid-cols-2 gap-4 text-center">
+                    <div className="bg-gradient-to-br from-sage/10 to-transparent rounded-xl p-4">
+                      <div className="text-lg font-700 text-sage">89%</div>
+                      <div className="text-xs text-charcoal/60">Helpfulness Score</div>
+                    </div>
+                    <div className="bg-gradient-to-br from-coral/10 to-transparent rounded-xl p-4">
+                      <div className="text-lg font-700 text-coral">12</div>
+                      <div className="text-xs text-charcoal/60">This Month</div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </FadeInUp>
 
         {/* Your Contributions */}
-        <div className="bg-white rounded-3 shadow-1 p-6 mb-6">
+        <FadeInUp delay={0.6}>
+          <PremiumHover scale={1.01} shadowIntensity="soft" duration={0.3}>
+            <div className="bg-off-white/90 backdrop-blur-lg rounded-3xl shadow-xl border border-sage/10 p-6 mb-6 relative overflow-hidden">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-urbanist text-5 font-600 text-black">Your Contributions</h3>
             <button className="font-urbanist text-7 font-500 text-hoockers-green hover:underline">
@@ -124,10 +308,14 @@ export default function ProfilePage() {
               </div>
             ))}
           </div>
-        </div>
+            </div>
+          </PremiumHover>
+        </FadeInUp>
 
         {/* Your Achievements */}
-        <div className="bg-white rounded-3 shadow-1 p-6 mb-6">
+        <FadeInUp delay={0.8}>
+          <PremiumHover scale={1.01} shadowIntensity="soft" duration={0.3}>
+            <div className="bg-off-white/90 backdrop-blur-lg rounded-3xl shadow-xl border border-sage/10 p-6 mb-6 relative overflow-hidden">
           <h3 className="font-urbanist text-5 font-600 text-black mb-4">Your Achievements</h3>
           <div className="space-y-3">
             {user.achievements.map((achievement, index) => (
@@ -139,38 +327,93 @@ export default function ProfilePage() {
               </div>
             ))}
           </div>
-        </div>
+            </div>
+          </PremiumHover>
+        </FadeInUp>
 
         {/* Account Settings */}
-        <div className="bg-white rounded-3 shadow-1 p-6">
-          <div className="space-y-4">
-            <button className="flex items-center space-x-3 w-full text-left p-3 hover:bg-cultured-1 rounded-3 transition-colors duration-1">
-              <ion-icon name="settings-outline" style={{ color: "#8b8b8b" }} size="small"></ion-icon>
-              <span className="font-urbanist text-6 font-500 text-black">Account Settings</span>
-            </button>
-            <button className="flex items-center space-x-3 w-full text-left p-3 hover:bg-cultured-1 rounded-3 transition-colors duration-1">
-              <ion-icon name="notifications-outline" style={{ color: "#8b8b8b" }} size="small"></ion-icon>
-              <span className="font-urbanist text-6 font-500 text-black">Notifications</span>
-            </button>
-            <button className="flex items-center space-x-3 w-full text-left p-3 hover:bg-cultured-1 rounded-3 transition-colors duration-1">
-              <ion-icon name="shield-outline" style={{ color: "#8b8b8b" }} size="small"></ion-icon>
-              <span className="font-urbanist text-6 font-500 text-black">Privacy & Data</span>
-            </button>
-            <button className="flex items-center space-x-3 w-full text-left p-3 hover:bg-cultured-1 rounded-3 transition-colors duration-1 text-red-500">
-              <ion-icon name="log-out-outline" style={{ color: "#ef4444" }} size="small"></ion-icon>
-              <span className="font-urbanist text-6 font-500">Log Out</span>
-            </button>
+        <FadeInUp delay={1.0}>
+          <PremiumHover scale={1.01} shadowIntensity="soft" duration={0.3}>
+            <div className="bg-off-white/90 backdrop-blur-lg rounded-3xl shadow-xl border border-sage/10 p-6 mb-6 relative overflow-hidden">
+          <div className="space-y-3">
+            {[
+              { icon: "settings-outline", label: "Account Settings", color: "sage" },
+              { icon: "notifications-outline", label: "Notifications", color: "sage" },
+              { icon: "shield-outline", label: "Privacy & Data", color: "sage" },
+              { icon: "log-out-outline", label: "Log Out", color: "coral", isLogout: true }
+            ].map((item, index) => (
+              <motion.button
+                key={item.label}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.2 + (index * 0.1), duration: 0.5 }}
+                whileHover={{ scale: 1.02, x: 10 }}
+                whileTap={{ scale: 0.98 }}
+                className={`flex items-center space-x-4 w-full text-left p-4 rounded-xl transition-all duration-300 group ${
+                  item.isLogout
+                    ? 'hover:bg-coral/10 border border-transparent hover:border-coral/20'
+                    : 'hover:bg-sage/10 border border-transparent hover:border-sage/20'
+                }`}
+              >
+                <motion.div
+                  whileHover={{ rotate: [0, -5, 5, 0] }}
+                  transition={{ duration: 0.5 }}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                    item.isLogout
+                      ? 'bg-coral/10 group-hover:bg-coral/20'
+                      : 'bg-sage/10 group-hover:bg-sage/20'
+                  } transition-all duration-300`}
+                >
+                  <ion-icon
+                    name={item.icon}
+                    style={{
+                      color: item.isLogout ? 'var(--coral)' : 'var(--sage)',
+                      fontSize: '20px'
+                    }}
+                  />
+                </motion.div>
+                <span className={`font-urbanist text-lg font-500 transition-colors duration-300 ${
+                  item.isLogout
+                    ? 'text-coral group-hover:text-coral'
+                    : 'text-charcoal group-hover:text-sage'
+                }`}>
+                  {item.label}
+                </span>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  className="ml-auto"
+                >
+                  <ion-icon
+                    name="chevron-forward-outline"
+                    style={{
+                      color: item.isLogout ? 'var(--coral)' : 'var(--sage)',
+                      fontSize: '16px'
+                    }}
+                  />
+                </motion.div>
+              </motion.button>
+            ))}
           </div>
-          
-          <div className="mt-6 pt-4 border-t border-light-gray text-center">
-            <Link 
-              href="/home"
-              className="inline-flex items-center space-x-2 bg-light-gray text-gray-web font-urbanist text-7 font-500 py-2 px-4 rounded-3 hover:bg-spanish-gray transition-colors duration-1"
+
+          <div className="mt-6 pt-4 border-t border-sage/10 text-center">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-block"
             >
-              <span>Back</span>
-            </Link>
+              <Link
+                href="/home"
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-sm font-600 py-3 px-6 rounded-full hover:shadow-lg transition-all duration-300"
+              >
+                <ion-icon name="home-outline" size="small"></ion-icon>
+                <span>Back to Home</span>
+              </Link>
+            </motion.div>
           </div>
-        </div>
+            </div>
+          </PremiumHover>
+        </FadeInUp>
       </div>
     </div>
   );

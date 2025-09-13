@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useMemo } from "react";
 import Stars from "../Stars/Stars";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
@@ -39,7 +40,16 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
     <li id={idForSnap} className="snap-start w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%]">
       <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] group cursor-pointer">
         <div className="relative overflow-hidden rounded-t-[6px]">
-          <img src={business.image} alt={business.alt} loading="lazy" className="h-[360px] md:h-[320px] lg:h-[280px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]" />
+          <Image
+            src={business.image}
+            alt={business.alt}
+            width={400}
+            height={320}
+            className="h-[360px] md:h-[320px] lg:h-[280px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
+            priority={false}
+            loading="lazy"
+            quality={85}
+          />
           
           {/* Subtle overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-charcoal/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

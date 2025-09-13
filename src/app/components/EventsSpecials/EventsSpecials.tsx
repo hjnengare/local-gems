@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import EventCard from "../EventCard/EventCard";
 import { Event } from "../../data/eventsData";
+import StaggerContainer, { staggerItemVariants } from "../Animations/StaggerContainer";
+import { motion } from "framer-motion";
 
 export default function EventsSpecials({
   title = "Events & Specials",
@@ -46,13 +48,13 @@ export default function EventsSpecials({
         </div>
 
         <div className="overflow-hidden">
-          <ul className="flex snap-x gap-6 overflow-x-auto pb-6 -mb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth">
+          <StaggerContainer className="flex snap-x gap-6 overflow-x-auto pb-6 -mb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth" staggerDelay={0.2}>
             {events.map((event) => (
-              <div key={event.id}>
+              <motion.div key={event.id} variants={staggerItemVariants}>
                 <EventCard event={event} />
-              </div>
+              </motion.div>
             ))}
-          </ul>
+          </StaggerContainer>
         </div>
       </div>
     </section>
