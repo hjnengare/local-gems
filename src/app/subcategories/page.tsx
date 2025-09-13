@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { useAuth } from "../contexts/AuthContext";
 
 interface SubcategoryItem {
   id: string;
@@ -46,6 +47,8 @@ export default function SubcategoriesPage() {
   const [displayedText, setDisplayedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const fullText = "Tell us more...";
+  
+  const { user, updateUser } = useAuth();
 
   // typing headline
   useEffect(() => {
@@ -83,6 +86,13 @@ export default function SubcategoriesPage() {
 
   const toggle = (id: string) =>
     setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+
+  const handleNext = () => {
+    if (user) {
+      // Store selected subcategories in user profile
+      updateUser({ subcategories: selected });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
@@ -171,6 +181,7 @@ export default function SubcategoriesPage() {
           <Link
             href="/deal-breakers"
             className="group block w-full bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2 relative overflow-hidden text-center"
+            onClick={handleNext}
           >
             <span className="relative z-10">Continue</span>
             <div className="absolute inset-0 bg-gradient-to-r from-sage/80 to-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

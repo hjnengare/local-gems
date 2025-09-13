@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 interface Interest {
   id: string;
@@ -25,6 +26,8 @@ export default function InterestsPage() {
   const [displayedText, setDisplayedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const fullText = "Let's get to know you";
+  
+  const { user, updateUser } = useAuth();
 
   useEffect(() => {
     let currentIndex = 0;
@@ -66,6 +69,12 @@ export default function InterestsPage() {
         ? prev.filter(id => id !== interestId)
         : [...prev, interestId]
     );
+  };
+
+  const handleNext = () => {
+    if (selectedInterests.length > 0 && user) {
+      updateUser({ interests: selectedInterests });
+    }
   };
 
   return (
@@ -161,6 +170,8 @@ export default function InterestsPage() {
                 onClick={(e) => {
                   if (selectedInterests.length === 0) {
                     e.preventDefault();
+                  } else {
+                    handleNext();
                   }
                 }}
               >

@@ -6,7 +6,9 @@
       "Bash(npm run build:*)",
       "Bash(sed:*)",
       "Read(//c/Users/HilarioNengare/OneDrive - rain/Pictures/Screenshots/**)",
-      "Read(//c/Users/HilarioNengare/OneDrive - rain/Desktop/reviews-app/**)"
+      "Read(//c/Users/HilarioNengare/OneDrive - rain/Desktop/reviews-app/**)",
+      "Bash(git commit:*)",
+      "Bash(npm run dev:*)"
     ],
     "deny": [],
     "ask": []

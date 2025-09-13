@@ -2,17 +2,23 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [displayedText, setDisplayedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const fullText = "Welcome back";
   
+  const { login, isLoading } = useAuth();
+
   useEffect(() => {
     let currentIndex = 0;
-    let typingInterval;
-    let cursorInterval;
+    let typingInterval: NodeJS.Timeout;
+    let cursorInterval: NodeJS.Timeout;
     
     // Start cursor blinking immediately
     cursorInterval = setInterval(() => {
@@ -42,6 +48,21 @@ export default function LoginPage() {
       clearInterval(cursorInterval);
     };
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    
+    if (!email || !password) {
+      setError("Please fill in all fields");
+      return;
+    }
+    
+    const success = await login(email, password);
+    if (!success) {
+      setError("Invalid email or password");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
@@ -82,7 +103,16 @@ export default function LoginPage() {
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-sage via-coral to-sage rounded-full"></div>
           </div>
           <p className="font-urbanist text-6 md:text-5 font-400 text-charcoal/70 max-w-md mx-auto leading-relaxed">
-            Log in to continue your Local Gems journey
+            Sign in to continue discovering local gems
+          </p>
+        </div>
+
+        {/* Demo Credentials Info */}
+        <div className="bg-sage/5 border border-sage/20 rounded-xl p-4 mb-8 text-center">
+          <p className="font-urbanist text-sm font-600 text-sage mb-2">Demo Login Credentials</p>
+          <p className="font-urbanist text-xs text-charcoal/70">
+            Email: <span className="font-mono bg-white px-2 py-1 rounded">test@example.com</span> | 
+            Password: <span className="font-mono bg-white px-2 py-1 rounded">password123</span>
           </p>
         </div>
 
@@ -92,7 +122,14 @@ export default function LoginPage() {
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
           
-          <form className="space-y-6 md:space-y-8 relative z-10">
+          <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8 relative z-10">
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
+                <p className="font-urbanist text-sm font-600 text-red-600">{error}</p>
+              </div>
+            )}
+
             {/* Email with icon */}
             <div className="relative group">
               <div className="absolute left-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 group-focus-within:text-sage transition-colors duration-300 z-10">
@@ -101,6 +138,8 @@ export default function LoginPage() {
               <input
                 type="email"
                 placeholder="email@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-cultured-1/50 border border-light-gray/50 rounded-3 pl-14 pr-4 py-4 md:py-5 font-urbanist text-6 font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
               />
             </div>
@@ -113,6 +152,8 @@ export default function LoginPage() {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-cultured-1/50 border border-light-gray/50 rounded-3 pl-14 pr-16 py-4 md:py-5 font-urbanist text-6 font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
               />
               <button
@@ -130,12 +171,25 @@ export default function LoginPage() {
             {/* Forgot Password */}
             <div className="text-right">
               <Link
-                href="/forgot-password"
-                className="font-urbanist text-7 font-400 text-coral hover:text-coral/80 transition-colors duration-300 relative group"
+                href="#"
+                className="font-urbanist text-sm font-500 text-coral hover:text-coral/80 transition-colors duration-300"
               >
-                <span>Forgot password?</span>
-                <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-coral/30 group-hover:bg-coral/60 transition-colors duration-300 rounded-full"></div>
+                Forgot password?
               </Link>
+            </div>
+
+            {/* Sign In Button */}
+            <div className="pt-4">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="group block w-full bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2 relative overflow-hidden text-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              >
+                <span className="relative z-10">
+                  {isLoading ? "Signing in..." : "Sign In"}
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-sage/80 to-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </button>
             </div>
 
             {/* Divider */}
@@ -172,17 +226,6 @@ export default function LoginPage() {
                 <span className="group-hover:text-sage transition-colors duration-300">Apple</span>
               </button>
             </div>
-
-            {/* Log In Button */}
-            <div className="pt-8">
-              <Link
-                href="/home"
-                className="group block w-full bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2 relative overflow-hidden text-center"
-              >
-                <span className="relative z-10">Log In</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-sage/80 to-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </Link>
-            </div>
           </form>
 
           {/* Enhanced footer */}
@@ -193,7 +236,7 @@ export default function LoginPage() {
                 href="/register"
                 className="text-coral font-600 hover:text-coral/80 transition-colors duration-300 relative group"
               >
-                <span>Create one</span>
+                <span>Sign up</span>
                 <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-coral/30 group-hover:bg-coral/60 transition-colors duration-300 rounded-full"></div>
               </Link>
             </p>

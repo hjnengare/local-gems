@@ -2,12 +2,19 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [displayedText, setDisplayedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const fullText = "Create your account";
+  
+  const { register, isLoading } = useAuth();
   
   useEffect(() => {
     let currentIndex = 0;
@@ -42,6 +49,26 @@ export default function RegisterPage() {
       clearInterval(cursorInterval);
     };
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    
+    if (!username || !email || !password) {
+      setError("Please fill in all fields");
+      return;
+    }
+    
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return;
+    }
+    
+    const success = await register(username, email, password);
+    if (!success) {
+      setError("Username or email already exists");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
@@ -92,7 +119,13 @@ export default function RegisterPage() {
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
           
-          <form className="space-y-6 md:space-y-8 relative z-10">
+          <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8 relative z-10">
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
+                <p className="font-urbanist text-sm font-600 text-red-600">{error}</p>
+              </div>
+            )}
             {/* Username with icon */}
             <div className="relative group">
               <div className="absolute left-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 group-focus-within:text-sage transition-colors duration-300 z-10">
@@ -101,6 +134,8 @@ export default function RegisterPage() {
               <input
                 type="text"
                 placeholder="@username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full bg-cultured-1/50 border border-light-gray/50 rounded-3 pl-14 pr-4 py-4 md:py-5 font-urbanist text-6 font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
               />
             </div>
@@ -113,6 +148,8 @@ export default function RegisterPage() {
               <input
                 type="email"
                 placeholder="email@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-cultured-1/50 border border-light-gray/50 rounded-3 pl-14 pr-4 py-4 md:py-5 font-urbanist text-6 font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
               />
             </div>
@@ -125,6 +162,8 @@ export default function RegisterPage() {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Create a strong password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-cultured-1/50 border border-light-gray/50 rounded-3 pl-14 pr-16 py-4 md:py-5 font-urbanist text-6 font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
               />
               <button
@@ -176,13 +215,16 @@ export default function RegisterPage() {
 
             {/* Create Account Button */}
             <div className="pt-8">
-              <Link
-                href="/interests"
-                className="group block w-full bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2 relative overflow-hidden text-center"
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="group block w-full bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2 relative overflow-hidden text-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                <span className="relative z-10">Next</span>
+                <span className="relative z-10">
+                  {isLoading ? "Creating account..." : "Create Account"}
+                </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-sage/80 to-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </Link>
+              </button>
             </div>
           </form>
 

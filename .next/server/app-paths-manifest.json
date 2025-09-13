@@ -1,7 +1,8 @@
 {
-  "/subcategories/page": "app/subcategories/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/interests/page": "app/interests/page.js",
   "/deal-breakers/page": "app/deal-breakers/page.js",
+  "/complete/page": "app/complete/page.js",
   "/home/page": "app/home/page.js",
-  "/listings/page": "app/listings/page.js",
-  "/complete/page": "app/complete/page.js"
+  "/listings/page": "app/listings/page.js"
 }

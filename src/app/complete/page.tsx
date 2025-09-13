@@ -3,9 +3,15 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import confetti from "canvas-confetti";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function CompletePage() {
+  const { updateUser } = useAuth();
+  
   useEffect(() => {
+    // Mark onboarding as complete
+    updateUser({ onboardingComplete: true });
+    
     // Rain confetti effect on mount
     const duration = 2 * 1000; // 2 seconds
     const end = Date.now() + duration;

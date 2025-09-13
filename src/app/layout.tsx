@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -66,7 +67,9 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
         <Script
           src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
           type="module"

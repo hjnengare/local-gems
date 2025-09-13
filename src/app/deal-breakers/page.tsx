@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 interface DealBreaker {
   id: string;
@@ -18,6 +19,8 @@ const dealBreakers: DealBreaker[] = [
 
 export default function DealBreakersPage() {
   const [selected, setSelected] = useState<string[]>([]);
+  
+  const { user, updateUser } = useAuth();
 
   const toggle = (id: string) => {
     setSelected(prev => {
@@ -28,6 +31,12 @@ export default function DealBreakersPage() {
     });
   };
 
+  const handleNext = () => {
+    if (canContinue && user) {
+      updateUser({ dealBreakers: selected });
+    }
+  };
+
   const canContinue = selected.length >= 2 && selected.length <= 3;
 
   return (
@@ -35,7 +44,7 @@ export default function DealBreakersPage() {
       {/* Back button - top left */}
       <div className="absolute top-6 left-6 z-20">
         <Link
-          href="/subcategories"
+          href="/interests"
           className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full"
         >
           <ion-icon name="arrow-back-outline" size="small"></ion-icon>
@@ -115,7 +124,13 @@ export default function DealBreakersPage() {
         <div className="pt-6">
           <Link
             href={canContinue ? "/complete" : "#"}
-            onClick={(e) => { if (!canContinue) e.preventDefault(); }}
+            onClick={(e) => { 
+              if (!canContinue) {
+                e.preventDefault();
+              } else {
+                handleNext();
+              }
+            }}
             className={`group block w-full py-5 md:w-1/4 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full text-center font-urbanist text-6 md:text-5 font-600 transition-all duration-300 relative overflow-hidden
                         ${canContinue
                           ? "bg-gradient-to-r from-sage to-sage/90 text-white hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
@@ -131,13 +146,13 @@ export default function DealBreakersPage() {
         {/* Progress indicator */}
         <div className="flex justify-center items-center space-x-2 mt-6 mb-4">
           <div className="w-3 h-3 bg-sage/40 rounded-full"></div>
+          <div className="w-3 h-3 bg-sage/40 rounded-full"></div>
           <div className="w-3 h-3 bg-sage rounded-full"></div>
-          <div className="w-3 h-3 bg-charcoal/20 rounded-full"></div>
           <div className="w-3 h-3 bg-charcoal/20 rounded-full"></div>
         </div>
 
         <div className="text-center">
-          <p className="font-urbanist text-8 font-400 text-charcoal/50">Step 2 of 4</p>
+          <p className="font-urbanist text-8 font-400 text-charcoal/50">Step 3 of 4</p>
         </div>
       </div>
     </div>
