@@ -1,14 +1,44 @@
 {
-  "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
-    "id": 5139,
+  "..\\node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts": {
+    "id": "..\\node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts",
     "files": [
-      "static/chunks/139.7a5a8e93a21948c1.js"
+      "static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js"
     ]
   },
-  "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
-    "id": 1646,
+  "app\\home\\page.tsx -> ../components/Animations/FloatingElements": {
+    "id": "app\\home\\page.tsx -> ../components/Animations/FloatingElements",
     "files": [
-      "static/chunks/646.f342b7cffc01feb0.js"
+      "static/chunks/_app-pages-browser_src_app_components_Animations_FloatingElements_tsx.js"
+    ]
+  },
+  "app\\home\\page.tsx -> ../components/Animations/ScrollReveal": {
+    "id": "app\\home\\page.tsx -> ../components/Animations/ScrollReveal",
+    "files": [
+      "static/chunks/_app-pages-browser_src_app_components_Animations_ScrollReveal_tsx.js"
+    ]
+  },
+  "app\\home\\page.tsx -> ../components/CommunityHighlights/CommunityHighlights": {
+    "id": "app\\home\\page.tsx -> ../components/CommunityHighlights/CommunityHighlights",
+    "files": [
+      "static/chunks/_app-pages-browser_src_app_components_CommunityHighlights_CommunityHighlights_tsx.js"
+    ]
+  },
+  "app\\home\\page.tsx -> ../components/EventsSpecials/EventsSpecials": {
+    "id": "app\\home\\page.tsx -> ../components/EventsSpecials/EventsSpecials",
+    "files": [
+      "static/chunks/_app-pages-browser_src_app_components_EventsSpecials_EventsSpecials_tsx.js"
+    ]
+  },
+  "app\\profile\\page.tsx -> ../components/Animations/FadeInUp": {
+    "id": "app\\profile\\page.tsx -> ../components/Animations/FadeInUp",
+    "files": [
+      "static/chunks/_app-pages-browser_src_app_components_Animations_FadeInUp_tsx.js"
+    ]
+  },
+  "app\\profile\\page.tsx -> ../components/Animations/PremiumHover": {
+    "id": "app\\profile\\page.tsx -> ../components/Animations/PremiumHover",
+    "files": [
+      "static/chunks/_app-pages-browser_src_app_components_Animations_PremiumHover_tsx.js"
     ]
   }
 }

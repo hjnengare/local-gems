@@ -407,7 +407,7 @@ export default function ProfilePage() {
                 className="inline-flex items-center space-x-2 bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-sm font-600 py-3 px-6 rounded-full hover:shadow-lg transition-all duration-300"
               >
                 <ion-icon name="home-outline" size="small"></ion-icon>
-                <span>Back to Home</span>
+                <span>Back </span>
               </Link>
             </motion.div>
           </div>

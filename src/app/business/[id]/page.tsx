@@ -1,7 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
 import { useState } from "react";
+
+// Dynamic imports for premium animations
+const FadeInUp = dynamic(() => import("../../components/Animations/FadeInUp"), {
+  ssr: false,
+});
+
+const PremiumHover = dynamic(() => import("../../components/Animations/PremiumHover"), {
+  ssr: false,
+});
 
 export default function BusinessProfilePage() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -9,8 +21,8 @@ export default function BusinessProfilePage() {
   // Mock data - in real app this would come from params and API
   const business = {
     name: "Mama's Kitchen",
-    rating: 4.3,
-    image: null,
+    rating: 4.8,
+    image: "/images/product-01.jpg", // Business photo
     trust: 95,
     punctuality: 89,
     friendliness: 92,
@@ -23,131 +35,384 @@ export default function BusinessProfilePage() {
         id: 1,
         author: "Jess",
         rating: 5,
-        text: "Loved the pizza, staff were so friendly. Food came fast & trustworthy. Bon me friendly!",
-        date: "Feb 2023"
+        text: "Loved the pizza, staff were so friendly. Food came fast & trustworthy. @on time @friendly",
+        date: "Feb 2023",
+        tags: ["trustworthy", "on time", "friendly"]
       },
       {
         id: 2,
         author: "Hilario",
         rating: 4,
-        text: "Terrible anything but food came fast. Bon me",
-        date: "March 2023"
+        text: "Terrible anything but food came fast. @on time",
+        date: "March 2023",
+        tags: ["on time"]
       }
     ]
   };
 
   return (
-    <div className="min-h-screen bg-off-white">
-      {/* Header */}
-      <header className="bg-white border-b border-light-gray px-4 py-4">
-        <div className="flex items-center justify-between max-w-6xl mx-auto">
-          <Link href="/home" className="text-hoockers-green">
-            <ion-icon name="arrow-back-outline" size="small"></ion-icon>
-          </Link>
-          <h1 className="font-urbanist text-5 font-700 text-black">{business.name}</h1>
-          <div className="w-6"></div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
+      {/* Ambient background elements */}
+      <div className="absolute inset-0 opacity-20">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+          className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sage/30 to-sage/10 rounded-full blur-3xl"
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 1.2 }}
+          animate={{ opacity: 1, scale: 0.8 }}
+          transition={{ duration: 3, delay: 1, repeat: Infinity, repeatType: "reverse" }}
+          className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-coral/20 to-coral/5 rounded-full blur-3xl"
+        />
+      </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-6">
-        {/* Business Header */}
-        <div className="bg-white rounded-3 shadow-1 p-6 mb-6">
-          <div className="flex items-start space-x-4">
-            {/* Business Image/Icon */}
-            <div className="w-20 h-20 bg-cultured-1 rounded-3 flex items-center justify-center flex-shrink-0">
-              <ion-icon name="restaurant-outline" size="large" style={{ color: "#8b8b8b" }}></ion-icon>
-            </div>
-            
-            {/* Business Info */}
-            <div className="flex-1">
-              <h2 className="font-urbanist text-4 font-700 text-black mb-2">{business.name}</h2>
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="flex items-center space-x-1">
-                  <ion-icon name="star" style={{ color: "#589f6a" }} size="small"></ion-icon>
-                  <span className="font-urbanist text-6 font-600 text-black">{business.rating}</span>
-                </div>
-              </div>
-              
-              {/* Trust Metrics */}
-              <div className="grid grid-cols-3 gap-4">
-                <div className="text-center">
-                  <div className="font-urbanist text-6 font-700 text-hoockers-green">{business.trust}%</div>
-                  <div className="font-urbanist text-8 font-400 text-gray-web">Trust</div>
-                </div>
-                <div className="text-center">
-                  <div className="font-urbanist text-6 font-700 text-hoockers-green">{business.punctuality}%</div>
-                  <div className="font-urbanist text-8 font-400 text-gray-web">Punctuality</div>
-                </div>
-                <div className="text-center">
-                  <div className="font-urbanist text-6 font-700 text-hoockers-green">{business.friendliness}%</div>
-                  <div className="font-urbanist text-8 font-400 text-gray-web">Friendliness</div>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* Premium Header */}
+      <motion.header
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="relative z-10 bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm"
+      >
+        <div className="flex items-center justify-between max-w-4xl mx-auto">
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Link href="/home" className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full">
+              <ion-icon name="arrow-back-outline" size="small"></ion-icon>
+            </Link>
+          </motion.div>
+
+          <motion.h1
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="font-urbanist text-2xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal"
+          >
+            {business.name}
+          </motion.h1>
+
+          <div className="w-10"></div>
         </div>
+      </motion.header>
+
+      <div className="max-w-4xl mx-auto px-4 py-6 relative z-10">
+        {/* Premium Business Header */}
+        <FadeInUp delay={0.2}>
+          <PremiumHover scale={1.02} shadowIntensity="medium" duration={0.4}>
+            <div className="bg-off-white/90 backdrop-blur-lg rounded-3xl shadow-xl border border-sage/10 p-8 mb-8 relative overflow-hidden">
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
+
+              <div className="relative z-10">
+                <div className="flex flex-col lg:flex-row items-start lg:items-center space-y-6 lg:space-y-0 lg:space-x-8">
+                  {/* Business Photo/Icon Section */}
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="flex-shrink-0"
+                  >
+                    <div className="relative group">
+                      {business.image ? (
+                        <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-2xl overflow-hidden ring-4 ring-sage/20 group-hover:ring-sage/40 transition-all duration-500">
+                          <Image
+                            src={business.image}
+                            alt={`${business.name} photo`}
+                            width={224}
+                            height={224}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            priority
+                          />
+                          {/* Shimmer overlay on hover */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 group-hover:translate-x-full"></div>
+                        </div>
+                      ) : (
+                        <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-2xl bg-gradient-to-br from-sage/20 to-coral/20 flex items-center justify-center ring-4 ring-sage/20 group-hover:ring-sage/40 transition-all duration-500">
+                          <motion.div
+                            whileHover={{ rotate: 10, scale: 1.1 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <ion-icon name="restaurant" style={{ fontSize: '4rem', color: 'var(--sage)' }} />
+                          </motion.div>
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+
+                  {/* Business Info */}
+                  <div className="flex-1 text-center lg:text-left">
+                    <motion.h2
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.5, duration: 0.6 }}
+                      className="font-urbanist text-3xl lg:text-4xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-4"
+                    >
+                      {business.name}
+                    </motion.h2>
+
+                    {/* Rating */}
+                    <motion.div
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.6, duration: 0.6 }}
+                      className="flex items-center justify-center lg:justify-start space-x-2 mb-6"
+                    >
+                      <motion.div
+                        animate={{ rotate: [0, 10, -10, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                        className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full shadow-lg"
+                      >
+                        <ion-icon name="star" style={{ color: 'white', fontSize: '20px' }} />
+                      </motion.div>
+                      <span className="font-urbanist text-2xl font-700 text-charcoal">{business.rating}</span>
+                    </motion.div>
+
+                    {/* Trust Metrics */}
+                    <motion.div
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.7, duration: 0.6 }}
+                      className="grid grid-cols-3 gap-6"
+                    >
+                      {[
+                        { label: "Trust", value: business.trust, color: "sage" },
+                        { label: "Punctuality", value: business.punctuality, color: "coral" },
+                        { label: "Friendliness", value: business.friendliness, color: "sage" }
+                      ].map((metric, index) => (
+                        <motion.div
+                          key={metric.label}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.8 + (index * 0.1), duration: 0.5 }}
+                          whileHover={{ scale: 1.05, y: -5 }}
+                          className="text-center group"
+                        >
+                          <div className={`w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br ${
+                            metric.color === 'sage' ? 'from-sage/20 to-sage/10' : 'from-coral/20 to-coral/10'
+                          } flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300`}>
+                            <motion.div
+                              animate={{ scale: [1, 1.2, 1] }}
+                              transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
+                              className={`font-urbanist text-lg font-700 ${
+                                metric.color === 'sage' ? 'text-sage' : 'text-coral'
+                              }`}
+                            >
+                              {metric.value}%
+                            </motion.div>
+                          </div>
+                          <span className="font-urbanist text-sm font-500 text-charcoal/70 capitalize">
+                            {metric.label}
+                          </span>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </PremiumHover>
+        </FadeInUp>
 
         {/* Specials & Events */}
-        <div className="bg-white rounded-3 shadow-1 p-6 mb-6">
-          <h3 className="font-urbanist text-5 font-600 text-black mb-4">Specials & Events</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {business.specials.map((special) => (
-              <div key={special.id} className="bg-cultured-1 rounded-3 p-4 flex items-center space-x-3">
-                <div className="w-12 h-12 bg-hoockers-green rounded-3 flex items-center justify-center">
-                  <ion-icon name={special.icon} style={{ color: 'white' }} size="small"></ion-icon>
-                </div>
-                <div>
-                  <h4 className="font-urbanist text-6 font-600 text-black">{special.name}</h4>
-                  <p className="font-urbanist text-8 font-400 text-gray-web">{special.description}</p>
+        <FadeInUp delay={0.4}>
+          <PremiumHover scale={1.01} shadowIntensity="soft" duration={0.3}>
+            <div className="bg-off-white/90 backdrop-blur-lg rounded-3xl shadow-xl border border-sage/10 p-8 mb-8 relative overflow-hidden">
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl"></div>
+
+              <div className="relative z-10">
+                <motion.h3
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                  className="font-urbanist text-2xl font-600 text-charcoal mb-6 flex items-center"
+                >
+                  <motion.div
+                    animate={{ rotate: [0, 5, -5, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
+                    className="w-8 h-8 bg-gradient-to-br from-coral/20 to-coral/10 rounded-full flex items-center justify-center mr-3"
+                  >
+                    <ion-icon name="calendar-outline" style={{ color: 'var(--coral)', fontSize: '18px' }} />
+                  </motion.div>
+                  Specials & Events
+                </motion.h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {business.specials.map((special, index) => (
+                    <motion.div
+                      key={special.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 + (index * 0.1), duration: 0.5 }}
+                      whileHover={{ scale: 1.03, y: -5 }}
+                      className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-2xl p-6 border border-sage/10 group hover:border-sage/30 transition-all duration-300"
+                    >
+                      <div className="flex items-center space-x-4">
+                        <motion.div
+                          whileHover={{ rotate: [0, -10, 10, 0] }}
+                          transition={{ duration: 0.6 }}
+                          className="w-16 h-16 bg-gradient-to-br from-sage/20 to-sage/10 rounded-2xl flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300"
+                        >
+                          <ion-icon
+                            name={special.icon}
+                            style={{ color: 'var(--sage)', fontSize: '28px' }}
+                          />
+                        </motion.div>
+                        <div>
+                          <h4 className="font-urbanist text-lg font-600 text-charcoal mb-1 group-hover:text-sage transition-colors duration-300">
+                            {special.name}
+                          </h4>
+                          <p className="font-urbanist text-sm font-400 text-charcoal/70">
+                            {special.description}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          </PremiumHover>
+        </FadeInUp>
 
         {/* Reviews */}
-        <div className="bg-white rounded-3 shadow-1 p-6 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-urbanist text-5 font-600 text-black">Reviews</h3>
-            <Link 
-              href={`/business/${business.name.toLowerCase().replace(/[^a-z0-9]/g, '')}/review`}
-              className="bg-hoockers-green text-white px-4 py-2 rounded-3 font-urbanist text-8 font-500 hover:bg-opacity-90 transition-colors duration-1"
-            >
-              Write a Review
-            </Link>
-          </div>
-          
-          <div className="space-y-4">
-            {business.reviews.map((review) => (
-              <div key={review.id} className="border-b border-light-gray pb-4 last:border-b-0">
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-hoockers-green rounded-full flex items-center justify-center">
-                    <span className="font-urbanist text-8 font-600 text-white">
-                      {review.author[0]}
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-1">
-                      <span className="font-urbanist text-7 font-600 text-black">{review.author}</span>
-                      <div className="flex items-center space-x-1">
-                        {[...Array(5)].map((_, i) => (
-                          <ion-icon
-                            key={i}
-                            name={i < review.rating ? "star" : "star-outline"}
-                            style={{ color: i < review.rating ? "#589f6a" : "#9ca3af" }}
-                            size="small"
-                          ></ion-icon>
-                        ))}
+        <FadeInUp delay={0.6}>
+          <PremiumHover scale={1.01} shadowIntensity="soft" duration={0.3}>
+            <div className="bg-off-white/90 backdrop-blur-lg rounded-3xl shadow-xl border border-sage/10 p-8 mb-8 relative overflow-hidden">
+              {/* Decorative elements */}
+              <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
+
+              <div className="relative z-10">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
+                  <motion.h3
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.7, duration: 0.6 }}
+                    className="font-urbanist text-2xl font-600 text-charcoal flex items-center"
+                  >
+                    <motion.div
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                      className="w-8 h-8 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mr-3"
+                    >
+                      <ion-icon name="chatbubbles-outline" style={{ color: 'var(--sage)', fontSize: '18px' }} />
+                    </motion.div>
+                    Reviews
+                  </motion.h3>
+
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.8, duration: 0.6 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Link
+                      href={`/business/${business.name.toLowerCase().replace(/[^a-z0-9]/g, '')}/review`}
+                      className="inline-flex items-center space-x-2 bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-sm font-600 py-3 px-6 rounded-full hover:shadow-lg transition-all duration-300 group"
+                    >
+                      <ion-icon name="create-outline" size="small" />
+                      <span>Write a Review</span>
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        className="ml-auto"
+                      >
+                        <ion-icon name="arrow-forward-outline" size="small" />
+                      </motion.div>
+                    </Link>
+                  </motion.div>
+                </div>
+
+                <div className="space-y-6">
+                  {business.reviews.map((review, index) => (
+                    <motion.div
+                      key={review.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.9 + (index * 0.1), duration: 0.5 }}
+                      whileHover={{ scale: 1.01, x: 10 }}
+                      className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-2xl p-6 border border-sage/5 hover:border-sage/20 transition-all duration-300 group"
+                    >
+                      <div className="flex items-start space-x-4">
+                        {/* Avatar */}
+                        <motion.div
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          transition={{ duration: 0.3 }}
+                          className="w-12 h-12 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:shadow-lg transition-shadow duration-300"
+                        >
+                          <span className="font-urbanist text-lg font-700 text-sage">
+                            {review.author[0]}
+                          </span>
+                        </motion.div>
+
+                        <div className="flex-1">
+                          {/* Header */}
+                          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-3 space-y-2 md:space-y-0">
+                            <div className="flex items-center space-x-3">
+                              <span className="font-urbanist text-lg font-600 text-charcoal group-hover:text-sage transition-colors duration-300">
+                                {review.author}
+                              </span>
+                              <div className="flex items-center space-x-1">
+                                {[...Array(5)].map((_, i) => (
+                                  <motion.div
+                                    key={i}
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{ delay: 1 + (index * 0.1) + (i * 0.05), duration: 0.3 }}
+                                  >
+                                    <ion-icon
+                                      name={i < review.rating ? "star" : "star-outline"}
+                                      style={{
+                                        color: i < review.rating ? "var(--coral)" : "#9ca3af",
+                                        fontSize: '16px'
+                                      }}
+                                    />
+                                  </motion.div>
+                                ))}
+                              </div>
+                            </div>
+                            <span className="font-urbanist text-sm font-400 text-charcoal/60">
+                              {review.date}
+                            </span>
+                          </div>
+
+                          {/* Review Text */}
+                          <p className="font-urbanist text-base font-400 text-charcoal/90 leading-relaxed mb-4">
+                            {review.text}
+                          </p>
+
+                          {/* Tags */}
+                          {review.tags && review.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                              {review.tags.map((tag, tagIndex) => (
+                                <motion.span
+                                  key={tag}
+                                  initial={{ opacity: 0, scale: 0.8 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  transition={{ delay: 1.1 + (index * 0.1) + (tagIndex * 0.05), duration: 0.3 }}
+                                  whileHover={{ scale: 1.05 }}
+                                  className="inline-flex items-center px-3 py-1 bg-sage/10 text-sage text-sm font-500 rounded-full border border-sage/20 hover:bg-sage/20 transition-colors duration-300"
+                                >
+                                  <span className="mr-1">@</span>
+                                  {tag}
+                                </motion.span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                      <span className="font-urbanist text-8 font-400 text-gray-web">({review.date})</span>
-                    </div>
-                    <p className="font-urbanist text-8 font-400 text-black">{review.text}</p>
-                  </div>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          </PremiumHover>
+        </FadeInUp>
       </div>
     </div>
   );
