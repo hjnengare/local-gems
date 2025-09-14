@@ -132,7 +132,7 @@ export default function Header({ showSearch = true, showProfile = true }: Header
     return () => clearInterval(interval);
   }, [bannerTexts.length]);
 
-  const headerClassName = `fixed md:top-12 top-10 left-0 right-0 z-50 bg-off-white/80 backdrop-blur-sm overflow-hidden transition-all duration-300 ease-in-out hover:shadow-sm ${isVisible ? 'translate-y-0' : '-translate-y-full'}`;
+  const headerClassName = `fixed md:top-12 top-10 left-0 right-0 z-50 bg-off-white/80 backdrop-blur-sm overflow-hidden py-4 transition-all duration-300 ease-in-out hover:shadow-sm ${isVisible ? 'translate-y-0' : '-translate-y-full'}`;
   
   const searchOverlayClassName = `fixed left-0 right-0 z-70 bg-gradient-to-b from-white/98 to-off-white/98 backdrop-blur-lg border-b border-sage/20 shadow-2xl transition-all duration-500 ease-out ${isSearchOpen ? 'top-0 translate-y-0 opacity-100' : 'top-0 -translate-y-full opacity-0'}`;
 

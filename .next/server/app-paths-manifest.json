@@ -1,7 +1,8 @@
 {
-  "/interests/page": "app/interests/page.js",
-  "/page": "app/page.js",
-  "/onboarding/page": "app/onboarding/page.js",
+  "/complete/page": "app/complete/page.js",
+  "/business/[id]/review/page": "app/business/[id]/review/page.js",
   "/home/page": "app/home/page.js",
-  "/profile/page": "app/profile/page.js"
+  "/interests/page": "app/interests/page.js",
+  "/business/[id]/page": "app/business/[id]/page.js",
+  "/all/page": "app/all/page.js"
 }

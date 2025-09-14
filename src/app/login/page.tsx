@@ -95,34 +95,31 @@ export default function LoginPage() {
         {/* Animated geometric accents with different patterns */}
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.7, delay: 1.0, type: "spring", stiffness: 450 }}
-          className="absolute top-16 right-20 w-2 h-2 bg-sage/35 rounded-full"
           animate={{
-            scale: [1, 1.4, 1],
-            opacity: [0.35, 0.7, 0.35],
+            scale: [0, 1, 1.4, 1],
+            opacity: [0, 0.35, 0.7, 0.35],
           }}
           transition={{
             duration: 2.5,
+            delay: 1.0,
             repeat: Infinity,
             ease: "easeInOut",
           }}
+          className="absolute top-16 right-20 w-2 h-2 bg-sage/35 rounded-full"
         />
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.7, delay: 1.2, type: "spring", stiffness: 450 }}
-          className="absolute bottom-20 left-20 w-2 h-2 bg-coral/35 rounded-full"
           animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.65, 0.3],
+            scale: [0, 1, 1.2, 1],
+            opacity: [0, 0.3, 0.65, 0.3],
           }}
           transition={{
             duration: 3.5,
+            delay: 1.2,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 0.8,
           }}
+          className="absolute bottom-20 left-20 w-2 h-2 bg-coral/35 rounded-full"
         />
       </motion.div>
 
@@ -309,7 +306,7 @@ export default function LoginPage() {
           {/* Enhanced footer */}
           <div className="text-center mt-8 pt-6 border-t border-light-gray/30">
             <p className="font-urbanist text-7 font-400 text-charcoal/70">
-              {"Don't have an account? "}
+              {"Don&apos;t have an account? "}
               <Link
                 href="/register"
                 className="text-coral font-600 hover:text-coral/80 transition-colors duration-300 relative group"

@@ -101,34 +101,31 @@ export default function RegisterPage() {
         {/* Animated geometric accents */}
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.2, type: "spring", stiffness: 400 }}
-          className="absolute top-16 right-20 w-2 h-2 bg-sage/40 rounded-full"
           animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.4, 0.8, 0.4],
+            scale: [0, 1, 1.5, 1],
+            opacity: [0, 0.4, 0.8, 0.4],
           }}
           transition={{
             duration: 3,
+            delay: 1.2,
             repeat: Infinity,
             ease: "easeInOut",
           }}
+          className="absolute top-16 right-20 w-2 h-2 bg-sage/40 rounded-full"
         />
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.4, type: "spring", stiffness: 400 }}
-          className="absolute bottom-20 left-20 w-2 h-2 bg-coral/40 rounded-full"
           animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.3, 0.7, 0.3],
+            scale: [0, 1, 1.3, 1],
+            opacity: [0, 0.3, 0.7, 0.3],
           }}
           transition={{
             duration: 4,
+            delay: 1.4,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 1,
           }}
+          className="absolute bottom-20 left-20 w-2 h-2 bg-coral/40 rounded-full"
         />
       </motion.div>
 
