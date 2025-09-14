@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useRouter } from "next/navigation";
@@ -27,7 +27,8 @@ export default function InterestsPage() {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [displayedText, setDisplayedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
-  const fullText = "Let&apos;s get to know you";
+  const [isNavigating, setIsNavigating] = useState(false);
+  const fullText = "Let's get to know you";
 
   const { user, updateUser } = useAuth();
   const { canAccessRoute } = useOnboarding();
@@ -66,23 +67,32 @@ export default function InterestsPage() {
     };
   }, [fullText]);
 
-  const handleInterestToggle = (interestId: string) => {
+  const handleInterestToggle = useCallback((interestId: string) => {
     setSelectedInterests(prev =>
       prev.includes(interestId)
         ? prev.filter(id => id !== interestId)
         : [...prev, interestId]
     );
-  };
+  }, []);
 
-  const handleNext = () => {
-    if (selectedInterests.length > 0 && user) {
-      updateUser({ interests: selectedInterests });
-      // Only navigate if user can access subcategories
-      if (canAccessRoute("/subcategories")) {
-        router.push(`/subcategories?interests=${selectedInterests.join(',')}`);
-      }
-    }
-  };
+  const canProceed = useMemo(() =>
+    selectedInterests.length > 0 && user && !isNavigating,
+    [selectedInterests.length, user, isNavigating]
+  );
+
+  const handleNext = useCallback(() => {
+    if (!canProceed) return;
+
+    // Set loading state for immediate feedback
+    setIsNavigating(true);
+
+    // Optimistic update - navigate immediately, update in background
+    const nextUrl = `/subcategories?interests=${selectedInterests.join(',')}`;
+    router.push(nextUrl);
+
+    // Update user data asynchronously
+    updateUser({ interests: selectedInterests });
+  }, [canProceed, selectedInterests, router, updateUser]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
@@ -168,18 +178,21 @@ export default function InterestsPage() {
               <button
                 className={`
                   group block w-full py-5 md:w-1/2 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full text-center font-urbanist text-6 md:text-5 font-600 transition-all duration-300 relative overflow-hidden
-                  ${selectedInterests.length > 0
+                  ${canProceed
                     ? 'bg-gradient-to-r from-sage to-sage/90 text-white hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2'
                     : 'bg-light-gray/50 text-charcoal/40 cursor-not-allowed'
                   }
                 `}
                 onClick={handleNext}
-                disabled={selectedInterests.length === 0}
+                disabled={!canProceed}
               >
-                <span className="relative z-10">
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  {isNavigating && (
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  )}
                   Next {selectedInterests.length > 0 && `(${selectedInterests.length} selected)`}
                 </span>
-                {selectedInterests.length > 0 && (
+                {canProceed && (
                   <div className="absolute inset-0 bg-gradient-to-r from-sage/80 to-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 )}
               </button>

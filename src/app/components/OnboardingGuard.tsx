@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { ONBOARDING_STEPS, OnboardingStep } from "../contexts/onboarding-steps";
@@ -15,32 +15,33 @@ export default function OnboardingGuard({ children }: OnboardingGuardProps) {
   const router = useRouter();
   const pathname = usePathname();
 
-  useEffect(() => {
-    if (isLoading) return;
+  // Memoize expensive calculations
+  const isOnboardingRoute = useMemo(() =>
+    ONBOARDING_STEPS.some(step => pathname === step.path || pathname.startsWith(step.path)),
+    [pathname]
+  );
+
+  const currentStep = useMemo(() =>
+    ONBOARDING_STEPS.find(step => pathname === step.path),
+    [pathname]
+  );
+
+  // Memoize navigation logic
+  const handleNavigation = useCallback(() => {
+    if (isLoading || !currentStep) return;
 
     // Skip guard for non-onboarding routes
-    const isOnboardingRoute = ONBOARDING_STEPS.some(step =>
-      pathname === step.path || pathname.startsWith(step.path)
-    );
-
-    if (!isOnboardingRoute) {
-      // Allow access to non-onboarding routes (like /home, /business, etc.)
-      return;
-    }
-
-    const currentStep = ONBOARDING_STEPS.find(step => pathname === step.path);
-
-    if (!currentStep) return;
+    if (!isOnboardingRoute) return;
 
     // If user is already onboarded and trying to access onboarding steps, redirect to home
     if (user?.onboardingComplete && pathname !== "/complete") {
-      router.push("/home");
+      router.replace("/home");
       return;
     }
 
     // If no user and trying to access protected steps, redirect to start
     if (!user && currentStep.path !== "/onboarding" && currentStep.path !== "/register" && currentStep.path !== "/login") {
-      router.push("/onboarding");
+      router.replace("/onboarding");
       return;
     }
 
@@ -57,16 +58,16 @@ export default function OnboardingGuard({ children }: OnboardingGuardProps) {
           step.requiredPrevious && !step.isComplete(user)
         );
 
-        if (nextIncompleteStep) {
-          router.push(nextIncompleteStep.path);
-        } else {
-          router.push("/onboarding");
-        }
+        const redirectPath = nextIncompleteStep?.path || "/onboarding";
+        router.replace(redirectPath);
         return;
       }
     }
+  }, [user, isLoading, pathname, router, isOnboardingRoute, currentStep]);
 
-  }, [user, isLoading, pathname, router]);
+  useEffect(() => {
+    handleNavigation();
+  }, [handleNavigation]);
 
   // Show loading while checking auth
   if (isLoading) {

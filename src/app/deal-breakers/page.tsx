@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { useOnboarding } from "../contexts/OnboardingContext";
@@ -26,26 +26,29 @@ export default function DealBreakersPage() {
   const { user, updateUser } = useAuth();
   const { canAccessRoute } = useOnboarding();
 
-  const toggle = (id: string) => {
+  const toggle = useCallback((id: string) => {
     setSelected(prev => {
       const on = prev.includes(id);
       if (on) return prev.filter(x => x !== id);
       if (prev.length >= 3) return prev; // pick 2–3
       return [...prev, id];
     });
-  };
+  }, []);
 
-  const handleNext = () => {
-    if (canContinue && user) {
-      updateUser({ dealBreakers: selected });
-      // Only navigate if user can access complete
-      if (canAccessRoute("/complete")) {
-        router.push("/complete");
-      }
-    }
-  };
+  const canContinue = useMemo(() =>
+    selected.length >= 2 && selected.length <= 3,
+    [selected.length]
+  );
 
-  const canContinue = selected.length >= 2 && selected.length <= 3;
+  const handleNext = useCallback(() => {
+    if (!canContinue || !user) return;
+
+    // Optimistic navigation - navigate immediately
+    router.push("/complete");
+
+    // Update user data asynchronously
+    updateUser({ dealBreakers: selected });
+  }, [canContinue, user, router, selected, updateUser]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">

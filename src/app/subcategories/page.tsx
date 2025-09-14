@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { useOnboarding } from "../contexts/OnboardingContext";
@@ -85,19 +85,20 @@ export default function SubcategoriesPage() {
   const fromUrl = interests.filter((k) => availableKeys.includes(k));
   const sectionsToShow = fromUrl.length > 0 ? fromUrl : ["food-drink", "arts-culture"];
 
-  const toggle = (id: string) =>
-    setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  const toggle = useCallback((id: string) =>
+    setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id])),
+    []
+  );
 
-  const handleNext = () => {
-    if (user) {
-      // Store selected subcategories in user profile
-      updateUser({ subcategories: selected });
-      // Only navigate if user can access deal-breakers
-      if (canAccessRoute("/deal-breakers")) {
-        router.push("/deal-breakers");
-      }
-    }
-  };
+  const handleNext = useCallback(() => {
+    if (!user) return;
+
+    // Optimistic navigation - navigate immediately
+    router.push("/deal-breakers");
+
+    // Update user data asynchronously
+    updateUser({ subcategories: selected });
+  }, [user, router, selected, updateUser]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
