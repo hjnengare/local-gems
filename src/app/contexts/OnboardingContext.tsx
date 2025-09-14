@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, ReactNode } from "react";
 import { useAuth, User } from "./AuthContext";
-import { ONBOARDING_STEPS, OnboardingStep } from "../components/OnboardingGuard";
+import { ONBOARDING_STEPS, OnboardingStep } from "./onboarding-steps";
 
 interface OnboardingContextType {
   canAccessRoute: (path: string) => boolean;

@@ -2,58 +2,9 @@
 
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useAuth, User } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
+import { ONBOARDING_STEPS, OnboardingStep } from "../contexts/onboarding-steps";
 import PageLoading from "./Loading/PageLoading";
-
-interface OnboardingStep {
-  path: string;
-  name: string;
-  isComplete: (user: User | null) => boolean;
-  requiredPrevious?: string[];
-}
-
-const ONBOARDING_STEPS: OnboardingStep[] = [
-  {
-    path: "/onboarding",
-    name: "Get Started",
-    isComplete: () => true, // Always accessible
-  },
-  {
-    path: "/register",
-    name: "Register",
-    isComplete: (user) => !!user?.email, // Must have registered
-    requiredPrevious: ["/onboarding"]
-  },
-  {
-    path: "/login",
-    name: "Login",
-    isComplete: (user) => !!user?.email, // Must be logged in
-  },
-  {
-    path: "/interests",
-    name: "Interests",
-    isComplete: (user) => !!user?.interests && user.interests.length > 0,
-    requiredPrevious: ["/register", "/login"]
-  },
-  {
-    path: "/subcategories",
-    name: "Subcategories",
-    isComplete: (user) => !!user?.subcategories && user.subcategories.length > 0,
-    requiredPrevious: ["/interests"]
-  },
-  {
-    path: "/deal-breakers",
-    name: "Deal Breakers",
-    isComplete: (user) => !!user?.dealBreakers && user.dealBreakers.length >= 2 && user.dealBreakers.length <= 3,
-    requiredPrevious: ["/subcategories"]
-  },
-  {
-    path: "/complete",
-    name: "Complete",
-    isComplete: (user) => !!user?.onboardingComplete,
-    requiredPrevious: ["/deal-breakers"]
-  }
-];
 
 interface OnboardingGuardProps {
   children: React.ReactNode;
@@ -124,6 +75,3 @@ export default function OnboardingGuard({ children }: OnboardingGuardProps) {
 
   return <>{children}</>;
 }
-
-export { ONBOARDING_STEPS };
-export type { OnboardingStep };
