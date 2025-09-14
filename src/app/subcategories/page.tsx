@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
+import { useOnboarding } from "../contexts/OnboardingContext";
 
 interface SubcategoryItem {
   id: string;
@@ -43,21 +44,21 @@ const TITLES: Record<string, string> = {
 
 export default function SubcategoriesPage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [selected, setSelected] = useState<string[]>([]);
   const [displayedText, setDisplayedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const fullText = "Tell us more...";
-  
+
   const { user, updateUser } = useAuth();
+  const { canAccessRoute } = useOnboarding();
 
   // typing headline
   useEffect(() => {
     let i = 0;
-    let typeId: NodeJS.Timeout;
-    let cursorId: NodeJS.Timeout;
 
-    cursorId = setInterval(() => setShowCursor((p) => !p), 500);
-    typeId = setInterval(() => {
+    const cursorId = setInterval(() => setShowCursor((p) => !p), 500);
+    const typeId = setInterval(() => {
       if (i <= fullText.length) {
         setDisplayedText(fullText.slice(0, i));
         i++;
@@ -72,7 +73,7 @@ export default function SubcategoriesPage() {
       clearInterval(typeId);
       clearInterval(cursorId);
     };
-  }, []);
+  }, [fullText]);
 
   // determine which sections to show
   const interests = (searchParams?.get("interests")?.split(",") || [])
@@ -91,6 +92,10 @@ export default function SubcategoriesPage() {
     if (user) {
       // Store selected subcategories in user profile
       updateUser({ subcategories: selected });
+      // Only navigate if user can access deal-breakers
+      if (canAccessRoute("/deal-breakers")) {
+        router.push("/deal-breakers");
+      }
     }
   };
 
@@ -178,14 +183,13 @@ export default function SubcategoriesPage() {
 
         {/* Continue (same style as Interests) */}
         <div className="pt-8">
-          <Link
-            href="/deal-breakers"
+          <button
             className="group block w-full bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2 relative overflow-hidden text-center"
             onClick={handleNext}
           >
             <span className="relative z-10">Continue</span>
             <div className="absolute inset-0 bg-gradient-to-r from-sage/80 to-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </Link>
+          </button>
         </div>
 
         {/* Stepper */}

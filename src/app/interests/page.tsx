@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useOnboarding } from "../contexts/OnboardingContext";
+import { useRouter } from "next/navigation";
 
 interface Interest {
   id: string;
@@ -25,23 +27,23 @@ export default function InterestsPage() {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [displayedText, setDisplayedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
-  const fullText = "Let's get to know you";
-  
+  const fullText = "Let&apos;s get to know you";
+
   const { user, updateUser } = useAuth();
+  const { canAccessRoute } = useOnboarding();
+  const router = useRouter();
 
   useEffect(() => {
     let currentIndex = 0;
-    let typingInterval;
-    let cursorInterval;
 
     // Start cursor blinking immediately
-    cursorInterval = setInterval(() => {
+    const cursorInterval = setInterval(() => {
       setShowCursor(prev => !prev);
     }, 500);
 
     // Start typing after a small delay
     const startTyping = () => {
-      typingInterval = setInterval(() => {
+      const typingInterval = setInterval(() => {
         if (currentIndex <= fullText.length) {
           setDisplayedText(fullText.slice(0, currentIndex));
           currentIndex++;
@@ -52,16 +54,17 @@ export default function InterestsPage() {
           setShowCursor(false);
         }
       }, 80);
+      return typingInterval;
     };
 
     // Start typing immediately
-    startTyping();
+    const typingInterval = startTyping();
 
     return () => {
       clearInterval(typingInterval);
       clearInterval(cursorInterval);
     };
-  }, []);
+  }, [fullText]);
 
   const handleInterestToggle = (interestId: string) => {
     setSelectedInterests(prev =>
@@ -74,6 +77,10 @@ export default function InterestsPage() {
   const handleNext = () => {
     if (selectedInterests.length > 0 && user) {
       updateUser({ interests: selectedInterests });
+      // Only navigate if user can access subcategories
+      if (canAccessRoute("/subcategories")) {
+        router.push(`/subcategories?interests=${selectedInterests.join(',')}`);
+      }
     }
   };
 
@@ -116,7 +123,7 @@ export default function InterestsPage() {
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-sage via-coral to-sage rounded-full"></div>
           </div>
           <p className="font-urbanist text-6 md:text-5 font-400 text-charcoal/70 max-w-md mx-auto leading-relaxed">
-            Pick a few things you love and let's personalize your experience
+            Pick a few things you love and let&apos;s personalize your experience
           </p>
         </div>
 
@@ -158,8 +165,7 @@ export default function InterestsPage() {
 
             {/* Next Button */}
             <div className="pt-6">
-              <Link
-                href={`/subcategories?interests=${selectedInterests.join(',')}`}
+              <button
                 className={`
                   group block w-full py-5 md:w-1/2 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full text-center font-urbanist text-6 md:text-5 font-600 transition-all duration-300 relative overflow-hidden
                   ${selectedInterests.length > 0
@@ -167,13 +173,8 @@ export default function InterestsPage() {
                     : 'bg-light-gray/50 text-charcoal/40 cursor-not-allowed'
                   }
                 `}
-                onClick={(e) => {
-                  if (selectedInterests.length === 0) {
-                    e.preventDefault();
-                  } else {
-                    handleNext();
-                  }
-                }}
+                onClick={handleNext}
+                disabled={selectedInterests.length === 0}
               >
                 <span className="relative z-10">
                   Next {selectedInterests.length > 0 && `(${selectedInterests.length} selected)`}
@@ -181,7 +182,7 @@ export default function InterestsPage() {
                 {selectedInterests.length > 0 && (
                   <div className="absolute inset-0 bg-gradient-to-r from-sage/80 to-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 )}
-              </Link>
+              </button>
             </div>
           </div>
         </div>

@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
+import { useOnboarding } from "../contexts/OnboardingContext";
 
 interface DealBreaker {
   id: string;
@@ -19,8 +21,10 @@ const dealBreakers: DealBreaker[] = [
 
 export default function DealBreakersPage() {
   const [selected, setSelected] = useState<string[]>([]);
-  
+  const router = useRouter();
+
   const { user, updateUser } = useAuth();
+  const { canAccessRoute } = useOnboarding();
 
   const toggle = (id: string) => {
     setSelected(prev => {
@@ -34,6 +38,10 @@ export default function DealBreakersPage() {
   const handleNext = () => {
     if (canContinue && user) {
       updateUser({ dealBreakers: selected });
+      // Only navigate if user can access complete
+      if (canAccessRoute("/complete")) {
+        router.push("/complete");
+      }
     }
   };
 
@@ -44,7 +52,7 @@ export default function DealBreakersPage() {
       {/* Back button - top left */}
       <div className="absolute top-6 left-6 z-20">
         <Link
-          href="/interests"
+          href="/subcategories"
           className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full"
         >
           <ion-icon name="arrow-back-outline" size="small"></ion-icon>
@@ -122,15 +130,9 @@ export default function DealBreakersPage() {
 
         {/* Continue button */}
         <div className="pt-6">
-          <Link
-            href={canContinue ? "/complete" : "#"}
-            onClick={(e) => { 
-              if (!canContinue) {
-                e.preventDefault();
-              } else {
-                handleNext();
-              }
-            }}
+          <button
+            onClick={handleNext}
+            disabled={!canContinue}
             className={`group block w-full py-5 md:w-1/4 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full text-center font-urbanist text-6 md:text-5 font-600 transition-all duration-300 relative overflow-hidden
                         ${canContinue
                           ? "bg-gradient-to-r from-sage to-sage/90 text-white hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
@@ -140,7 +142,7 @@ export default function DealBreakersPage() {
             {canContinue && (
               <div className="absolute inset-0 bg-gradient-to-r from-sage/80 to-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             )}
-          </Link>
+          </button>
         </div>
 
         {/* Progress indicator */}

@@ -3,6 +3,9 @@ import { Urbanist } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { AuthProvider } from "./contexts/AuthContext";
+import { OnboardingProvider } from "./contexts/OnboardingContext";
+import OnboardingGuard from "./components/OnboardingGuard";
+import PageTransitionProvider from "./components/Providers/PageTransitionProvider";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -69,7 +72,13 @@ export default function RootLayout({
           Skip to main content
         </a>
         <AuthProvider>
-          {children}
+          <OnboardingProvider>
+            <OnboardingGuard>
+              <PageTransitionProvider>
+                {children}
+              </PageTransitionProvider>
+            </OnboardingGuard>
+          </OnboardingProvider>
         </AuthProvider>
         <Script
           src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"

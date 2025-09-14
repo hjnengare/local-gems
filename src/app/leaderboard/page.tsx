@@ -1,160 +1,424 @@
 "use client";
 
-import Footer from "../components/Footer/Footer";
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import Link from "next/link";
+
+const BottomNav = dynamic(() => import("../components/Navigation/BottomNav"));
 
 interface LeaderboardUser {
   rank: number;
   username: string;
   reviews: number;
   badge?: string;
+  avatar: string;
+  totalRating: number;
 }
 
 const topReviewers: LeaderboardUser[] = [
-  { rank: 1, username: "Observer", reviews: 25, badge: "🥇" },
-  { rank: 2, username: "Ghost", reviews: 20, badge: "🥈" },
-  { rank: 3, username: "Reviewer", reviews: 15, badge: "🥉" },
-  { rank: 4, username: "LocalGuru", reviews: 12 },
-  { rank: 5, username: "TasteExplorer", reviews: 10 },
-  { rank: 6, username: "CityScout", reviews: 8 },
-  { rank: 7, username: "GemHunter", reviews: 7 },
-  { rank: 8, username: "ReviewMaster", reviews: 6 }
+  { rank: 1, username: "Observer", reviews: 25, badge: "🥇", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Observer&backgroundColor=708090&size=96", totalRating: 4.9 },
+  { rank: 2, username: "Ghost", reviews: 20, badge: "🥈", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ghost&backgroundColor=F4A261&size=96", totalRating: 4.8 },
+  { rank: 3, username: "Reviewer", reviews: 15, badge: "🥉", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Reviewer&backgroundColor=708090&size=96", totalRating: 4.7 },
+  { rank: 4, username: "LocalGuru", reviews: 12, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=LocalGuru&backgroundColor=F4A261&size=96", totalRating: 4.6 },
+  { rank: 5, username: "TasteExplorer", reviews: 10, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=TasteExplorer&backgroundColor=708090&size=96", totalRating: 4.5 },
+  { rank: 6, username: "CityScout", reviews: 8, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=CityScout&backgroundColor=F4A261&size=96", totalRating: 4.4 },
+  { rank: 7, username: "GemHunter", reviews: 7, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=GemHunter&backgroundColor=708090&size=96", totalRating: 4.3 },
+  { rank: 8, username: "ReviewMaster", reviews: 6, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=ReviewMaster&backgroundColor=F4A261&size=96", totalRating: 4.2 }
 ];
 
 interface BusinessOfMonth {
   name: string;
   rating: number;
   category: string;
+  image: string;
+  location: string;
+  ownerName: string;
+  ownerAvatar: string;
+  reviews: number;
 }
 
 const businessOfMonth: BusinessOfMonth[] = [
-  { name: "Mama's Kitchen", rating: 4.9, category: "Restaurant" },
-  { name: "Bella's Hair", rating: 4.8, category: "Beauty" },
-  { name: "Fresh Flowers", rating: 4.9, category: "Florist" },
-  { name: "Ocean Kloof", rating: 4.9, category: "Restaurant" },
-  { name: "Apple Store", rating: 4.5, category: "Tech" },
-  { name: "Pet Store A", rating: 4.9, category: "Pets" }
+  {
+    name: "Mama's Kitchen",
+    rating: 4.9,
+    category: "Restaurant",
+    image: "/images/product-01.jpg",
+    location: "Downtown",
+    ownerName: "Maria Santos",
+    ownerAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=MariaSantos&backgroundColor=708090&size=64",
+    reviews: 127
+  },
+  {
+    name: "Bella's Hair",
+    rating: 4.8,
+    category: "Beauty",
+    image: "/images/product-02.jpg",
+    location: "Arts District",
+    ownerName: "Isabella Chen",
+    ownerAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=IsabellaChen&backgroundColor=F4A261&size=64",
+    reviews: 89
+  },
+  {
+    name: "Fresh Flowers",
+    rating: 4.9,
+    category: "Florist",
+    image: "/images/product-03.jpg",
+    location: "Riverside",
+    ownerName: "David Green",
+    ownerAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=DavidGreen&backgroundColor=708090&size=64",
+    reviews: 156
+  },
+  {
+    name: "Ocean Kloof",
+    rating: 4.9,
+    category: "Restaurant",
+    image: "/images/product-04.jpg",
+    location: "Old Town",
+    ownerName: "James Wilson",
+    ownerAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=JamesWilson&backgroundColor=F4A261&size=64",
+    reviews: 203
+  },
+  {
+    name: "Apple Store",
+    rating: 4.5,
+    category: "Tech",
+    image: "/images/product-05.jpg",
+    location: "Westside",
+    ownerName: "Sarah Johnson",
+    ownerAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahJohnson&backgroundColor=708090&size=64",
+    reviews: 74
+  },
+  {
+    name: "Pet Store A",
+    rating: 4.9,
+    category: "Pets",
+    image: "/images/product-06.jpg",
+    location: "Main Street",
+    ownerName: "Michael Brown",
+    ownerAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=MichaelBrown&backgroundColor=F4A261&size=64",
+    reviews: 342
+  }
 ];
 
 export default function LeaderboardPage() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white border-b border-light-gray px-4 py-4">
-        <div className="flex items-center justify-between max-w-6xl mx-auto">
-          <h1 className="font-urbanist text-5 font-700 text-hoockers-green">Local Gems</h1>
-          <button className="p-2 rounded-full hover:bg-cultured-1 transition-colors duration-1">
-            <ion-icon name="person-outline" size="small"></ion-icon>
-          </button>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 pb-24 md:pb-6 relative overflow-hidden">
+      {/* Premium background elements */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-sage/8 via-sage/4 to-transparent rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-br from-coral/6 via-coral/3 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-charcoal/3 via-charcoal/1 to-transparent rounded-full blur-2xl animate-pulse" style={{ animationDelay: "2s" }} />
+      </div>
 
-      <div className="max-w-6xl mx-auto px-4 py-6">
-        {/* Page Title */}
-        <div className="text-center mb-8">
-          <h2 className="font-urbanist text-3 font-700 text-black mb-2">
-            Community Highlights
-          </h2>
-          <p className="font-urbanist text-6 font-400 text-gray-web">
-            Top Reviewers This Month in Claremont
-          </p>
+      {/* Header */}
+      <motion.header
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="bg-off-white/80 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm relative z-10"
+      >
+        <div className="flex items-center justify-between max-w-[1300px] mx-auto">
+          {/* Back button */}
+          <Link href="/home" className="group flex items-center">
+            <div className="w-12 h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-4">
+              <ion-icon name="arrow-back" class="text-xl text-charcoal/70 group-hover:text-sage transition-colors duration-300" />
+            </div>
+            <motion.h1
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="font-urbanist text-2xl md:text-3xl lg:text-4xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal"
+            >
+              Community Highlights
+            </motion.h1>
+          </Link>
+
+          {/* Profile button */}
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-12 h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20"
+          >
+            <ion-icon name="person-outline" class="text-xl text-charcoal/70 hover:text-sage transition-colors duration-300" />
+          </motion.button>
         </div>
+      </motion.header>
+
+      <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12 relative z-10">
+        {/* Page Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <h2 className="font-urbanist text-2xl md:text-3xl lg:text-4xl font-700 text-charcoal mb-4">
+            Top Contributors This Month
+          </h2>
+          <p className="font-urbanist text-base md:text-lg font-400 text-charcoal/70 max-w-2xl mx-auto">
+            Celebrating our community&apos;s most valued reviewers and featured businesses
+          </p>
+        </motion.div>
 
         {/* Top Reviewers Leaderboard */}
-        <div className="bg-cultured-1 rounded-3 shadow-1 p-6 mb-8">
-          <h3 className="font-urbanist text-5 font-600 text-black mb-6 text-center">
-            Top Reviewers This Month
-          </h3>
-          
-          {/* Top 3 Podium */}
-          <div className="flex justify-center items-end space-x-4 mb-8">
-            {/* 2nd Place */}
-            <div className="text-center">
-              <div className="w-16 h-16 bg-spanish-gray rounded-full flex items-center justify-center mb-2">
-                <span className="font-urbanist text-5 font-700 text-white">2</span>
-              </div>
-              <div className="bg-white rounded-3 p-3 min-w-[120px]">
-                <div className="text-2xl mb-1">🥈</div>
-                <div className="font-urbanist text-7 font-600 text-black">@{topReviewers[1].username}</div>
-                <div className="font-urbanist text-8 font-400 text-gray-web">{topReviewers[1].reviews} reviews</div>
-              </div>
-            </div>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className="bg-off-white/95 backdrop-blur-xl rounded-3xl shadow-xl border border-white/30 p-6 md:p-8 mb-12 relative overflow-hidden"
+        >
+          {/* Card decorative elements */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
 
-            {/* 1st Place */}
-            <div className="text-center">
-              <div className="w-20 h-20 bg-hoockers-green rounded-full flex items-center justify-center mb-2">
-                <span className="font-urbanist text-4 font-700 text-white">1</span>
-              </div>
-              <div className="bg-white rounded-3 p-4 min-w-[140px] border-2 border-hoockers-green">
-                <div className="text-3xl mb-1">🥇</div>
-                <div className="font-urbanist text-6 font-700 text-black">@{topReviewers[0].username}</div>
-                <div className="font-urbanist text-8 font-400 text-gray-web">{topReviewers[0].reviews} reviews</div>
-              </div>
-            </div>
+          <div className="relative z-10">
+            <h3 className="font-urbanist text-xl md:text-2xl font-700 text-charcoal mb-8 text-center flex items-center justify-center gap-3">
+              <ion-icon name="trophy" class="text-2xl text-sage" />
+              Top Reviewers
+            </h3>
 
-            {/* 3rd Place */}
-            <div className="text-center">
-              <div className="w-16 h-16 bg-light-gray rounded-full flex items-center justify-center mb-2">
-                <span className="font-urbanist text-5 font-700 text-white">3</span>
-              </div>
-              <div className="bg-white rounded-3 p-3 min-w-[120px]">
-                <div className="text-2xl mb-1">🥉</div>
-                <div className="font-urbanist text-7 font-600 text-black">@{topReviewers[2].username}</div>
-                <div className="font-urbanist text-8 font-400 text-gray-web">{topReviewers[2].reviews} reviews</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Rest of Rankings */}
-          <div className="space-y-3">
-            {topReviewers.slice(3).map((user) => (
-              <div key={user.rank} className="flex items-center justify-between bg-white rounded-3 p-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-cultured-2 rounded-full flex items-center justify-center">
-                    <span className="font-urbanist text-8 font-600 text-gray-web">{user.rank}</span>
+            {/* Top 3 Podium */}
+            <div className="flex justify-center items-end gap-6 mb-12">
+              {/* 2nd Place */}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.6 }}
+                className="text-center group cursor-pointer"
+              >
+                <div className="relative mb-4">
+                  <div className="w-20 h-20 relative rounded-full overflow-hidden border-4 border-coral/30 mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Image
+                      src={topReviewers[1].avatar}
+                      alt={topReviewers[1].username}
+                      fill
+                      className="object-cover"
+                      sizes="80px"
+                    />
                   </div>
-                  <span className="font-urbanist text-6 font-600 text-black">@{user.username}</span>
+                  <div className="absolute -top-2 -right-2 text-2xl animate-bounce">{topReviewers[1].badge}</div>
                 </div>
-                <span className="font-urbanist text-7 font-400 text-gray-web">{user.reviews} reviews</span>
-              </div>
-            ))}
-          </div>
+                <div className="bg-off-white rounded-[6px] p-4 min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
+                  <div className="font-urbanist text-lg font-700 text-charcoal mb-1 group-hover:text-coral transition-colors duration-300">@{topReviewers[1].username}</div>
+                  <div className="font-urbanist text-sm text-charcoal/70 mb-2">{topReviewers[1].reviews} reviews</div>
+                  <div className="bg-white/50 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-white/30 flex items-center justify-center gap-1 mx-auto w-fit">
+                    <ion-icon name="star" class="text-sm text-coral" />
+                    <span className="font-urbanist text-sm font-600 text-charcoal">{topReviewers[1].totalRating}</span>
+                  </div>
+                </div>
+              </motion.div>
 
-          <div className="text-center mt-6">
-            <button className="font-urbanist text-7 font-500 text-hoockers-green hover:underline">
-              See leaderboard...
-            </button>
+              {/* 1st Place */}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="text-center group cursor-pointer"
+              >
+                <div className="relative mb-4">
+                  <div className="w-28 h-28 relative rounded-full overflow-hidden border-4 border-sage mx-auto group-hover:scale-110 transition-transform duration-300 shadow-xl">
+                    <Image
+                      src={topReviewers[0].avatar}
+                      alt={topReviewers[0].username}
+                      fill
+                      className="object-cover"
+                      sizes="112px"
+                    />
+                  </div>
+                  <div className="absolute -top-3 -right-3 text-3xl animate-pulse">{topReviewers[0].badge}</div>
+                </div>
+                <div className="bg-off-white rounded-[6px] p-5 min-w-[160px] shadow-xl border-2 border-sage/30 group-hover:shadow-2xl transition-all duration-300">
+                  <div className="font-urbanist text-xl font-700 text-charcoal mb-1 group-hover:text-sage transition-colors duration-300">@{topReviewers[0].username}</div>
+                  <div className="font-urbanist text-sm text-charcoal/70 mb-3">{topReviewers[0].reviews} reviews</div>
+                  <div className="bg-gradient-to-r from-sage/20 to-sage/10 backdrop-blur-sm px-3 py-2 rounded-full shadow-sm border border-sage/20 flex items-center justify-center gap-1 mx-auto w-fit">
+                    <ion-icon name="star" class="text-base text-sage" />
+                    <span className="font-urbanist text-base font-700 text-charcoal">{topReviewers[0].totalRating}</span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* 3rd Place */}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7, duration: 0.6 }}
+                className="text-center group cursor-pointer"
+              >
+                <div className="relative mb-4">
+                  <div className="w-20 h-20 relative rounded-full overflow-hidden border-4 border-charcoal/30 mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Image
+                      src={topReviewers[2].avatar}
+                      alt={topReviewers[2].username}
+                      fill
+                      className="object-cover"
+                      sizes="80px"
+                    />
+                  </div>
+                  <div className="absolute -top-2 -right-2 text-2xl animate-bounce" style={{ animationDelay: "0.5s" }}>{topReviewers[2].badge}</div>
+                </div>
+                <div className="bg-off-white rounded-[6px] p-4 min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
+                  <div className="font-urbanist text-lg font-700 text-charcoal mb-1 group-hover:text-charcoal/80 transition-colors duration-300">@{topReviewers[2].username}</div>
+                  <div className="font-urbanist text-sm text-charcoal/70 mb-2">{topReviewers[2].reviews} reviews</div>
+                  <div className="bg-white/50 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-white/30 flex items-center justify-center gap-1 mx-auto w-fit">
+                    <ion-icon name="star" class="text-sm text-coral" />
+                    <span className="font-urbanist text-sm font-600 text-charcoal">{topReviewers[2].totalRating}</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Rest of Rankings */}
+            <div className="space-y-3">
+              {topReviewers.slice(3).map((user, index) => (
+                <motion.div
+                  key={user.rank}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
+                  className="group bg-off-white rounded-[6px] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.01] cursor-pointer"
+                >
+                  <div className="flex items-center justify-between p-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-8 h-8 bg-gradient-to-br from-charcoal/10 to-charcoal/5 rounded-full flex items-center justify-center font-urbanist text-sm font-600 text-charcoal/70 shadow-sm">
+                        {user.rank}
+                      </div>
+                      <div className="w-12 h-12 relative rounded-full overflow-hidden border-2 border-white shadow-md group-hover:scale-105 transition-transform duration-300">
+                        <Image
+                          src={user.avatar}
+                          alt={user.username}
+                          fill
+                          className="object-cover"
+                          sizes="48px"
+                        />
+                      </div>
+                      <div>
+                        <div className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-300">@{user.username}</div>
+                        <div className="font-urbanist text-sm text-charcoal/60">{user.reviews} reviews</div>
+                      </div>
+                    </div>
+                    <div className="bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1">
+                      <ion-icon name="star" class="text-sm text-coral" />
+                      <span className="font-urbanist text-sm font-600 text-charcoal">{user.totalRating}</span>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="text-center mt-8">
+              <button className="font-urbanist text-base font-600 text-sage hover:text-sage/80 transition-colors duration-300 px-6 py-2 hover:bg-sage/5 rounded-full">
+                View Full Leaderboard →
+              </button>
+            </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Businesses of the Month */}
-        <div className="bg-white rounded-3 shadow-1 p-6 mb-8">
-          <h3 className="font-urbanist text-5 font-600 text-black mb-6">
-            Businesses of the Month
-          </h3>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {businessOfMonth.map((business, index) => (
-              <div key={index} className="bg-cultured-1 rounded-3 p-4 text-center">
-                <div className="w-12 h-12 bg-hoockers-green rounded-3 mx-auto mb-3 flex items-center justify-center">
-                  <ion-icon name="star" style={{ color: 'white' }} size="small"></ion-icon>
-                </div>
-                <h4 className="font-urbanist text-6 font-600 text-black mb-1">{business.name}</h4>
-                <p className="font-urbanist text-8 font-400 text-gray-web mb-2">{business.category}</p>
-                <div className="flex items-center justify-center space-x-1">
-                  <ion-icon name="star" style={{ color: "#589f6a" }} size="small"></ion-icon>
-                  <span className="font-urbanist text-8 font-500 text-black">{business.rating}</span>
-                </div>
-              </div>
-            ))}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.8 }}
+          className="bg-off-white/95 backdrop-blur-xl rounded-3xl shadow-xl border border-white/30 p-6 md:p-8 mb-8 relative overflow-hidden"
+        >
+          {/* Card decorative elements */}
+          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tr from-sage/10 to-transparent rounded-full blur-2xl"></div>
+
+          <div className="relative z-10">
+            <h3 className="font-urbanist text-xl md:text-2xl font-700 text-charcoal mb-8 text-center flex items-center justify-center gap-3">
+              <ion-icon name="diamond" class="text-2xl text-coral" />
+              Featured Businesses
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {businessOfMonth.map((business, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 + index * 0.1, duration: 0.6 }}
+                  className="group bg-off-white rounded-[6px] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.03] cursor-pointer"
+                >
+                  <div className="relative overflow-hidden rounded-t-[6px]">
+                    <div className="relative">
+                      <Image
+                        src={business.image}
+                        alt={business.name}
+                        width={400}
+                        height={240}
+                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        className="h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
+                        loading="lazy"
+                      />
+
+                      {/* Rating badge - exactly matching BusinessCard style */}
+                      <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-3 bg-white/50 backdrop-blur-sm px-2 py-1 text-charcoal shadow-lg">
+                        <ion-icon name="star" class="text-coral text-sm drop-shadow-sm" />
+                        <span className="font-urbanist text-xs font-700">{business.rating.toFixed(1)}</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-4">
+                    {/* Business name - matching BusinessCard typography */}
+                    <div className="mb-1">
+                      <h3 className="font-urbanist text-base font-600 text-charcoal transition-colors duration-200 group-hover:text-sage">
+                        {business.name}
+                      </h3>
+                    </div>
+
+                    {/* Category and location line */}
+                    <p className="mb-3 font-urbanist text-sm font-400 text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
+                      {business.category} - {business.location}
+                    </p>
+
+                    {/* Owner information */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <Image
+                        src={business.ownerAvatar}
+                        alt={business.ownerName}
+                        width={24}
+                        height={24}
+                        className="rounded-full ring-1 ring-white/50 shadow-sm"
+                        sizes="24px"
+                      />
+                      <div className="flex items-center gap-1 text-xs font-urbanist text-charcoal/60">
+                        <span>by {business.ownerName}</span>
+                        <span>•</span>
+                        <span>{business.reviews} reviews</span>
+                      </div>
+                    </div>
+
+                    {/* Rating display matching BusinessCard style */}
+                    <div className="flex items-center gap-2">
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <ion-icon
+                            key={i}
+                            name={i < Math.floor(business.rating) ? "star" : business.rating > i ? "star-half" : "star-outline"}
+                            class={`text-sm ${i < business.rating ? "text-coral" : "text-charcoal/30"}`}
+                          />
+                        ))}
+                      </div>
+                      <p className="font-urbanist text-sm font-400 leading-none text-charcoal/70 transition-colors duration-200">Featured</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="text-center mt-8">
+              <button className="font-urbanist text-base font-600 text-coral hover:text-coral/80 transition-colors duration-300 px-6 py-2 hover:bg-coral/5 rounded-full">
+                Explore All Businesses →
+              </button>
+            </div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Bottom Navigation */}
-      <Footer variant="bottom-nav" />
-
-      {/* Bottom padding for fixed nav */}
-      <div className="h-16"></div>
+      <BottomNav />
     </div>
   );
 }
