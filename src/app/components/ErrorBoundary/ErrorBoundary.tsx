@@ -38,7 +38,7 @@ class ErrorBoundary extends Component<Props, State> {
               Something went wrong
             </h1>
             <p className="font-urbanist text-6 text-charcoal/70 mb-6">
-              We're experiencing a technical issue. Please refresh the page.
+              We&apos;re experiencing a technical issue. Please refresh the page.
             </p>
             <button
               onClick={() => window.location.reload()}

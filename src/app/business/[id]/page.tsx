@@ -16,7 +16,7 @@ const PremiumHover = dynamic(() => import("../../components/Animations/PremiumHo
 });
 
 export default function BusinessProfilePage() {
-  const [activeTab, setActiveTab] = useState("overview");
+  // const [activeTab, setActiveTab] = useState("overview");
 
   // Mock data - in real app this would come from params and API
   const business = {
