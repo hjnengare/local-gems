@@ -7,6 +7,7 @@ import { OnboardingProvider } from "./contexts/OnboardingContext";
 import OnboardingGuard from "./components/OnboardingGuard";
 import PageTransitionProvider from "./components/Providers/PageTransitionProvider";
 import WebVitals from "./components/Performance/WebVitals";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -16,6 +17,7 @@ const urbanist = Urbanist({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://local-gems.vercel.app'),
   title: "Local Gems - Discover trusted local gems near you",
   description: "Find amazing local businesses, restaurants, and experiences in your area with personalized recommendations and trusted reviews.",
   keywords: "local business, restaurants, reviews, recommendations, local gems",
@@ -73,15 +75,17 @@ export default function RootLayout({
           Skip to main content
         </a>
         <WebVitals />
-        <AuthProvider>
-          <OnboardingProvider>
-            <OnboardingGuard>
-              <PageTransitionProvider>
-                {children}
-              </PageTransitionProvider>
-            </OnboardingGuard>
-          </OnboardingProvider>
-        </AuthProvider>
+        <ErrorBoundary>
+          <AuthProvider>
+            <OnboardingProvider>
+              <OnboardingGuard>
+                <PageTransitionProvider>
+                  {children}
+                </PageTransitionProvider>
+              </OnboardingGuard>
+            </OnboardingProvider>
+          </AuthProvider>
+        </ErrorBoundary>
         <Script
           src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
           type="module"

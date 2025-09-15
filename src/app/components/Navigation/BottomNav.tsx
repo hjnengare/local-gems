@@ -17,19 +17,9 @@ const navItems: NavItem[] = [
     icon: "home"
   },
   {
-    name: "Explore",
-    href: "/all",
-    icon: "search"
-  },
-  {
-    name: "Saved",
-    href: "/saved",
-    icon: "bookmark"
-  },
-  {
-    name: "Profile",
-    href: "/profile",
-    icon: "person"
+    name: "Leaderboard",
+    href: "/leaderboard",
+    icon: "leaderboard"
   }
 ];
 

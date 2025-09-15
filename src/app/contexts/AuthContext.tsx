@@ -36,14 +36,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // Check for existing user session on mount
   useEffect(() => {
-    const storedUser = localStorage.getItem('local-gems-user');
-    if (storedUser) {
+    // Only access localStorage on client side
+    if (typeof window !== 'undefined') {
       try {
-        const parsedUser = JSON.parse(storedUser);
-        setUser(parsedUser);
+        const storedUser = localStorage.getItem('local-gems-user');
+        if (storedUser) {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+        }
       } catch (error) {
         console.error('Error parsing stored user:', error);
-        localStorage.removeItem('local-gems-user');
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('local-gems-user');
+        }
       }
     }
     setIsLoading(false);
@@ -85,7 +90,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (foundUser) {
       const { password: _, ...userWithoutPassword } = foundUser;
       setUser(userWithoutPassword);
-      localStorage.setItem('local-gems-user', JSON.stringify(userWithoutPassword));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('local-gems-user', JSON.stringify(userWithoutPassword));
+      }
       setIsLoading(false);
       
       // Redirect based on onboarding status
@@ -131,7 +138,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     DUMMY_USERS.push({ ...newUser, password });
     
     setUser(newUser);
-    localStorage.setItem('local-gems-user', JSON.stringify(newUser));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('local-gems-user', JSON.stringify(newUser));
+    }
     setIsLoading(false);
     
     // Navigate to interests page after successful registration
@@ -142,7 +151,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('local-gems-user');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('local-gems-user');
+    }
     router.push('/onboarding');
   };
 
@@ -151,7 +162,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     
     const updatedUser = { ...user, ...userData };
     setUser(updatedUser);
-    localStorage.setItem('local-gems-user', JSON.stringify(updatedUser));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('local-gems-user', JSON.stringify(updatedUser));
+    }
     
     // Update in dummy users array
     const userIndex = DUMMY_USERS.findIndex(u => u.id === user.id);

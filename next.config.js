@@ -69,7 +69,22 @@ const nextConfig = {
   },
 
   // Webpack optimizations
-  webpack: (config, { dev }) => {
+  webpack: (config, { dev, isServer }) => {
+    // Development optimizations for faster compilation
+    if (dev) {
+      config.optimization.removeAvailableModules = false;
+      config.optimization.removeEmptyChunks = false;
+      config.optimization.splitChunks = false;
+
+      // Improve build speed in development
+      if (!isServer) {
+        config.resolve.fallback = {
+          ...config.resolve.fallback,
+          fs: false,
+        };
+      }
+    }
+
     // Production optimizations
     if (!dev) {
       config.optimization.splitChunks.cacheGroups = {

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface ReviewContentProps {
   businessName: string;
   businessType: string;
@@ -47,10 +49,13 @@ export default function ReviewContent({
 
       {images && images.length > 0 && (
         <div className="mb-3">
-          <img
+          <Image
             src={images[0]}
             alt="Review image"
+            width={300}
+            height={96}
             className="w-full h-24 object-cover rounded-lg"
+            sizes="(max-width: 768px) 100vw, 300px"
           />
         </div>
       )}
