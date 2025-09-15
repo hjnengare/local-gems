@@ -6,6 +6,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { OnboardingProvider } from "./contexts/OnboardingContext";
 import OnboardingGuard from "./components/OnboardingGuard";
 import PageTransitionProvider from "./components/Providers/PageTransitionProvider";
+import WebVitals from "./components/Performance/WebVitals";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -71,6 +72,7 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
+        <WebVitals />
         <AuthProvider>
           <OnboardingProvider>
             <OnboardingGuard>
@@ -83,9 +85,11 @@ export default function RootLayout({
         <Script
           src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
           type="module"
+          strategy="afterInteractive"
         />
         <Script
           src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+          strategy="lazyOnload"
           noModule
         />
       </body>
