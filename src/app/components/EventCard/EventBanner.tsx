@@ -1,3 +1,4 @@
+import Image from "next/image";
 import EventIcon from "./EventIcon";
 import EventBadge from "./EventBadge";
 import RatingBadge from "./RatingBadge";
@@ -26,11 +27,13 @@ export default function EventBanner({
       {/* Image or Icon placeholder */}
       {image ? (
         <>
-          <img 
-            src={image} 
-            alt={alt || title} 
-            loading="lazy" 
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]" 
+          <Image
+            src={image}
+            alt={alt || title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
+            priority={false}
           />
           {/* Subtle overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-charcoal/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

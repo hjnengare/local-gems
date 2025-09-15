@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface ProfilePictureProps {
   src: string;
   alt: string;
@@ -13,8 +15,13 @@ export default function ProfilePicture({
 }: ProfilePictureProps) {
   const sizeClasses = {
     sm: "w-10 h-10",
-    md: "w-12 h-12", 
+    md: "w-12 h-12",
     lg: "w-16 h-16"
+  };
+
+  const getSizeNumber = (size: keyof typeof sizeClasses): number => {
+    const sizeMap = { sm: 40, md: 48, lg: 64 };
+    return sizeMap[size];
   };
 
   const getBadgeIcon = (badgeType: string) => {
@@ -57,10 +64,13 @@ export default function ProfilePicture({
 
   return (
     <div className="relative inline-block">
-      <img
+      <Image
         src={src}
         alt={alt}
+        width={getSizeNumber(size)}
+        height={getSizeNumber(size)}
         className={`${sizeClasses[size]} rounded-full object-cover border-2 border-white shadow-md`}
+        unoptimized={src.includes('dicebear.com')}
       />
       
       {badge && (

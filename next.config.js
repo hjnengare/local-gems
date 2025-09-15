@@ -79,14 +79,35 @@ const nextConfig = {
           name: 'vendors',
           chunks: 'all',
           priority: 10,
+          enforce: true,
         },
-        animations: {
+        framerMotion: {
           test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
           name: 'framer-motion',
-          chunks: 'all',
+          chunks: 'async',
           priority: 20,
+          enforce: true,
         },
+        confetti: {
+          test: /[\\/]node_modules[\\/]canvas-confetti[\\/]/,
+          name: 'confetti',
+          chunks: 'async',
+          priority: 15,
+          enforce: true,
+        },
+        react: {
+          test: /[\\/]node_modules[\\/]react[\\/]/,
+          name: 'react-vendor',
+          chunks: 'all',
+          priority: 30,
+          enforce: true,
+        }
       };
+
+      // Tree shaking optimization
+      config.optimization.usedExports = true;
+      config.optimization.providedExports = true;
+      config.optimization.sideEffects = false;
     }
 
     return config;
