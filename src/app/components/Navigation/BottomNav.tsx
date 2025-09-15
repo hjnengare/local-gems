@@ -29,8 +29,17 @@ export default function BottomNav() {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
+  // Only show bottom nav on home page and leaderboard
+  const allowedPages = ['/home', '/leaderboard'];
+  const shouldShowNav = allowedPages.some(page => pathname === page || pathname.startsWith(page));
+
   useEffect(() => {
     const controlBottomNav = () => {
+      if (!shouldShowNav) {
+        setIsVisible(false);
+        return;
+      }
+
       const currentScrollY = window.scrollY;
 
       // Hide bottom nav when at top (scroll position is 0 or very close)
@@ -54,7 +63,12 @@ export default function BottomNav() {
     return () => {
       window.removeEventListener('scroll', controlBottomNav);
     };
-  }, [lastScrollY]);
+  }, [lastScrollY, shouldShowNav]);
+
+  // Don't render nav at all if not on allowed pages
+  if (!shouldShowNav) {
+    return null;
+  }
 
   return (
     <motion.nav

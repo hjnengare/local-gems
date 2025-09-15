@@ -52,17 +52,14 @@ export default function CommunityHighlights({
       </div>
       
       <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10 py-8 sm:py-12 md:py-16">
-        <div className="mb-8 sm:mb-10 md:mb-12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-[18px]">
-          <div>
-            <h2 className="font-urbanist text-2xl sm:text-3xl font-800 text-charcoal relative mb-2">
-              {title}
-              <div className="absolute -bottom-2 left-0 w-8 sm:w-12 h-0.5 sm:h-1 bg-gradient-to-r from-sage to-coral rounded-full" />
-            </h2>
-            
-          </div>
-          <button 
+        <div className="mb-12 flex flex-wrap items-center justify-between gap-[18px]">
+          <h2 className="font-urbanist text-3xl font-800 text-charcoal relative">
+            {title}
+            <div className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-sage to-coral rounded-full" />
+          </h2>
+          <button
             onClick={handleSeeMore}
-            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage hover:scale-105 text-lg sm:text-xl md:text-2xl self-start sm:self-auto"
+            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base"
           >
             <span className="transition-transform duration-300 group-hover:translate-x-[-1px]">
               {cta}
@@ -72,11 +69,10 @@ export default function CommunityHighlights({
 
         {/* Top Reviewers Subsection */}
         <div className="mt-12 sm:mt-14 md:mt-16">
-          <div className="mb-6 sm:mb-7 md:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-[18px]">
-            <h3 className="font-urbanist text-xl sm:text-2xl font-700 text-charcoal relative">
+          <div className="mb-8 flex flex-wrap items-center justify-between gap-[18px]">
+            <h3 className="font-urbanist text-2xl font-700 text-charcoal relative">
               Top Reviewers This Month In Claremont
             </h3>
-            
           </div>
 
           <div className="overflow-hidden">
@@ -96,13 +92,13 @@ export default function CommunityHighlights({
         {/* Businesses of the Month Subsection */}
         {businessesOfTheMonth && businessesOfTheMonth.length > 0 && (
           <div className="mt-12 sm:mt-14 md:mt-16">
-            <div className="mb-6 sm:mb-7 md:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-[18px]">
-              <h3 className="font-urbanist text-xl sm:text-2xl font-700 text-charcoal relative">
+            <div className="mb-8 flex flex-wrap items-center justify-between gap-[18px]">
+              <h3 className="font-urbanist text-2xl font-700 text-charcoal relative">
                 Businesses of the Month
               </h3>
-              <button 
+              <button
                 onClick={() => router.push('/awards')}
-                className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-coral hover:scale-105 text-lg sm:text-xl md:text-2xl self-start sm:self-auto"
+                className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-coral text-base"
               >
                 <span className="transition-transform duration-300 group-hover:translate-x-[-1px]">
                   View All Awards

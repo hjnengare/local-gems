@@ -20,7 +20,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
 
   if (variant === "reviewer" || reviewer) {
     return (
-      <li id={idForSnap} className="snap-start w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%]">
+      <li id={idForSnap} className="snap-start w-[280px] sm:w-[320px] flex-shrink-0">
         <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] group cursor-pointer">
           <div className="relative overflow-hidden rounded-t-[6px]">
             <Image
@@ -28,7 +28,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
               alt={reviewerData?.name || 'User avatar'}
               width={400}
               height={320}
-              className="h-[360px] md:h-[320px] lg:h-[280px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
+              className="h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
               priority={false}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
             />

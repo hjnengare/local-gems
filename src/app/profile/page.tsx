@@ -4,6 +4,7 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import { useAuth } from "../contexts/AuthContext";
 import Header from "../components/Header/Header";
+import { PrivateRoute } from "../components/ProtectedRoute/ProtectedRoute";
 
 // Dynamic imports
 const BottomNav = dynamic(() => import("../components/Navigation/BottomNav"));
@@ -11,7 +12,7 @@ const ScrollReveal = dynamic(() => import("../components/Animations/ScrollReveal
   ssr: false,
 });
 
-export default function ProfilePage() {
+function ProfileContent() {
   const { user, logout } = useAuth();
 
   // Mock user stats - in real app this would come from API
@@ -49,11 +50,11 @@ export default function ProfilePage() {
               <div className="text-center mb-8">
                 <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-sage to-coral rounded-full flex items-center justify-center shadow-lg">
                   <span className="text-white font-urbanist text-2 font-700">
-                    {user?.username?.charAt(0)?.toUpperCase() || "U"}
+                    {user?.email?.charAt(0)?.toUpperCase() || "U"}
                   </span>
                 </div>
                 <h1 className="font-urbanist text-2 md:text-4xl font-700 text-charcoal mb-2">
-                  {user?.username || "User"}
+                  {user?.email?.split('@')[0] || "User"}
                 </h1>
                 <p className="font-urbanist text-6 text-charcoal/70 mb-4">
                   {userStats.level}
@@ -108,5 +109,13 @@ export default function ProfilePage() {
 
       <BottomNav />
     </div>
+  );
+}
+
+export default function ProfilePage() {
+  return (
+    <PrivateRoute>
+      <ProfileContent />
+    </PrivateRoute>
   );
 }

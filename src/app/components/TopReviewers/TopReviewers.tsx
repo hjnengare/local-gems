@@ -37,9 +37,9 @@ export default function TopReviewers({
             {title}
             <div className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-sage to-coral rounded-full" />
           </h2>
-          <button 
+          <button
             onClick={handleSeeMore}
-            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage hover:scale-105 text-base"
+            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base"
           >
             <span className="transition-transform duration-300 group-hover:translate-x-[-1px]">
               {cta}
