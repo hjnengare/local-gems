@@ -46,7 +46,7 @@ export default function SearchInput({
       <div className="relative group">
         {/* Search icon */}
         <div className="absolute left-8 top-1/2 transform -translate-y-1/2 text-sage/60 group-focus-within:text-sage group-focus-within:scale-110 transition-all duration-300 z-10">
-          <ion-icon name="search" class={variant === "header" ? "text-3xl" : "text-2xl"} />
+          <ion-icon name="search" class={variant === "header" ? "text-sm md:text-3xl" : "text-sm md:text-2xl"} />
         </div>
         
         {/* Filter icon - right side */}
@@ -56,7 +56,7 @@ export default function SearchInput({
             onClick={onFilterClick}
             className="absolute right-8 top-1/2 transform -translate-y-1/2 text-sage/60 hover:text-sage hover:scale-110 transition-all duration-300 z-10 p-2"
           >
-            <ion-icon name="options" class={variant === "header" ? "text-2xl" : "text-xl"} />
+            <ion-icon name="options" class={variant === "header" ? "text-sm md:text-2xl" : "text-sm md:text-xl"} />
           </button>
         )}
 
@@ -69,9 +69,9 @@ export default function SearchInput({
           className={`w-full bg-off-white/95 border-2 border-sage/30 rounded-full ${
             showFilter && onFilterClick ? 'pl-20 pr-20' : 'pl-20 pr-6'
           } ${
-            variant === "header" 
-              ? "py-6 md:py-8 text-xl md:text-2xl" 
-              : "py-4 text-lg"
+            variant === "header"
+              ? "py-6 md:py-8 text-sm md:text-xl lg:text-2xl"
+              : "py-4 text-sm md:text-lg"
           } font-urbanist font-500 text-charcoal placeholder-charcoal/40 focus:outline-none focus:ring-4 focus:ring-sage/20 focus:border-sage/60 focus:bg-white focus:shadow-2xl transition-all duration-300 hover:border-sage/50 hover:shadow-xl backdrop-blur-sm italic`}
           autoFocus={variant === "header"}
         />
