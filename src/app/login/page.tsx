@@ -13,7 +13,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { login, isLoading } = useAuth();
+  const { login, isLoading, error: authError } = useAuth();
 
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -45,7 +45,7 @@ export default function LoginPage() {
     
     const success = await login(email, password);
     if (!success) {
-      setError("Invalid email or password");
+      setError(authError || "Invalid email or password");
     }
   };
 

@@ -9,12 +9,11 @@ import PremiumHover from "../components/Animations/PremiumHover";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { register, isLoading } = useAuth();
+  const { register, isLoading, error: authError } = useAuth();
 
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -38,20 +37,20 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    
-    if (!username || !email || !password) {
+
+    if (!email || !password) {
       setError("Please fill in all fields");
       return;
     }
-    
+
     if (password.length < 6) {
       setError("Password must be at least 6 characters long");
       return;
     }
-    
-    const success = await register(username, email, password);
+
+    const success = await register(email, password);
     if (!success) {
-      setError("Username or email already exists");
+      setError(authError || "Registration failed");
     }
   };
 
@@ -189,19 +188,6 @@ export default function RegisterPage() {
                 <p className="font-urbanist text-[14px] font-600 text-red-600">{error}</p>
               </div>
             )}
-            {/* Username with icon */}
-            <div className="relative group">
-              <div className="absolute left-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 group-focus-within:text-sage transition-colors duration-300 z-10">
-                <ion-icon name="person-outline" size="small"></ion-icon>
-              </div>
-              <input
-                type="text"
-                placeholder="@username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full bg-cultured-1/50 border border-light-gray/50 rounded-3 pl-14 pr-4 py-4 md:py-5 font-urbanist text-6 font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
-              />
-            </div>
 
             {/* Email with icon */}
             <div className="relative group">

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface NavItem {
   name: string;
@@ -25,9 +26,51 @@ const navItems: NavItem[] = [
 
 export default function BottomNav() {
   const pathname = usePathname();
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const controlBottomNav = () => {
+      const currentScrollY = window.scrollY;
+
+      // Hide bottom nav when at top (scroll position is 0 or very close)
+      if (currentScrollY <= 10) {
+        setIsVisible(false);
+      }
+      // Show bottom nav when scrolling up (header becomes hidden)
+      else if (currentScrollY < lastScrollY) {
+        setIsVisible(true);
+      }
+      // Hide bottom nav when scrolling down
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', controlBottomNav, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', controlBottomNav);
+    };
+  }, [lastScrollY]);
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-off-white/95 backdrop-blur-xl border-t border-sage/10 md:hidden">
+    <motion.nav
+      initial={{ y: 0 }}
+      animate={{
+        y: isVisible ? 0 : 100,
+        opacity: isVisible ? 1 : 0
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+        duration: 0.3
+      }}
+      className="fixed bottom-0 left-0 right-0 z-50 bg-off-white/95 backdrop-blur-xl border-t border-sage/10 md:hidden"
+    >
       <div className="flex items-center justify-around py-3 px-4 max-w-md mx-auto">
         {navItems.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href);
@@ -91,6 +134,6 @@ export default function BottomNav() {
       <div className="flex justify-center pb-2">
         <div className="w-32 h-1 bg-charcoal/20 rounded-full" />
       </div>
-    </nav>
+    </motion.nav>
   );
 }

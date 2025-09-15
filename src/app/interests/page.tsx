@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useOnboarding } from "../contexts/OnboardingContext";
+import { OnboardingRoute } from "../components/ProtectedRoute/ProtectedRoute";
 import { useRouter } from "next/navigation";
 
 interface Interest {
@@ -23,16 +24,28 @@ const interests: Interest[] = [
   { id: "shopping-lifestyle", label: "Shopping & Lifestyle", subcategory: "shopping-lifestyle" },
 ];
 
-export default function InterestsPage() {
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+function InterestsContent() {
   const [displayedText, setDisplayedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const [isNavigating, setIsNavigating] = useState(false);
   const fullText = "Let's get to know you";
 
-  const { user, updateUser } = useAuth();
-  const { canAccessRoute } = useOnboarding();
+  const { user } = useAuth();
+  const {
+    interests: availableInterests,
+    selectedInterests,
+    setSelectedInterests,
+    nextStep,
+    loadInterests,
+    isLoading: onboardingLoading,
+    error: onboardingError
+  } = useOnboarding();
   const router = useRouter();
+
+  // Load interests on mount
+  useEffect(() => {
+    loadInterests();
+  }, [loadInterests]);
 
   useEffect(() => {
     let currentIndex = 0;
@@ -68,31 +81,29 @@ export default function InterestsPage() {
   }, [fullText]);
 
   const handleInterestToggle = useCallback((interestId: string) => {
-    setSelectedInterests(prev =>
-      prev.includes(interestId)
-        ? prev.filter(id => id !== interestId)
-        : [...prev, interestId]
-    );
-  }, []);
+    const newSelection = selectedInterests.includes(interestId)
+      ? selectedInterests.filter(id => id !== interestId)
+      : [...selectedInterests, interestId];
+    setSelectedInterests(newSelection);
+  }, [selectedInterests, setSelectedInterests]);
 
   const canProceed = useMemo(() =>
     selectedInterests.length > 0 && user && !isNavigating,
     [selectedInterests.length, user, isNavigating]
   );
 
-  const handleNext = useCallback(() => {
-    if (!canProceed) return;
+  const handleNext = useCallback(async () => {
+    if (!canProceed || onboardingLoading) return;
 
-    // Set loading state for immediate feedback
     setIsNavigating(true);
-
-    // Optimistic update - navigate immediately, update in background
-    const nextUrl = `/subcategories?interests=${selectedInterests.join(',')}`;
-    router.push(nextUrl);
-
-    // Update user data asynchronously
-    updateUser({ interests: selectedInterests });
-  }, [canProceed, selectedInterests, router, updateUser]);
+    try {
+      await nextStep();
+      // Navigation will be handled by the onboarding context
+    } catch (error) {
+      console.error('Error proceeding to next step:', error);
+      setIsNavigating(false);
+    }
+  }, [canProceed, nextStep, onboardingLoading]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
@@ -144,9 +155,24 @@ export default function InterestsPage() {
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
 
           <div className="relative z-10 py-8">
-            {/* Interests Grid - Preserving Wireframe Style */}
-            <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12 overflow-visible">
-              {interests.map((interest) => (
+            {/* Error Message */}
+            {onboardingError && (
+              <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-6">
+                <p className="font-urbanist text-sm font-600 text-red-600">{onboardingError}</p>
+              </div>
+            )}
+
+            {/* Loading State */}
+            {onboardingLoading && availableInterests.length === 0 ? (
+              <div className="text-center py-8">
+                <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
+                <p className="font-urbanist text-base text-charcoal/70">Loading interests...</p>
+              </div>
+            ) : (
+              <>
+                {/* Interests Grid - Preserving Wireframe Style */}
+                <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12 overflow-visible">
+                  {(availableInterests.length > 0 ? availableInterests : interests).map((interest) => (
                 <button
                   key={interest.id}
                   onClick={() => handleInterestToggle(interest.id)}
@@ -161,7 +187,7 @@ export default function InterestsPage() {
                 >
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
                     <span className="font-urbanist text-7 md:text-6 font-600 text-center leading-tight">
-                      {interest.label}
+                      {interest.name || interest.label}
                     </span>
                     {selectedInterests.includes(interest.id) && (
                       <div className="absolute top-2 right-2">
@@ -171,32 +197,34 @@ export default function InterestsPage() {
                   </div>
                 </button>
               ))}
-            </div>
+                </div>
 
-            {/* Next Button */}
-            <div className="pt-6">
-              <button
-                className={`
-                  group block w-full py-5 md:w-1/2 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full text-center font-urbanist text-6 md:text-5 font-600 transition-all duration-300 relative overflow-hidden
-                  ${canProceed
-                    ? 'bg-gradient-to-r from-sage to-sage/90 text-white hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2'
-                    : 'bg-light-gray/50 text-charcoal/40 cursor-not-allowed'
-                  }
-                `}
-                onClick={handleNext}
-                disabled={!canProceed}
-              >
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  {isNavigating && (
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                  )}
-                  Next {selectedInterests.length > 0 && `(${selectedInterests.length} selected)`}
-                </span>
-                {canProceed && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-sage/80 to-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                )}
-              </button>
-            </div>
+                {/* Next Button */}
+                <div className="pt-6">
+                  <button
+                    className={`
+                      group block w-full py-5 md:w-1/2 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full text-center font-urbanist text-6 md:text-5 font-600 transition-all duration-300 relative overflow-hidden
+                      ${canProceed
+                        ? 'bg-gradient-to-r from-sage to-sage/90 text-white hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2'
+                        : 'bg-light-gray/50 text-charcoal/40 cursor-not-allowed'
+                      }
+                    `}
+                    onClick={handleNext}
+                    disabled={!canProceed}
+                  >
+                    <span className="relative z-10 flex items-center justify-center gap-2">
+                      {(isNavigating || onboardingLoading) && (
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      )}
+                      Next {selectedInterests.length > 0 && `(${selectedInterests.length} selected)`}
+                    </span>
+                    {canProceed && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-sage/80 to-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    )}
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -215,5 +243,13 @@ export default function InterestsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function InterestsPage() {
+  return (
+    <OnboardingRoute step="interests">
+      <InterestsContent />
+    </OnboardingRoute>
   );
 }
