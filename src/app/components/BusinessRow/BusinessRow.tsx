@@ -38,7 +38,7 @@ export default function BusinessRow({
           </h2>
           <MagneticButton
             onClick={handleSeeMore}
-            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-2xl"
+            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base"
             strength={0.4}
           >
             <span className="transition-transform duration-300 group-hover:translate-x-[-1px]">

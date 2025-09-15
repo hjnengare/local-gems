@@ -19,7 +19,7 @@ const navItems: NavItem[] = [
   {
     name: "Leaderboard",
     href: "/leaderboard",
-    icon: "leaderboard"
+    icon: "trophy"
   }
 ];
 

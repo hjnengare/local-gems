@@ -39,7 +39,7 @@ export default function TopReviewers({
           </h2>
           <button 
             onClick={handleSeeMore}
-            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage hover:scale-105 text-2xl"
+            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage hover:scale-105 text-base"
           >
             <span className="transition-transform duration-300 group-hover:translate-x-[-1px]">
               {cta}
