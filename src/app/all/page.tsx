@@ -29,6 +29,7 @@ export default function ExploreGemsPage() {
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedRating, setSelectedRating] = useState("All Ratings");
   const [selectedDistance, setSelectedDistance] = useState("All Distances");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const searchOverlayClassName = `fixed left-0 right-0 z-70 bg-gradient-to-b from-white/98 to-off-white/98 backdrop-blur-lg border-b border-sage/20 shadow-2xl transition-all duration-500 ease-out ${isSearchOpen ? 'top-0 translate-y-0 opacity-100' : '-top-32 -translate-y-full opacity-0'}`;
 
@@ -71,11 +72,16 @@ export default function ExploreGemsPage() {
   };
 
   const handleSearch = (query: string) => {
-    console.log('Search query:', query);
-    // Handle search logic here
+    setSearchQuery(query);
   };
 
   const filteredBusinesses = allBusinesses.filter(business => {
+    // Search query filter - searches name, category, and description
+    const searchMatch = !searchQuery ||
+      business.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      business.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (business.description && business.description.toLowerCase().includes(searchQuery.toLowerCase()));
+
     const categoryMatch = selectedCategory === "All Categories" || business.category === selectedCategory;
     
     let ratingMatch = true;
@@ -83,7 +89,7 @@ export default function ExploreGemsPage() {
     else if (selectedRating === "4.0+ Stars") ratingMatch = business.totalRating >= 4.0;
     else if (selectedRating === "3.5+ Stars") ratingMatch = business.totalRating >= 3.5;
     
-    return categoryMatch && ratingMatch;
+    return searchMatch && categoryMatch && ratingMatch;
   });
 
   return (
