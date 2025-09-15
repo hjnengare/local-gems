@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useToast } from "../contexts/ToastContext";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import FadeInUp from "../components/Animations/FadeInUp";
 import PremiumHover from "../components/Animations/PremiumHover";
@@ -14,6 +15,7 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
 
   const { register, isLoading, error: authError } = useAuth();
+  const { showToast } = useToast();
 
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -49,7 +51,9 @@ export default function RegisterPage() {
     }
 
     const success = await register(email, password);
-    if (!success) {
+    if (success) {
+      showToast("Account created successfully! Let's set up your profile.", 'success', 3000);
+    } else {
       setError(authError || "Registration failed");
     }
   };
@@ -273,8 +277,8 @@ export default function RegisterPage() {
                     whileTap={{ scale: 0.98 }}
                     transition={{ duration: 0.1 }}
                   >
-                    <span className="relative z-10">
-                      {isLoading ? "Creating account..." : "Create Account"}
+                    <span className="relative z-10 inline-block">
+                      {isLoading ? "Creating..." : "Create"}
                     </span>
                     <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </motion.button>
@@ -285,7 +289,7 @@ export default function RegisterPage() {
 
           {/* Enhanced footer */}
           <div className="text-center mt-8 pt-6 border-t border-light-gray/30">
-            <p className="font-urbanist text-7 font-400 text-charcoal/70">
+            <div className="font-urbanist text-7 font-400 text-charcoal/70">
               Already have an account?{" "}
               <Link
                 href="/login"
@@ -294,7 +298,7 @@ export default function RegisterPage() {
                 <span>Log in</span>
                 <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-coral/30 group-hover:bg-coral/60 transition-colors duration-300 rounded-full"></div>
               </Link>
-            </p>
+            </div>
           </div>
         </motion.div>
 

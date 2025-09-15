@@ -1,8 +1,33 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+
+interface SparkleData {
+  id: number;
+  x: number;
+  y: number;
+  duration: number;
+  delay: number;
+}
 
 export default function FloatingElements() {
+  const [sparkles, setSparkles] = useState<SparkleData[]>([]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    // Use fixed positions to avoid hydration mismatch
+    const sparkleData: SparkleData[] = Array.from({ length: 12 }).map((_, i) => ({
+      id: i,
+      x: (i * 83 + 37) % 100, // Fixed pseudo-random positions as percentages
+      y: (i * 127 + 19) % 100,
+      duration: 3 + (i % 3), // Fixed durations
+      delay: i * 0.4, // Fixed delays
+    }));
+    setSparkles(sparkleData);
+  }, []);
+
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
       {/* Floating orbs */}
@@ -51,14 +76,16 @@ export default function FloatingElements() {
         style={{ bottom: "20%", left: "20%" }}
       />
 
-      {/* Subtle sparkles */}
-      {Array.from({ length: 12 }).map((_, i) => (
+      {/* Subtle sparkles - only render after hydration */}
+      {mounted && sparkles.map((sparkle) => (
         <motion.div
-          key={i}
+          key={sparkle.id}
           className="absolute w-1 h-1 bg-sage/20 rounded-full"
+          style={{
+            left: `${sparkle.x}%`,
+            top: `${sparkle.y}%`,
+          }}
           initial={{
-            x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1200),
-            y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 800),
             opacity: 0,
           }}
           animate={{
@@ -66,9 +93,9 @@ export default function FloatingElements() {
             scale: [0, 1.5, 0],
           }}
           transition={{
-            duration: 3 + Math.random() * 2,
+            duration: sparkle.duration,
             repeat: Infinity,
-            delay: Math.random() * 5,
+            delay: sparkle.delay,
             ease: "easeInOut",
           }}
         />

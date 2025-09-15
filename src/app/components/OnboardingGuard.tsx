@@ -26,9 +26,9 @@ export default function OnboardingGuard({ children }: OnboardingGuardProps) {
     [pathname]
   );
 
-  // Memoize navigation logic
+  // Simplified navigation logic to fix registration loop
   const handleNavigation = useCallback(() => {
-    if (isLoading || !currentStep) return;
+    if (isLoading) return;
 
     // Skip guard for non-onboarding routes
     if (!isOnboardingRoute) return;
@@ -40,30 +40,33 @@ export default function OnboardingGuard({ children }: OnboardingGuardProps) {
     }
 
     // If no user and trying to access protected steps, redirect to start
-    if (!user && currentStep.path !== "/onboarding" && currentStep.path !== "/register" && currentStep.path !== "/login") {
+    if (!user && pathname !== "/onboarding" && pathname !== "/register" && pathname !== "/login") {
       router.replace("/onboarding");
       return;
     }
 
-    // Check if user has completed required previous steps
-    if (currentStep.requiredPrevious && user) {
-      const incompletePrevious = currentStep.requiredPrevious.find(previousPath => {
-        const previousStep = ONBOARDING_STEPS.find(step => step.path === previousPath);
-        return previousStep && !previousStep.isComplete(user);
-      });
-
-      if (incompletePrevious) {
-        // Find the next incomplete step to redirect to
-        const nextIncompleteStep = ONBOARDING_STEPS.find(step =>
-          step.requiredPrevious && !step.isComplete(user)
-        );
-
-        const redirectPath = nextIncompleteStep?.path || "/onboarding";
-        router.replace(redirectPath);
-        return;
-      }
+    // For registration flow - allow progression
+    if (user && pathname === "/interests") {
+      // User is logged in and going to interests - allow it
+      return;
     }
-  }, [user, isLoading, pathname, router, isOnboardingRoute, currentStep]);
+
+    // For other steps, check basic requirements
+    if (pathname === "/subcategories" && user && (!user.interests || user.interests.length === 0)) {
+      router.replace("/interests");
+      return;
+    }
+
+    if (pathname === "/deal-breakers" && user && (!user.subInterests || user.subInterests.length === 0)) {
+      router.replace("/subcategories");
+      return;
+    }
+
+    if (pathname === "/complete" && user && (!user.dealbreakers || user.dealbreakers.length < 2)) {
+      router.replace("/deal-breakers");
+      return;
+    }
+  }, [user, isLoading, pathname, router, isOnboardingRoute]);
 
   useEffect(() => {
     handleNavigation();

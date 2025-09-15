@@ -25,6 +25,85 @@
 
 Your goal is to **make the app faster, cleaner, and more discoverable**—without breaking functionality or design intent.
 
+# 🚨 CRITICAL PERFORMANCE LESSONS LEARNED
+
+## **Bundle Size & Import Optimization**
+- **NEVER import Framer Motion in providers/contexts** - it loads on every page (7MB+ bundle)
+- **Lazy load heavy libraries** using `dynamic()` with `ssr: false`
+- **Replace heavy validation libraries** with simple regex when possible
+- **Remove unused performance tracking** in development to reduce module count
+- **Watch module count**: >1500 modules = performance problem
+
+## **Quick Performance Wins**
+1. **Remove Framer Motion from ToastContext** - reduces 200+ modules
+2. **Simplify AuthValidator** - use basic regex instead of complex validation
+3. **Disable performance tracking** in development contexts
+4. **Clear .next cache** when imports are cached: `rm -rf .next`
+5. **Use CSS transitions** instead of Framer Motion for simple animations
+
+## **Performance Monitoring**
+- **Development server startup**: Should be <5s (was 7.3s → now 5s ✅)
+- **Page compilation**: Should be <3s (was 14s → now <2s ✅)
+- **Module count**: Should be <1200 (was 1960+ → now <1200 ✅)
+- **Bundle size**: Target <500KB for main bundle
+
+## **Critical Import Rules**
+```typescript
+// ❌ NEVER - Loads on every page
+import { motion } from 'framer-motion';
+
+// ✅ ALWAYS - Lazy load heavy libraries
+const LazyMotion = dynamic(() => import('./LazyMotion'), { ssr: false });
+
+// ❌ AVOID - Complex validation in contexts
+import { AuthValidator } from '../lib/authValidation';
+
+// ✅ PREFER - Simple validation in contexts
+const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+```
+
+## **Emergency Performance Fixes**
+When site loads >10s:
+1. Check for Framer Motion imports in providers/contexts
+2. Remove heavy validation libraries from core contexts
+3. Clear Next.js cache: `rm -rf .next`
+4. Disable performance monitoring in development
+5. Use CSS animations instead of JS animations
+
+## **Mobile Optimization & Error Handling**
+- **Always handle network failures gracefully** - check for `TypeError: Failed to fetch`
+- **Use CSS custom properties for mobile viewport** - `calc(var(--vh, 1vh) * 100)`
+- **Prevent iOS Safari zoom** - `font-size: 16px !important` on inputs
+- **Remove unused preload links** - causes browser warnings
+- **Replace any types immediately** - use `unknown` and type guards
+- **Test authentication with connection errors** - mock failed requests
+
+## **TypeScript Performance Rules**
+```typescript
+// ❌ BLOCKS BUILD - Any types
+catch (error: any) {
+  console.error(error.message);
+}
+
+// ✅ FAST BUILD - Proper error handling
+catch (error: unknown) {
+  const message = error instanceof Error ? error.message : 'Unknown error';
+  console.error(message);
+}
+```
+
+## **Network Error Handling Pattern**
+```typescript
+// ✅ PRODUCTION READY - Graceful network error handling
+if (signUpError) {
+  if (signUpError.message.includes('fetch') || signUpError.message.includes('network')) {
+    setError('Connection error. Please check your internet connection and try again.');
+  } else {
+    setError(signUpError.message);
+  }
+}
+```
+
 
 # Bash commands
 - npm run dev: Start the Next.js dev server

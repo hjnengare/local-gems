@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { AuthProvider } from "./contexts/AuthContext";
 import { OnboardingProvider } from "./contexts/OnboardingContext";
+import { ToastProvider } from "./contexts/ToastContext";
 import OnboardingGuard from "./components/OnboardingGuard";
 import PageTransitionProvider from "./components/Providers/PageTransitionProvider";
 import WebVitals from "./components/Performance/WebVitals";
@@ -69,6 +70,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="preconnect" href="https://unpkg.com" crossOrigin="" />
         <link rel="canonical" href="/" />
       </head>
       <body className={urbanist.className}>
@@ -77,25 +79,29 @@ export default function RootLayout({
         </a>
         <WebVitals />
         <ErrorBoundary>
-          <AuthProvider>
-            <OnboardingProvider>
-              <OnboardingGuard>
-                <PageTransitionProvider>
-                  {children}
-                </PageTransitionProvider>
-              </OnboardingGuard>
-            </OnboardingProvider>
-          </AuthProvider>
+          <ToastProvider>
+            <AuthProvider>
+              <OnboardingProvider>
+                <OnboardingGuard>
+                  <PageTransitionProvider>
+                    {children}
+                  </PageTransitionProvider>
+                </OnboardingGuard>
+              </OnboardingProvider>
+            </AuthProvider>
+          </ToastProvider>
         </ErrorBoundary>
         <Script
           src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
           type="module"
           strategy="afterInteractive"
+          crossOrigin="anonymous"
         />
         <Script
           src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
           strategy="lazyOnload"
           noModule
+          crossOrigin="anonymous"
         />
       </body>
     </html>
