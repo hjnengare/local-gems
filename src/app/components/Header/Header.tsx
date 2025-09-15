@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
-import FadeInUp from "../Animations/FadeInUp";
 import { motion } from "framer-motion";
 
 interface HeaderProps {
@@ -16,8 +15,6 @@ export default function Header({ showSearch = true, showProfile = true }: Header
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const [textVisible, setTextVisible] = useState(true);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
 
@@ -95,64 +92,13 @@ export default function Header({ showSearch = true, showProfile = true }: Header
     preloadIcons();
   }, []);
 
-  // Banner text rotation logic
-  const bannerTexts = [
-    "🔍 Discover hidden local gems in your neighborhood",
-    "⭐ Share your experiences and help others find quality places",
-    "🏆 Climb the leaderboard by reviewing local businesses",
-    "📍 Find trusted recommendations from real local reviewers",
-    "💎 Uncover the best kept secrets in your area",
-    "🌟 Support small businesses and local entrepreneurs",
-    "🍽️ Explore top-rated restaurants, cafes, and eateries",
-    "☕ Find cozy spots for your next coffee break",
-    "🎉 Discover fun local events and activities",
-    "🛍️ Shop at unique local boutiques and stores",
-    "🏞️ Explore beautiful parks and outdoor spaces nearby",
-    "🎨 Find local art galleries and cultural experiences",
-    "🚶‍♂️ Plan your next walking tour of hidden gems",
-    "🍔 Satisfy your cravings with local food trucks and street food",
-    "🍷 Discover the best local wineries and breweries",  
-    "🎶 Find live music venues and local performances"
-  ];
 
-  useEffect(() => {
-    const rotateText = () => {
-      setTextVisible(false);
-      
-      setTimeout(() => {
-        setCurrentTextIndex((prevIndex) => 
-          prevIndex === bannerTexts.length - 1 ? 0 : prevIndex + 1
-        );
-        setTextVisible(true);
-      }, 300);
-    };
+  const headerClassName = `fixed top-0 left-0 right-0 z-50 bg-off-white/80 backdrop-blur-sm overflow-hidden py-4 transition-all duration-300 ease-in-out hover:shadow-sm ${isVisible ? 'translate-y-0' : '-translate-y-full'}`;
 
-    const interval = setInterval(rotateText, 4000);
-
-    return () => clearInterval(interval);
-  }, [bannerTexts.length]);
-
-  const headerClassName = `fixed md:top-12 top-10 left-0 right-0 z-50 bg-off-white/80 backdrop-blur-sm overflow-hidden py-4 transition-all duration-300 ease-in-out hover:shadow-sm ${isVisible ? 'translate-y-0' : '-translate-y-full'}`;
-  
   const searchOverlayClassName = `fixed left-0 right-0 z-70 bg-gradient-to-b from-white/98 to-off-white/98 backdrop-blur-lg border-b border-sage/20 shadow-2xl transition-all duration-500 ease-out ${isSearchOpen ? 'top-0 translate-y-0 opacity-100' : 'top-0 -translate-y-full opacity-0'}`;
 
   return (
     <>
-      {/* Static Alert Banner with Dynamic Text */}
-      <div className="fixed top-0 left-0 right-0 z-60 bg-gradient-to-r from-sage/90 to-sage/80 backdrop-blur-sm">
-        <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4 md:block hidden">
-          <p className={`text-center font-urbanist text-md sm:text-md md:text-xl font-600 text-white transition-opacity duration-300 ${textVisible ? 'opacity-100' : 'opacity-0'}`}>
-            {bannerTexts[currentTextIndex]}
-          </p>
-        </div>
-        {/* Mobile-specific banner with fixed dimensions */}
-        <div className="md:hidden block px-4 py-3">
-          <p className={`text-center font-urbanist text-sm font-600 text-white transition-opacity duration-300 ${textVisible ? 'opacity-100' : 'opacity-0'}`}>
-            {bannerTexts[currentTextIndex]}
-          </p>
-        </div>
-      </div>
-
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -193,7 +139,7 @@ export default function Header({ showSearch = true, showProfile = true }: Header
           <div className="flex items-center justify-between px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
             {/* Logo - mobile first */}
             <Link href="/home" className="flex items-center group">
-              <span className="font-urbanist text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative">
+              <span className="font-urbanist text-xl sm:text-2xl md:text-3xl lg:text-4xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative">
                 Local Gems
                 <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-sage to-sage/60 group-hover:w-full transition-all duration-300 rounded-full"></div>
               </span>

@@ -39,6 +39,7 @@ module.exports = {
         urbanist: ['Urbanist', 'sans-serif'],
       },
       fontSize: {
+        // Legacy numbered scale (for gradual migration)
         1: '4.8rem',
         2: '4rem',
         3: '3.4rem',
@@ -48,6 +49,20 @@ module.exports = {
         7: '1.5rem',
         8: '1.4rem',
         9: '1.3rem',
+
+        // Mobile-first responsive typography scale
+        // [fontSize, { lineHeight, letterSpacing }]
+        xs: ['0.75rem', { lineHeight: '1.2', letterSpacing: '0.01em' }],   // 12px
+        sm: ['0.875rem', { lineHeight: '1.35', letterSpacing: '0.005em' }], // 14px
+        base: ['1rem', { lineHeight: '1.6' }],                              // 16px
+        lg: ['1.125rem', { lineHeight: '1.55' }],                           // 18px
+        xl: ['1.25rem', { lineHeight: '1.45' }],                            // 20px
+        '2xl': ['1.5rem', { lineHeight: '1.35' }],                          // 24px
+        '3xl': ['1.875rem', { lineHeight: '1.25' }],                        // 30px
+        '4xl': ['2.25rem', { lineHeight: '1.2' }],                          // 36px
+        '5xl': ['3rem', { lineHeight: '1.1' }],                             // 48px
+        '6xl': ['3.75rem', { lineHeight: '1.05' }],                         // 60px
+        '7xl': ['4.5rem', { lineHeight: '1' }],                             // 72px
       },
       fontWeight: {
         400: '400',

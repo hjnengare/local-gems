@@ -59,7 +59,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           
           {/* Achievement badge - positioned above image */}
           <div className="absolute left-2 top-2 z-20">
-            <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-urbanist font-700 shadow-xl ${getBadgeStyle(business.badge)}`}>
+            <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[14px] font-urbanist font-700 shadow-xl ${getBadgeStyle(business.badge)}`}>
               <span>{getBadgeIcon(business.badge)}</span>
               <span className="drop-shadow-sm">{business.monthAchievement}</span>
             </span>
@@ -74,7 +74,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           
           {/* Numeric rating badge - positioned above image */}
           <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-3 bg-white/50 backdrop-blur-sm px-2 py-1 text-charcoal shadow-lg">
-            <ion-icon name="star" class="text-coral text-sm drop-shadow-sm" />
+            <ion-icon name="star" class="text-coral text-[14px] drop-shadow-sm" />
             <span className="font-urbanist text-9 font-700">{business.totalRating.toFixed(1)}</span>
           </span>
 

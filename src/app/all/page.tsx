@@ -139,26 +139,26 @@ export default function ExploreGemsPage() {
           <div className="px-4 sm:px-6 md:px-8 pb-6 flex justify-center">
             <div className="flex gap-2 flex-wrap w-full sm:w-[90%] md:w-[85%] lg:w-[75%]">
               {selectedCategory !== "All Categories" && (
-                <span className="px-3 py-1 bg-sage/10 text-sage font-urbanist font-600 rounded-full text-sm flex items-center gap-2">
+                <span className="px-3 py-1 bg-sage/10 text-sage font-urbanist font-600 rounded-full text-[14px] flex items-center gap-2">
                   {selectedCategory}
                   <button onClick={() => setSelectedCategory("All Categories")}>
-                    <ion-icon name="close" class="text-sm" />
+                    <ion-icon name="close" class="text-[14px]" />
                   </button>
                 </span>
               )}
               {selectedRating !== "All Ratings" && (
-                <span className="px-3 py-1 bg-coral/10 text-coral font-urbanist font-600 rounded-full text-sm flex items-center gap-2">
+                <span className="px-3 py-1 bg-coral/10 text-coral font-urbanist font-600 rounded-full text-[14px] flex items-center gap-2">
                   {selectedRating}
                   <button onClick={() => setSelectedRating("All Ratings")}>
-                    <ion-icon name="close" class="text-sm" />
+                    <ion-icon name="close" class="text-[14px]" />
                   </button>
                 </span>
               )}
               {selectedDistance !== "All Distances" && (
-                <span className="px-3 py-1 bg-sage/10 text-sage font-urbanist font-600 rounded-full text-sm flex items-center gap-2">
+                <span className="px-3 py-1 bg-sage/10 text-sage font-urbanist font-600 rounded-full text-[14px] flex items-center gap-2">
                   {selectedDistance}
                   <button onClick={() => setSelectedDistance("All Distances")}>
-                    <ion-icon name="close" class="text-sm" />
+                    <ion-icon name="close" class="text-[14px]" />
                   </button>
                 </span>
               )}

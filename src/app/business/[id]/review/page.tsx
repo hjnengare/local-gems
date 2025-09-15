@@ -179,7 +179,7 @@ export default function WriteReviewPage() {
                       </motion.button>
                     ))}
                   </div>
-                  <p className="text-center font-urbanist text-sm font-400 text-charcoal/60">
+                  <p className="text-center font-urbanist text-[14px] font-400 text-charcoal/60">
                     Tap to select rating
                   </p>
                 </motion.div>
@@ -212,7 +212,7 @@ export default function WriteReviewPage() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className={`
-                          px-4 md:px-6 py-2 md:py-3 rounded-full border-2 transition-all duration-300 font-urbanist text-sm font-600
+                          px-4 md:px-6 py-2 md:py-3 rounded-full border-2 transition-all duration-300 font-urbanist text-[14px] font-600
                           ${selectedTags.includes(tag)
                             ? 'bg-sage border-sage text-white shadow-lg'
                             : 'bg-white/80 backdrop-blur-sm border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10'
@@ -249,7 +249,7 @@ export default function WriteReviewPage() {
                     placeholder="Share your thoughts and help other locals..."
                     rows={4}
                     whileFocus={{ scale: 1.02 }}
-                    className="w-full bg-white/80 backdrop-blur-sm border border-sage/20 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 font-urbanist text-sm md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none shadow-sm flex-1 min-h-[120px] md:min-h-0"
+                    className="w-full bg-white/80 backdrop-blur-sm border border-sage/20 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 font-urbanist text-[14px] md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none shadow-sm flex-1 min-h-[120px] md:min-h-0"
                   />
                 </motion.div>
 

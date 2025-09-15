@@ -128,7 +128,7 @@ export default function LeaderboardPage() {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="font-urbanist text-2xl md:text-3xl lg:text-4xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal"
+              className="font-urbanist text-xl md:text-2xl lg:text-3xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal"
             >
               Community Highlights
             </motion.h1>
@@ -153,7 +153,7 @@ export default function LeaderboardPage() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="font-urbanist text-2xl md:text-3xl lg:text-4xl font-700 text-charcoal mb-4">
+          <h2 className="font-urbanist text-xl md:text-2xl lg:text-3xl font-700 text-charcoal mb-4">
             Top Contributors This Month
           </h2>
           <p className="font-urbanist text-base md:text-lg font-400 text-charcoal/70 max-w-2xl mx-auto">
@@ -173,8 +173,8 @@ export default function LeaderboardPage() {
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
 
           <div className="relative z-10">
-            <h3 className="font-urbanist text-xl md:text-2xl font-700 text-charcoal mb-8 text-center flex items-center justify-center gap-3">
-              <ion-icon name="trophy" class="text-2xl text-sage" />
+            <h3 className="font-urbanist text-lg md:text-xl font-700 text-charcoal mb-8 text-center flex items-center justify-center gap-3">
+              <ion-icon name="trophy" class="text-xl md:text-2xl text-sage" />
               Top Reviewers
             </h3>
 
@@ -200,7 +200,7 @@ export default function LeaderboardPage() {
                   <div className="absolute -top-2 -right-2 text-2xl animate-bounce">{topReviewers[1].badge}</div>
                 </div>
                 <div className="bg-off-white rounded-[6px] p-4 min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
-                  <div className="font-urbanist text-lg font-700 text-charcoal mb-1 group-hover:text-coral transition-colors duration-300">@{topReviewers[1].username}</div>
+                  <div className="font-urbanist text-base md:text-lg font-700 text-charcoal mb-1 group-hover:text-coral transition-colors duration-300">@{topReviewers[1].username}</div>
                   <div className="font-urbanist text-sm text-charcoal/70 mb-2">{topReviewers[1].reviews} reviews</div>
                   <div className="bg-white/50 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-white/30 flex items-center justify-center gap-1 mx-auto w-fit">
                     <ion-icon name="star" class="text-sm text-coral" />
@@ -229,7 +229,7 @@ export default function LeaderboardPage() {
                   <div className="absolute -top-3 -right-3 text-3xl animate-pulse">{topReviewers[0].badge}</div>
                 </div>
                 <div className="bg-off-white rounded-[6px] p-5 min-w-[160px] shadow-xl border-2 border-sage/30 group-hover:shadow-2xl transition-all duration-300">
-                  <div className="font-urbanist text-xl font-700 text-charcoal mb-1 group-hover:text-sage transition-colors duration-300">@{topReviewers[0].username}</div>
+                  <div className="font-urbanist text-lg md:text-xl font-700 text-charcoal mb-1 group-hover:text-sage transition-colors duration-300">@{topReviewers[0].username}</div>
                   <div className="font-urbanist text-sm text-charcoal/70 mb-3">{topReviewers[0].reviews} reviews</div>
                   <div className="bg-gradient-to-r from-sage/20 to-sage/10 backdrop-blur-sm px-3 py-2 rounded-full shadow-sm border border-sage/20 flex items-center justify-center gap-1 mx-auto w-fit">
                     <ion-icon name="star" class="text-base text-sage" />
@@ -258,7 +258,7 @@ export default function LeaderboardPage() {
                   <div className="absolute -top-2 -right-2 text-2xl animate-bounce" style={{ animationDelay: "0.5s" }}>{topReviewers[2].badge}</div>
                 </div>
                 <div className="bg-off-white rounded-[6px] p-4 min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
-                  <div className="font-urbanist text-lg font-700 text-charcoal mb-1 group-hover:text-charcoal/80 transition-colors duration-300">@{topReviewers[2].username}</div>
+                  <div className="font-urbanist text-base md:text-lg font-700 text-charcoal mb-1 group-hover:text-charcoal/80 transition-colors duration-300">@{topReviewers[2].username}</div>
                   <div className="font-urbanist text-sm text-charcoal/70 mb-2">{topReviewers[2].reviews} reviews</div>
                   <div className="bg-white/50 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-white/30 flex items-center justify-center gap-1 mx-auto w-fit">
                     <ion-icon name="star" class="text-sm text-coral" />
@@ -326,8 +326,8 @@ export default function LeaderboardPage() {
           <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tr from-sage/10 to-transparent rounded-full blur-2xl"></div>
 
           <div className="relative z-10">
-            <h3 className="font-urbanist text-xl md:text-2xl font-700 text-charcoal mb-8 text-center flex items-center justify-center gap-3">
-              <ion-icon name="diamond" class="text-2xl text-coral" />
+            <h3 className="font-urbanist text-lg md:text-xl font-700 text-charcoal mb-8 text-center flex items-center justify-center gap-3">
+              <ion-icon name="diamond" class="text-xl md:text-2xl text-coral" />
               Featured Businesses
             </h3>
 
@@ -355,7 +355,7 @@ export default function LeaderboardPage() {
                       {/* Rating badge - exactly matching BusinessCard style */}
                       <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-3 bg-white/50 backdrop-blur-sm px-2 py-1 text-charcoal shadow-lg">
                         <ion-icon name="star" class="text-coral text-sm drop-shadow-sm" />
-                        <span className="font-urbanist text-xs font-700">{business.rating.toFixed(1)}</span>
+                        <span className="font-urbanist text-sm font-700">{business.rating.toFixed(1)}</span>
                       </span>
                     </div>
                   </div>
@@ -383,7 +383,7 @@ export default function LeaderboardPage() {
                         className="rounded-full ring-1 ring-white/50 shadow-sm"
                         sizes="24px"
                       />
-                      <div className="flex items-center gap-1 text-xs font-urbanist text-charcoal/60">
+                      <div className="flex items-center gap-1 text-sm font-urbanist text-charcoal/60">
                         <span>by {business.ownerName}</span>
                         <span>•</span>
                         <span>{business.reviews} reviews</span>

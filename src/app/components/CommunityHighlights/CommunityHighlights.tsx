@@ -113,7 +113,7 @@ export default function CommunityHighlights({
             <div className="mb-4 sm:mb-5 md:mb-6 text-center">
               <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-coral/10 rounded-full px-3 sm:px-4 py-1.5 sm:py-2">
                 <ion-icon name="trophy" class="text-coral text-base sm:text-lg" />
-                <span className="font-urbanist font-600 text-coral text-sm sm:text-base">
+                <span className="font-urbanist font-600 text-coral text-[14px] sm:text-base">
                   September 2025 Winners
                 </span>
               </div>

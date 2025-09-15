@@ -119,7 +119,7 @@ function BusinessCard({ business }: { business: Business }) {
           {/* Numeric rating badge - positioned above image */}
           <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-3 bg-white/50 backdrop-blur-sm px-2 py-1 text-charcoal shadow-lg">
             <ion-icon name="star" class="text-coral text-sm drop-shadow-sm" />
-            <span className="font-urbanist text-9 font-700">{business.totalRating.toFixed(1)}</span>
+            <span className="font-urbanist text-sm font-700">{business.totalRating.toFixed(1)}</span>
           </span>
 
           {/* Enhanced Card Actions - mobile click, desktop hover/focus */}
@@ -371,7 +371,7 @@ function BusinessCard({ business }: { business: Business }) {
         <div className="p-5 relative">
           {/* Business name - left aligned as in wireframe */}
           <div className="mb-1">
-            <h3 className="font-urbanist text-7 font-600 text-charcoal transition-colors duration-200 group-hover:text-sage">
+            <h3 className="font-urbanist text-base md:text-lg font-600 text-charcoal transition-colors duration-200 group-hover:text-sage">
               <Link href={business.href || "#"} prefetch={true} className="hover:underline decoration-2 underline-offset-2">
                 {business.name}
               </Link>
@@ -379,14 +379,14 @@ function BusinessCard({ business }: { business: Business }) {
           </div>
 
           {/* Category line - left aligned and subtle */}
-          <p className="mb-3 font-urbanist text-8 font-400 text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
+          <p className="mb-3 font-urbanist text-sm font-400 text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
             {business.category} - {business.location}
           </p>
 
           {/* Stars + reviews - left aligned */}
           <div className="mb-4 flex items-center gap-2">
             <Stars value={business.rating} />
-            <p className="font-urbanist text-8 font-400 leading-none text-charcoal/70 transition-colors duration-200">{business.reviews} reviews</p>
+            <p className="font-urbanist text-sm font-400 leading-none text-charcoal/70 transition-colors duration-200">{business.reviews} reviews</p>
           </div>
 
           {/* Percentiles row at bottom - left aligned */}

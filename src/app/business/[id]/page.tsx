@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { useState } from "react";
 
 // Dynamic imports for premium animations
 const FadeInUp = dynamic(() => import("../../components/Animations/FadeInUp"), {

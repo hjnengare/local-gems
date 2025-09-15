@@ -67,7 +67,7 @@ export default function FilterModal({ isOpen, isVisible, onClose, onApplyFilters
               <ion-icon name="options" class="text-sage mr-3 text-2xl"></ion-icon>
               Filter Options
             </h2>
-            <p className="font-urbanist text-sm font-400 text-charcoal/60 mt-1">
+            <p className="font-urbanist text-[14px] font-400 text-charcoal/60 mt-1">
               Refine your search for the perfect local gems
             </p>
           </div>

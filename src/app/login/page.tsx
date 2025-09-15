@@ -171,7 +171,7 @@ export default function LoginPage() {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
-            <p className="font-urbanist text-sm font-600 text-sage mb-2">Demo Login Credentials</p>
+            <p className="font-urbanist text-[14px] font-600 text-sage mb-2">Demo Login Credentials</p>
             <p className="font-urbanist text-xs text-charcoal/70">
               Email: <span className="font-mono bg-white px-2 py-1 rounded">test@example.com</span> |
               Password: <span className="font-mono bg-white px-2 py-1 rounded">password123</span>
@@ -195,7 +195,7 @@ export default function LoginPage() {
             {/* Error Message */}
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-                <p className="font-urbanist text-sm font-600 text-red-600">{error}</p>
+                <p className="font-urbanist text-[14px] font-600 text-red-600">{error}</p>
               </div>
             )}
 
@@ -272,7 +272,7 @@ export default function LoginPage() {
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-light-gray/50"></div>
               </div>
-              <div className="relative flex justify-center text-sm">
+              <div className="relative flex justify-center text-[14px]">
                 <span className="px-4 bg-off-white/90 text-charcoal/60 font-urbanist text-7 font-400">or continue with</span>
               </div>
             </div>

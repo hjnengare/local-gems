@@ -54,7 +54,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
             {/* Numeric rating badge - positioned above image */}
             <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-3 bg-white/50 backdrop-blur-sm px-2 py-1 text-charcoal shadow-lg">
               <ion-icon name="star" class="text-coral text-sm drop-shadow-sm" />
-              <span className="font-urbanist text-9 font-700">{reviewerData?.rating.toFixed(1)}</span>
+              <span className="font-urbanist text-sm font-700">{reviewerData?.rating.toFixed(1)}</span>
             </span>
 
             {/* Card Actions - slide in from right on hover - hidden on mobile */}
@@ -74,7 +74,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
           <div className="p-5 relative">
             {/* Reviewer name - left aligned */}
             <div className="mb-1">
-              <h3 className="font-urbanist text-7 font-600 text-charcoal transition-colors duration-200 group-hover:text-sage">
+              <h3 className="font-urbanist text-base md:text-lg font-600 text-charcoal transition-colors duration-200 group-hover:text-sage">
                 <Link href={`/reviewer/${reviewerData?.id}` || "#"} className="hover:underline decoration-2 underline-offset-2">
                   {reviewerData?.name}
                 </Link>
@@ -82,7 +82,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
             </div>
 
             {/* Location line - left aligned and subtle */}
-            <p className="mb-3 font-urbanist text-8 font-400 text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
+            <p className="mb-3 font-urbanist text-sm font-400 text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
               Local Reviewer • {reviewerData?.location}
             </p>
 
@@ -90,9 +90,9 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
             <div className="mb-4 flex items-center gap-2">
               <div className="flex items-center gap-1">
                 <ion-icon name="star" class="text-coral text-sm" />
-                <span className="font-urbanist text-8 font-400 leading-none text-charcoal/70">{reviewerData?.rating.toFixed(1)}</span>
+                <span className="font-urbanist text-sm font-400 leading-none text-charcoal/70">{reviewerData?.rating.toFixed(1)}</span>
               </div>
-              <p className="font-urbanist text-8 font-400 leading-none text-charcoal/70 transition-colors duration-200">{reviewerData?.reviewCount} reviews</p>
+              <p className="font-urbanist text-sm font-400 leading-none text-charcoal/70 transition-colors duration-200">{reviewerData?.reviewCount} reviews</p>
             </div>
 
             {/* Badge info at bottom */}

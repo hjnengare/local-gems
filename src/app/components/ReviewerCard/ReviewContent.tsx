@@ -24,7 +24,7 @@ export default function ReviewContent({
       <ion-icon
         key={i}
         name={i < rating ? "star" : "star-outline"}
-        class={`text-sm ${i < rating ? "text-coral" : "text-charcoal/30"}`}
+        class={`text-[14px] ${i < rating ? "text-coral" : "text-charcoal/30"}`}
       />
     ));
   };
@@ -43,7 +43,7 @@ export default function ReviewContent({
         </div>
       </div>
 
-      <p className="font-urbanist text-sm text-charcoal/80 leading-relaxed mb-3 line-clamp-3">
+      <p className="font-urbanist text-[14px] text-charcoal/80 leading-relaxed mb-3 line-clamp-3">
         {reviewText}
       </p>
 
@@ -61,7 +61,7 @@ export default function ReviewContent({
       )}
 
       <div className="flex items-center gap-1 text-charcoal/60">
-        <ion-icon name="heart-outline" class="text-sm" />
+        <ion-icon name="heart-outline" class="text-[14px]" />
         <span className="text-xs font-urbanist">{likes}</span>
       </div>
     </div>
