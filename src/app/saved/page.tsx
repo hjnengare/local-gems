@@ -47,7 +47,7 @@ export default function SavedPage() {
 
             {/* Category Filter */}
             <ScrollReveal delay={0.2}>
-              <div className="flex space-x-3 mb-8 overflow-x-auto pb-2">
+              <div className="horizontal-scroll flex space-x-3 mb-8 overflow-x-auto pb-2">
                 {categories.map((category) => (
                   <button
                     key={category}

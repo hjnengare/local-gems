@@ -4610,6 +4610,49 @@
   ul, ol {
     list-style: none;
   }
+  input, textarea, select {
+    font-size: 16px !important;
+    transform: translateZ(0);
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    transform: translateZ(0);
+  }
+  body {
+    overscroll-behavior-x: none;
+  }
+  .horizontal-scroll {
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    transform: translateZ(0);
+    will-change: scroll-position;
+  }
+  .horizontal-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .horizontal-scroll > * {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  @supports (-webkit-touch-callout: none) {
+    .min-h-screen {
+      min-height: -webkit-fill-available;
+    }
+    .h-screen {
+      height: -webkit-fill-available;
+    }
+  }
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    select:focus,
+    textarea:focus,
+    input:focus {
+      font-size: 16px !important;
+      transform: translateZ(0);
+    }
+  }
 }
 @layer components {
   .skip-link {

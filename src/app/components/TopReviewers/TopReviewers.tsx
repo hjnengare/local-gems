@@ -48,7 +48,7 @@ export default function TopReviewers({
         </div>
 
         <div className="overflow-hidden">
-          <ul className="flex snap-x gap-6 overflow-x-auto pb-6 -mb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth">
+          <ul className="horizontal-scroll flex snap-x gap-6 overflow-x-auto pb-6 -mb-6">
             {reviewers.map((reviewer) => (
               <div key={reviewer.id}>
                 <ReviewerCard 

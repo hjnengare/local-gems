@@ -48,7 +48,7 @@ export default function EventsSpecials({
         </div>
 
         <div className="overflow-hidden">
-          <StaggerContainer className="flex snap-x gap-6 overflow-x-auto pb-6 -mb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth" staggerDelay={0.2}>
+          <StaggerContainer className="horizontal-scroll flex snap-x gap-6 overflow-x-auto pb-6 -mb-6" staggerDelay={0.2}>
             {events.map((event) => (
               <motion.div key={event.id} variants={staggerItemVariants}>
                 <EventCard event={event} />

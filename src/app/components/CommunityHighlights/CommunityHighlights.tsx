@@ -80,7 +80,7 @@ export default function CommunityHighlights({
           </div>
 
           <div className="overflow-hidden">
-            <ul className="flex snap-x gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6 -mb-4 sm:-mb-5 md:-mb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth">
+            <ul className="horizontal-scroll flex snap-x gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6 -mb-4 sm:-mb-5 md:-mb-6">
               {topReviewers.map((reviewer) => (
                 <div key={reviewer.id}>
                   <ReviewerCard 
@@ -120,7 +120,7 @@ export default function CommunityHighlights({
             </div>
 
             <div className="overflow-hidden">
-              <ul className="flex snap-x gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6 -mb-4 sm:-mb-5 md:-mb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth">
+              <ul className="horizontal-scroll flex snap-x gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6 -mb-4 sm:-mb-5 md:-mb-6">
                 {businessesOfTheMonth.map((business) => (
                   <div key={business.id}>
                     <BusinessOfTheMonthCard business={business} />

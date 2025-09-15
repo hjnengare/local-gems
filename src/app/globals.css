@@ -115,6 +115,64 @@
   ul, ol {
     list-style: none;
   }
+
+  /* iOS Safari zoom prevention */
+  input, textarea, select {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    transform: translateZ(0); /* Force hardware acceleration */
+  }
+
+  /* Improved focus handling for iOS */
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    transform: translateZ(0);
+  }
+
+  /* Prevent horizontal scroll bounce on iOS */
+  body {
+    overscroll-behavior-x: none;
+  }
+
+  /* Enhanced carousel scrolling */
+  .horizontal-scroll {
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    transform: translateZ(0); /* Force GPU acceleration */
+    will-change: scroll-position;
+  }
+
+  .horizontal-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .horizontal-scroll > * {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /* Fix iOS safari viewport height issues */
+  @supports (-webkit-touch-callout: none) {
+    .min-h-screen {
+      min-height: -webkit-fill-available;
+    }
+
+    .h-screen {
+      height: -webkit-fill-available;
+    }
+  }
+
+  /* Prevent zoom on input focus for iOS */
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    select:focus,
+    textarea:focus,
+    input:focus {
+      font-size: 16px !important;
+      transform: translateZ(0);
+    }
+  }
 }
 
 @layer components {
