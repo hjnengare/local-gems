@@ -17,9 +17,19 @@ const navItems: NavItem[] = [
     icon: "home"
   },
   {
-    name: "Leaderboard",
-    href: "/leaderboard",
-    icon: "trophy"
+    name: "Explore",
+    href: "/all",
+    icon: "search"
+  },
+  {
+    name: "Saved",
+    href: "/saved",
+    icon: "bookmark"
+  },
+  {
+    name: "Profile",
+    href: "/profile",
+    icon: "person"
   }
 ];
 

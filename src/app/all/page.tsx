@@ -23,6 +23,7 @@ type FilterState = {
 const allBusinesses: Business[] = [...TRENDING_BUSINESSES, ...NEARBY_FAVORITES];
 
 export default function ExploreGemsPage() {
+  const [searchQuery, setSearchQuery] = useState("");
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
