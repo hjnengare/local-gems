@@ -16,38 +16,38 @@ Our scale uses semantic tokens that replace arbitrary pixel values with meaningf
 
 ### Base Scale
 ```css
-xs:   12px (0.75rem)  - Line height: 1.2,  Letter spacing: 0.01em
-sm:   14px (0.875rem) - Line height: 1.35, Letter spacing: 0.005em
-base: 16px (1rem)     - Line height: 1.6   [Default body text]
-lg:   18px (1.125rem) - Line height: 1.55
-xl:   20px (1.25rem)  - Line height: 1.45
-2xl:  24px (1.5rem)   - Line height: 1.35
-3xl:  30px (1.875rem) - Line height: 1.25
-4xl:  36px (2.25rem)  - Line height: 1.2
-5xl:  48px (3rem)     - Line height: 1.1
-6xl:  60px (3.75rem)  - Line height: 1.05
-7xl:  72px (4.5rem)   - Line height: 1.0
+xs:   10px (0.625rem)  - Line height: 1.2,  Letter spacing: 0.01em
+sm:   12px (0.75rem)   - Line height: 1.35, Letter spacing: 0.005em
+base: 14px (0.875rem)  - Line height: 1.6   [Default body text]
+lg:   16px (1rem)      - Line height: 1.55
+xl:   18px (1.125rem)  - Line height: 1.45
+2xl:  20px (1.25rem)   - Line height: 1.35
+3xl:  24px (1.5rem)    - Line height: 1.25
+4xl:  30px (1.875rem)  - Line height: 1.2
+5xl:  36px (2.25rem)   - Line height: 1.1
+6xl:  48px (3rem)      - Line height: 1.05
+7xl:  60px (3.75rem)   - Line height: 1.0
 ```
 
 ## Semantic Hierarchy
 
 ### Headings (Mobile → Desktop)
 ```css
-h1: text-3xl md:text-4xl (30px → 36px)
-h2: text-2xl md:text-3xl (24px → 30px)
-h3: text-xl md:text-2xl  (20px → 24px)
-h4: text-lg md:text-xl   (18px → 20px)
-h5: text-base md:text-lg (16px → 18px)
-h6: text-sm md:text-base (14px → 16px)
+h1: text-3xl md:text-4xl (24px → 30px)
+h2: text-2xl md:text-3xl (20px → 24px)
+h3: text-xl md:text-2xl  (18px → 20px)
+h4: text-lg md:text-xl   (16px → 18px)
+h5: text-base md:text-lg (14px → 16px)
+h6: text-sm md:text-base (12px → 14px)
 ```
 
 ### Content Types
 ```css
-Primary Body:    text-base md:text-lg     (16px → 18px)
-Secondary Text:  text-sm                  (14px)
-Captions/Meta:   text-sm                  (14px) - Never below this!
-Button Labels:   text-sm or text-base     (14px or 16px)
-Navigation:      text-sm md:text-base     (14px → 16px)
+Primary Body:    text-base md:text-lg     (14px → 16px)
+Secondary Text:  text-sm                  (12px)
+Captions/Meta:   text-sm                  (12px) - Never below 10px!
+Button Labels:   text-sm or text-base     (12px or 14px)
+Navigation:      text-sm md:text-base     (12px → 14px)
 ```
 
 ## Usage Examples
@@ -90,10 +90,10 @@ Navigation:      text-sm md:text-base     (14px → 16px)
 - ❌ Missing line-heights and letter-spacing optimization
 
 ### After (Improvements)
-- ✅ Standard HTML base (100% = 16px) for accessibility
+- ✅ Standard HTML base (100% = 14px) for compact, readable design
 - ✅ Semantic tokens (`text-sm`, `text-base`, `text-lg`, etc.)
 - ✅ Mobile-first responsive scaling with `md:` breakpoints
-- ✅ All text ≥14px minimum for mobile readability
+- ✅ All text ≥10px minimum, 12px+ for important content
 - ✅ Optimized line-heights (1.6 for body, 1.2-1.35 for headings)
 - ✅ Built-in letter-spacing for premium feel
 - ✅ Global heading hierarchy in `globals.css`
