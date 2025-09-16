@@ -25,9 +25,18 @@ export function useScrollDirection({
     isScrollingUp: false
   });
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isClient, setIsClient] = useState(false);
 
   const updateScrollState = useCallback(() => {
-    const currentScrollY = window.scrollY;
+    if (!isClient) return; // Only run on client side
+
+    // Use both window.scrollY and document.documentElement.scrollTop for mobile compatibility
+    const currentScrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+    // Add minimum scroll difference to prevent jittery behavior on mobile
+    const scrollDifference = Math.abs(currentScrollY - lastScrollY);
+    if (scrollDifference < 1) return; // Ignore tiny scroll changes
+
     const isScrollingDown = currentScrollY > lastScrollY;
     const isScrollingUp = currentScrollY < lastScrollY;
 
@@ -37,11 +46,11 @@ export function useScrollDirection({
     if (currentScrollY <= 10) {
       // Always show when at top
       isVisible = true;
-    } else if (isScrollingUp) {
-      // Show when scrolling up
+    } else if (isScrollingUp && scrollDifference > 3) {
+      // Show when scrolling up with meaningful movement
       isVisible = true;
-    } else if (isScrollingDown && currentScrollY > threshold) {
-      // Hide when scrolling down past threshold
+    } else if (isScrollingDown && currentScrollY > threshold && scrollDifference > 3) {
+      // Hide when scrolling down past threshold with meaningful movement
       isVisible = false;
     }
 
@@ -53,24 +62,51 @@ export function useScrollDirection({
     });
 
     setLastScrollY(currentScrollY);
-  }, [lastScrollY, threshold]);
+  }, [isClient, lastScrollY, threshold]);
+
+  // Set client-side flag
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
+    if (!isClient) return; // Only run on client side
+
     let timeoutId: NodeJS.Timeout;
+    let isScrolling = false;
 
     const handleScroll = () => {
-      // Throttle scroll events for better performance
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(updateScrollState, throttleMs);
+      if (!isScrolling) {
+        // Use requestAnimationFrame for smoother mobile performance
+        requestAnimationFrame(() => {
+          updateScrollState();
+          isScrolling = false;
+        });
+        isScrolling = true;
+      }
     };
 
+    const handleScrollEnd = () => {
+      // Handle scroll end for mobile momentum scrolling
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(updateScrollState, 50);
+    };
+
+    // Add multiple event listeners for better mobile support
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('touchmove', handleScroll, { passive: true });
+    window.addEventListener('scrollend', handleScrollEnd, { passive: true } as any);
+
+    // Initial call to set correct state
+    updateScrollState();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('touchmove', handleScroll);
+      window.removeEventListener('scrollend', handleScrollEnd);
       clearTimeout(timeoutId);
     };
-  }, [updateScrollState, throttleMs]);
+  }, [isClient, updateScrollState, throttleMs]);
 
   return scrollState;
 }
