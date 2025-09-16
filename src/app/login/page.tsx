@@ -74,7 +74,7 @@ export default function LoginPage() {
         {/* Demo Credentials Info with animation */}
         <FadeInUp delay={1.0} duration={0.6} distance={20}>
           <motion.div
-            className="bg-sage/5 border border-sage/20 rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 text-center"
+            className="bg-sage/5 border border-sage/20  p-3 sm:p-4 mb-4 sm:mb-6 text-center"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
@@ -87,7 +87,7 @@ export default function LoginPage() {
         </FadeInUp>
 
         {/* Form Card */}
-        <div className="bg-off-white/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 lg:p-12 mb-4 sm:mb-6 relative overflow-hidden">
+        <div className="bg-off-white/95 backdrop-blur-lg shadow-xl p-4 sm:p-8 md:p-10 lg:p-12 mb-4 sm:mb-6 relative overflow-hidden">
           
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6 relative z-10">
             {/* Error Message */}
@@ -107,7 +107,7 @@ export default function LoginPage() {
                 placeholder="email@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-cultured-1/50 border border-light-gray/50 rounded-2xl sm:rounded-3xl pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
+                className="w-full bg-cultured-1/50 border border-light-gray/50 pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
               />
             </div>
 
@@ -121,7 +121,7 @@ export default function LoginPage() {
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-cultured-1/50 border border-light-gray/50 rounded-2xl sm:rounded-3xl pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
+                className="w-full bg-cultured-1/50 border border-light-gray/50 pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
               />
               <button
                 type="button"
@@ -179,7 +179,7 @@ export default function LoginPage() {
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
               <button
                 type="button"
-                className="flex items-center justify-center bg-white border border-light-gray/50 rounded-xl sm:rounded-2xl md:rounded-3xl px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-xs sm:text-sm md:text-base font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group min-h-[44px]"
+                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-xs sm:text-sm md:text-base font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group min-h-[44px]"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -191,7 +191,7 @@ export default function LoginPage() {
               </button>
               <button
                 type="button"
-                className="flex items-center justify-center bg-white border border-light-gray/50 rounded-xl sm:rounded-2xl md:rounded-3xl px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-xs sm:text-sm md:text-base font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group min-h-[44px]"
+                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-xs sm:text-sm md:text-base font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group min-h-[44px]"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>

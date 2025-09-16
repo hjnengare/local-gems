@@ -93,7 +93,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Form Card */}
-        <div className="bg-off-white/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 lg:p-12 mb-4 sm:mb-6 relative overflow-hidden">
+        <div className="bg-off-white/95 backdrop-blur-lg shadow-xl p-4 sm:p-6 md:p-8 lg:p-12 mb-4 sm:mb-6 relative overflow-hidden">
 
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6 relative z-10">
             {/* Error Message */}
@@ -113,7 +113,7 @@ export default function RegisterPage() {
                 placeholder="email@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-cultured-1/50 border border-light-gray/50 rounded-2xl sm:rounded-3xl pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50 min-h-[44px]"
+                className="w-full bg-cultured-1/50 border border-light-gray/50 pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50 min-h-[44px]"
               />
             </div>
 
@@ -127,7 +127,7 @@ export default function RegisterPage() {
                 placeholder="Create a strong password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-cultured-1/50 border border-light-gray/50 rounded-3 pl-14 pr-16 py-4 md:py-5 font-urbanist text-6 font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
+                className="w-full bg-cultured-1/50 border border-light-gray/50 pl-14 pr-16 py-4 md:py-5 font-urbanist text-6 font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
               />
               <button
                 type="button"
