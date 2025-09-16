@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
 import { motion } from "framer-motion";
+import KlioLogo from "../Logo/KlioLogo";
 
 interface HeaderProps {
   showSearch?: boolean;
@@ -140,7 +141,7 @@ export default function Header({ showSearch = true, showProfile = true }: Header
             {/* Logo - mobile first */}
             <Link href="/home" className="flex items-center group">
               <span className="font-urbanist text-xl sm:text-2xl md:text-3xl lg:text-4xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative">
-                Local Gems
+                KLIO
                 <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-sage to-sage/60 group-hover:w-full transition-all duration-300 rounded-full"></div>
               </span>
             </Link>

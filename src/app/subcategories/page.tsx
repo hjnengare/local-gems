@@ -110,8 +110,8 @@ export default function SubcategoriesPage() {
 
       {/* Ambient blobs */}
       <div className="absolute inset-0 opacity-4">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sage/20 to-sage/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-coral/15 to-coral/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sage/20 to-sage/50 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-coral/15 to-coral/50 rounded-full blur-3xl animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-gradient-to-br from-charcoal/10 to-charcoal/3 rounded-full blur-2xl animate-pulse delay-500"></div>
         <div className="absolute top-16 right-20 w-1 h-1 bg-sage/30 rounded-full animate-ping delay-2000"></div>
         <div className="absolute bottom-20 left-20 w-1 h-1 bg-coral/30 rounded-full animate-ping delay-1500"></div>
@@ -124,7 +124,7 @@ export default function SubcategoriesPage() {
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
           <div className="inline-block relative mb-6">
-            <h1 className="font-urbanist text-2 md:text-5xl lg:text-5xl font-700 text-charcoal mb-4 relative min-h-[3rem] md:min-h-[5rem] flex items-center justify-center">
+            <h2 className="font-urbanist text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-5 md:mb-6 text-center leading-snug px-2 tracking-[0.01em]">
               <span className="relative">
                 {displayedText}
                 <span
@@ -132,10 +132,10 @@ export default function SubcategoriesPage() {
                   style={{ animation: showCursor ? "blink 1s infinite" : "none" }}
                 />
               </span>
-            </h1>
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-sage via-coral to-sage rounded-full"></div>
+            </h2>
+            
           </div>
-          <p className="font-urbanist text-6 md:text-5 font-400 text-charcoal/70 max-w-md mx-auto leading-relaxed">
+          <p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 mb-10 md:mb-12 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto">
             Pick a few in each area to help us personalize your experience
           </p>
         </div>
@@ -184,7 +184,7 @@ export default function SubcategoriesPage() {
         {/* Continue (same style as Interests) */}
         <div className="pt-8">
           <button
-            className="group block w-full bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2 relative overflow-hidden text-center"
+            className="group block w-full bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white font-urbanist text-sm md:text-base font-600 py-3.5 md:py-4 px-6 md:px-8 rounded-2xl md:rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/20 hover:focus:ring-coral/20 focus:ring-offset-1 relative overflow-hidden text-center hover:scale-[1.02]"
             onClick={handleNext}
           >
             <span className="relative z-10">Continue</span>

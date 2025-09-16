@@ -199,7 +199,7 @@ export default function LeaderboardPage() {
                   </div>
                   <div className="absolute -top-2 -right-2 text-2xl animate-bounce">{topReviewers[1].badge}</div>
                 </div>
-                <div className="bg-off-white rounded-[6px] p-4 min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
+                <div className="bg-off-white rounded-[6px] p-4 min-w-[140px] shadow-lg border border-white/50 group- transition-all duration-300">
                   <div className="font-urbanist text-base md:text-lg font-700 text-charcoal mb-1 group-hover:text-coral transition-colors duration-300">@{topReviewers[1].username}</div>
                   <div className="font-urbanist text-sm text-charcoal/70 mb-2">{topReviewers[1].reviews} reviews</div>
                   <div className="bg-white/50 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-white/30 flex items-center justify-center gap-1 mx-auto w-fit">
@@ -257,7 +257,7 @@ export default function LeaderboardPage() {
                   </div>
                   <div className="absolute -top-2 -right-2 text-2xl animate-bounce" style={{ animationDelay: "0.5s" }}>{topReviewers[2].badge}</div>
                 </div>
-                <div className="bg-off-white rounded-[6px] p-4 min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
+                <div className="bg-off-white rounded-[6px] p-4 min-w-[140px] shadow-lg border border-white/50 group- transition-all duration-300">
                   <div className="font-urbanist text-base md:text-lg font-700 text-charcoal mb-1 group-hover:text-charcoal/80 transition-colors duration-300">@{topReviewers[2].username}</div>
                   <div className="font-urbanist text-sm text-charcoal/70 mb-2">{topReviewers[2].reviews} reviews</div>
                   <div className="bg-white/50 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-white/30 flex items-center justify-center gap-1 mx-auto w-fit">

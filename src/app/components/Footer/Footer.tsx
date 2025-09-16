@@ -79,7 +79,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
             >
               <Link href="/" className="inline-block">
                 <h2 className="font-urbanist text-3xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-4">
-                  Local Gems
+                  KLIO
                 </h2>
               </Link>
               <p className="font-urbanist text-6 text-charcoal/70 leading-relaxed mb-6 max-w-sm">
@@ -203,7 +203,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
             {/* Copyright */}
             <div className="flex items-center space-x-6">
               <p className="font-urbanist text-7 text-charcoal/60">
-                © {currentYear} Local Gems. All rights reserved.
+                © {currentYear} KLIO. All rights reserved.
               </p>
 
               {/* Trust indicators */}

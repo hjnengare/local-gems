@@ -28,7 +28,7 @@ export default function HomePage() {
           <div className="w-full h-full border-4 border-sage border-t-transparent rounded-full animate-spin"></div>
         </div>
         <h1 className="font-urbanist text-4 font-700 text-charcoal mb-2">
-          Local Gems
+          KLIO
         </h1>
         <p className="font-urbanist text-6 font-400 text-charcoal/70">
           {isLoading ? "Checking your session..." : "Getting ready..."}

@@ -213,7 +213,7 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
       // Note: All selections are now saved locally via updateUser
 
       // Show completion toast
-      showToast('🎉 Welcome to Local Gems! Your profile is now complete.', 'success', 4000);
+      showToast('🎉 Welcome to KLIO! Your profile is now complete.', 'success', 4000);
     } catch (error) {
       console.error('Error completing onboarding:', error);
       setError('Failed to complete onboarding');

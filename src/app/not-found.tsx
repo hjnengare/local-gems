@@ -61,7 +61,7 @@ export default function NotFound() {
         >
           <Link
             href="/home"
-            className="inline-block w-full py-4 px-8 bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist font-600 text-lg rounded-2xl hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
+            className="inline-block w-full py-4 px-8 bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist font-600 text-lg rounded-2xl  transition-all duration-300 hover:scale-[1.02]"
           >
             Go to Home
           </Link>

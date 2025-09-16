@@ -395,7 +395,7 @@ export default function WriteReviewPage() {
                   className={`
                     w-full py-4 md:py-5 px-6 md:px-8 rounded-xl md:rounded-2xl font-urbanist text-base md:text-2xl font-600 transition-all duration-300 relative overflow-hidden
                     ${isFormValid && !submitting
-                      ? 'bg-gradient-to-r from-sage to-sage/90 text-white hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2 group'
+                      ? 'bg-gradient-to-r from-sage to-sage/90 text-white  focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2 group'
                       : 'bg-charcoal/20 text-charcoal/40 cursor-not-allowed'
                     }
                   `}

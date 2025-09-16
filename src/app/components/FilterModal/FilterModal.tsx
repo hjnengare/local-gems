@@ -68,7 +68,7 @@ export default function FilterModal({ isOpen, isVisible, onClose, onApplyFilters
               Filter Options
             </h2>
             <p className="font-urbanist text-sm font-400 text-charcoal/60 mt-1">
-              Refine your search for the perfect local gems
+              Refine your search for the perfect KLIO
             </p>
           </div>
           <button

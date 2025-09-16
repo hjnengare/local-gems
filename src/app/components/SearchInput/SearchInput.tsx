@@ -72,7 +72,7 @@ export default function SearchInput({
             variant === "header"
               ? "py-6 md:py-8 text-sm md:text-xl lg:text-2xl"
               : "py-4 text-sm md:text-lg"
-          } font-urbanist font-500 text-charcoal placeholder-charcoal/40 focus:outline-none focus:ring-4 focus:ring-sage/20 focus:border-sage/60 focus:bg-white focus:shadow-2xl transition-all duration-300 hover:border-sage/50 hover:shadow-xl backdrop-blur-sm italic`}
+          } font-urbanist font-500 text-charcoal placeholder-charcoal/40 focus:outline-none focus:ring-4 focus:ring-sage/20 focus:border-sage/60 focus:bg-white focus:shadow-2xl transition-all duration-300 hover:border-sage/50  backdrop-blur-sm italic`}
           autoFocus={variant === "header"}
         />
       </div>

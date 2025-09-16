@@ -63,8 +63,8 @@ export default function DealBreakersPage() {
 
       {/* Decorative background blobs */}
       <div className="absolute inset-0 opacity-4">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sage/20 to-sage/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-coral/15 to-coral/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sage/20 to-sage/85 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-coral/15 to-coral/85 rounded-full blur-3xl animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-gradient-to-br from-charcoal/10 to-charcoal/3 rounded-full blur-2xl animate-pulse delay-500"></div>
       </div>
 
@@ -75,12 +75,12 @@ export default function DealBreakersPage() {
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
           <div className="inline-block relative mb-6">
-            <h1 className="font-urbanist text-2 md:text-5xl lg:text-5xl font-700 text-charcoal mb-4">
+            <h2 className="font-urbanist text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-5 md:mb-6 text-center leading-snug px-2 tracking-[0.01em]">
               Your deal-breakers
-            </h1>
+            </h2>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-sage via-coral to-sage rounded-full"></div>
           </div>
-          <p className="font-urbanist text-6 md:text-5 font-400 text-charcoal/70 max-w-md mx-auto leading-relaxed">
+          <p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 mb-10 md:mb-12 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto">
             (Pick 2–3 that matter most to you)
           </p>
         </div>
@@ -137,7 +137,7 @@ export default function DealBreakersPage() {
             disabled={!canContinue}
             className={`group block w-full py-5 md:w-1/4 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full text-center font-urbanist text-6 md:text-5 font-600 transition-all duration-300 relative overflow-hidden
                         ${canContinue
-                          ? "bg-gradient-to-r from-sage to-sage/90 text-white hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
+                          ? "bg-gradient-to-r from-sage to-sage/90 text-white hover:scale-105 shadow-lg  focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
                           : "bg-light-gray/50 text-charcoal/40 cursor-not-allowed"}`}
           >
             <span className="relative z-10">Continue</span>

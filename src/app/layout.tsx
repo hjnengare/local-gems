@@ -19,22 +19,22 @@ const urbanist = Urbanist({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://local-gems.vercel.app'),
-  title: "Local Gems - Discover trusted local gems near you",
+  title: "KLIO - Discover trusted KLIO near you",
   description: "Find amazing local businesses, restaurants, and experiences in your area with personalized recommendations and trusted reviews.",
-  keywords: "local business, restaurants, reviews, recommendations, local gems",
-  authors: [{ name: "Local Gems" }],
-  creator: "Local Gems",
+  keywords: "local business, restaurants, reviews, recommendations, KLIO",
+  authors: [{ name: "KLIO" }],
+  creator: "KLIO",
   openGraph: {
-    title: "Local Gems - Discover trusted local gems near you",
+    title: "KLIO - Discover trusted KLIO near you",
     description: "Find amazing local businesses, restaurants, and experiences in your area with personalized recommendations and trusted reviews.",
     url: "/",
-    siteName: "Local Gems",
+    siteName: "KLIO",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Local Gems - Discover trusted local gems near you",
+        alt: "KLIO - Discover trusted KLIO near you",
       },
     ],
     locale: "en_US",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Local Gems - Discover trusted local gems near you",
+    title: "KLIO - Discover trusted KLIO near you",
     description: "Find amazing local businesses, restaurants, and experiences in your area with personalized recommendations and trusted reviews.",
     images: ["/og.png"],
   },

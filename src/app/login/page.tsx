@@ -163,7 +163,7 @@ export default function LoginPage() {
           </FadeInUp>
           <FadeInUp delay={0.7} duration={0.8} distance={30}>
             <p className="font-urbanist text-6 md:text-5 font-400 text-charcoal/70 max-w-md mx-auto leading-relaxed">
-              Sign in to continue discovering local gems
+              Sign in to continue discovering KLIO
             </p>
           </FadeInUp>
         </div>

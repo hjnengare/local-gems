@@ -53,71 +53,8 @@ export default function PageLoading({ text = "Loading..." }: PageLoadingProps) {
         initial={{ scale: 0.8, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="relative z-10 text-center bg-white/40 backdrop-blur-xl rounded-3xl p-8 md:p-12 border border-white/20 shadow-2xl"
+        className="relative z-10 text-center p-16 md:p-18"
       >
-        {/* Logo or gem icon */}
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.1, duration: 0.5, type: "spring", bounce: 0.4 }}
-          className="relative mb-6"
-        >
-          <div className="w-16 h-16 mx-auto bg-gradient-to-br from-sage via-sage/90 to-sage/80 rounded-2xl flex items-center justify-center shadow-xl">
-            <ion-icon
-              name="diamond"
-              style={{ fontSize: "32px" }}
-              class="text-white drop-shadow-sm"
-            />
-          </div>
-
-          {/* Glowing ring effect */}
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.5, 0.8, 0.5]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute inset-0 bg-gradient-to-br from-sage/30 to-transparent rounded-2xl blur-md"
-          />
-        </motion.div>
-
-        {/* Enhanced loading spinner */}
-        <div className="relative mb-6">
-          {/* Outer rotating ring */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="w-20 h-20 mx-auto relative"
-          >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-sage via-coral to-sage opacity-20 blur-sm" />
-            <div className="absolute inset-2 rounded-full bg-gradient-to-r from-transparent via-sage/40 via-coral/40 to-transparent"
-                 style={{
-                   background: `conic-gradient(from 0deg, transparent 0deg, #708090 90deg, transparent 360deg)`,
-                   maskImage: `radial-gradient(circle, transparent 35%, black 36%, black 64%, transparent 65%)`,
-                   WebkitMaskImage: `radial-gradient(circle, transparent 35%, black 36%, black 64%, transparent 65%)`
-                 }}
-            />
-          </motion.div>
-
-          {/* Inner pulsing core */}
-          <motion.div
-            animate={{
-              scale: [0.8, 1, 0.8],
-              opacity: [0.6, 1, 0.6]
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-gradient-to-br from-sage to-coral rounded-full shadow-lg"
-          />
-        </div>
-
         {/* Premium loading text with gradient */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -126,11 +63,8 @@ export default function PageLoading({ text = "Loading..." }: PageLoadingProps) {
           className="mb-4"
         >
           <h3 className="font-urbanist text-xl md:text-2xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-2">
-            Local Gems
+            KLIO
           </h3>
-          <p className="font-urbanist text-base font-500 text-charcoal/70">
-            {text}
-          </p>
         </motion.div>
 
         {/* Sophisticated animated dots */}
