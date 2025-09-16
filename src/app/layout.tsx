@@ -5,7 +5,6 @@ import "./globals.css";
 import { AuthProvider } from "./contexts/AuthContext";
 import { OnboardingProvider } from "./contexts/OnboardingContext";
 import { ToastProvider } from "./contexts/ToastContext";
-import OnboardingGuard from "./components/OnboardingGuard";
 import PageTransitionProvider from "./components/Providers/PageTransitionProvider";
 import WebVitals from "./components/Performance/WebVitals";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
@@ -82,11 +81,9 @@ export default function RootLayout({
           <ToastProvider>
             <AuthProvider>
               <OnboardingProvider>
-                <OnboardingGuard>
-                  <PageTransitionProvider>
-                    {children}
-                  </PageTransitionProvider>
-                </OnboardingGuard>
+                <PageTransitionProvider>
+                  {children}
+                </PageTransitionProvider>
               </OnboardingProvider>
             </AuthProvider>
           </ToastProvider>

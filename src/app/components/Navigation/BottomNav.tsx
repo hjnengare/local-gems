@@ -84,7 +84,7 @@ export default function BottomNav() {
       }}
       className="fixed bottom-0 left-0 right-0 z-50 bg-off-white/95 backdrop-blur-xl border-t border-sage/10 md:hidden"
     >
-      <div className="flex items-center justify-around py-2 px-4 max-w-md mx-auto">
+      <div className="flex items-center justify-around py-1 px-4 max-w-md mx-auto">
         {navItems.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href);
 
@@ -93,13 +93,13 @@ export default function BottomNav() {
               key={item.name}
               href={item.href}
               prefetch={true}
-              className="relative flex flex-col items-center space-y-1 py-2 px-4 rounded-2xl transition-all duration-300 group"
+              className="relative flex flex-col items-center space-y-0.5 py-1 px-3 rounded-xl transition-all duration-300 group"
             >
               {/* Active background */}
               {isActive && (
                 <motion.div
                   layoutId="bottomNavActive"
-                  className="absolute inset-0 bg-sage/10 rounded-2xl"
+                  className="absolute inset-0 bg-sage/10 rounded-xl"
                   transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                 />
               )}
@@ -107,7 +107,7 @@ export default function BottomNav() {
               {/* Icon container */}
               <motion.div
                 whileTap={{ scale: 0.9 }}
-                className={`relative z-10 flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 ${
+                className={`relative z-10 flex items-center justify-center w-6 h-6 rounded-full transition-all duration-300 ${
                   isActive
                     ? "bg-sage text-white shadow-lg"
                     : "text-charcoal/60 group-hover:text-sage group-hover:bg-sage/10"
@@ -115,7 +115,7 @@ export default function BottomNav() {
               >
                 <ion-icon
                   name={isActive ? item.icon : `${item.icon}-outline`}
-                  style={{ fontSize: "20px" }}
+                  class="text-base"
                 />
               </motion.div>
 
@@ -135,7 +135,7 @@ export default function BottomNav() {
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="absolute -top-1 w-1 h-1 bg-sage rounded-full"
+                  className="absolute -top-0.5 w-1 h-1 bg-sage rounded-full"
                 />
               )}
             </Link>
@@ -144,8 +144,8 @@ export default function BottomNav() {
       </div>
 
       {/* iPhone-style home indicator */}
-      <div className="flex justify-center pb-2">
-        <div className="w-32 h-1 bg-charcoal/20 rounded-full" />
+      <div className="flex justify-center pb-1">
+        <div className="w-32 h-0.5 bg-charcoal/20 rounded-full" />
       </div>
     </motion.nav>
   );

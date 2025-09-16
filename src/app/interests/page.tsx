@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useOnboarding } from "../contexts/OnboardingContext";
-import { OnboardingRoute } from "../components/ProtectedRoute/ProtectedRoute";
 
 interface Interest {
   id: string;
@@ -247,9 +246,5 @@ function InterestsContent() {
 }
 
 export default function InterestsPage() {
-  return (
-    <OnboardingRoute step="interests">
-      <InterestsContent />
-    </OnboardingRoute>
-  );
+  return <InterestsContent />;
 }

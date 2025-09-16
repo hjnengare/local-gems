@@ -4,7 +4,6 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import { useAuth } from "../contexts/AuthContext";
 import Header from "../components/Header/Header";
-import { PrivateRoute } from "../components/ProtectedRoute/ProtectedRoute";
 
 // Dynamic imports
 const BottomNav = dynamic(() => import("../components/Navigation/BottomNav"));
@@ -113,9 +112,5 @@ function ProfileContent() {
 }
 
 export default function ProfilePage() {
-  return (
-    <PrivateRoute>
-      <ProfileContent />
-    </PrivateRoute>
-  );
+  return <ProfileContent />;
 }

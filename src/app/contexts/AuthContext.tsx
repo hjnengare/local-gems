@@ -10,6 +10,7 @@ interface User {
   onboardingComplete: boolean;
   interests: string[];
   subInterests: string[];
+  subcategories: string[];
   dealbreakers: string[];
   createdAt: string;
 }
@@ -44,6 +45,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     onboardingComplete: false,
     interests: [],
     subInterests: [],
+    subcategories: [],
     dealbreakers: [],
     createdAt: new Date().toISOString()
   });

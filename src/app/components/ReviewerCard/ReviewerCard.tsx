@@ -7,6 +7,7 @@ import { Review, Reviewer } from "../../data/communityHighlightsData";
 import ProfilePicture from "./ProfilePicture";
 import ReviewerStats from "./ReviewerStats";
 import ReviewContent from "./ReviewContent";
+import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
 
 interface ReviewerCardProps {
   review?: Review;
@@ -38,16 +39,11 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
             
             {/* Silver shimmer effect on hover */}
             <div className="absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform skew-x-12 group-hover:left-full transition-transform duration-700 ease-out" />
-            
-            {/* Badge - positioned above image */}
-            {reviewerData?.badge && (
+
+            {/* Instagram-style verified badge - positioned above image */}
+            {reviewerData?.badge === 'verified' && (
               <div className="absolute left-2 top-2 z-20">
-                <ProfilePicture
-                  src=""
-                  alt=""
-                  size="sm"
-                  badge={reviewerData.badge}
-                />
+                <VerifiedBadge />
               </div>
             )}
             
@@ -119,12 +115,20 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
     <li className="snap-start w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[320px]">
       <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] group cursor-pointer h-[280px] flex flex-col">
         <div className="flex items-start gap-4 mb-4">
-          <ProfilePicture
-            src={review?.reviewer.profilePicture || ''}
-            alt={review?.reviewer.name || ''}
-            size="md"
-            badge={review?.reviewer.badge}
-          />
+          <div className="relative">
+            <ProfilePicture
+              src={review?.reviewer.profilePicture || ''}
+              alt={review?.reviewer.name || ''}
+              size="md"
+              badge={review?.reviewer.badge}
+            />
+            {/* Instagram-style verified badge for profile picture */}
+            {review?.reviewer.badge === 'verified' && (
+              <div className="absolute -right-1 -top-1 z-20">
+                <VerifiedBadge />
+              </div>
+            )}
+          </div>
           
           <div className="flex-1 min-w-0">
             <h3 className="font-urbanist font-700 text-charcoal truncate">{review?.reviewer.name}</h3>

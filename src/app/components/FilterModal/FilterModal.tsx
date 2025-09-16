@@ -63,8 +63,8 @@ export default function FilterModal({ isOpen, isVisible, onClose, onApplyFilters
         {/* Modal Header - Fixed */}
         <div className="relative z-10 flex items-center justify-between p-8 pb-6 flex-shrink-0">
           <div>
-            <h2 className="font-urbanist text-xl md:text-3xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal flex items-center">
-              <ion-icon name="options" class="text-sage mr-3 text-sm md:text-2xl"></ion-icon>
+            <h2 className="font-urbanist text-base md:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal flex items-center">
+              <ion-icon name="options" class="text-sage mr-3 text-base"></ion-icon>
               Filter Options
             </h2>
             <p className="font-urbanist text-sm font-400 text-charcoal/60 mt-1">
@@ -75,7 +75,7 @@ export default function FilterModal({ isOpen, isVisible, onClose, onApplyFilters
             onClick={onClose}
             className="w-12 h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg border border-charcoal/5 hover:border-sage/20"
           >
-            <ion-icon name="close" class="text-2xl text-charcoal/60 hover:text-sage transition-colors duration-300"></ion-icon>
+            <ion-icon name="close" class="text-base text-charcoal/60 hover:text-sage transition-colors duration-300"></ion-icon>
           </button>
         </div>
 
@@ -83,8 +83,8 @@ export default function FilterModal({ isOpen, isVisible, onClose, onApplyFilters
         <div className="relative z-10 px-8 pb-4 space-y-6 overflow-y-auto flex-1 min-h-0">
           {/* Category Filter */}
           <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-sage/10 hover:border-sage/20 transition-all duration-300">
-            <h3 className="font-urbanist text-base md:text-xl font-600 text-charcoal mb-4 flex items-center">
-              <ion-icon name="restaurant" class="text-sage mr-3 text-sm md:text-xl"></ion-icon>
+            <h3 className="font-urbanist text-base font-600 text-charcoal mb-4 flex items-center">
+              <ion-icon name="restaurant" class="text-sage mr-3 text-base"></ion-icon>
               Category
             </h3>
             <div className="grid grid-cols-1 gap-3">
@@ -102,8 +102,8 @@ export default function FilterModal({ isOpen, isVisible, onClose, onApplyFilters
                     onChange={() => toggleCategory(category.name)}
                     className="w-5 h-5 text-sage bg-white border-2 border-sage/30 rounded-lg focus:ring-4 focus:ring-sage/20 transition-all duration-300 group-hover:border-sage/50" 
                   />
-                  <ion-icon name={category.icon} class="text-sage text-sm md:text-xl"></ion-icon>
-                  <span className="font-urbanist text-sm md:text-lg font-500 text-charcoal group-hover:text-sage/80 transition-colors duration-300">{category.name}</span>
+                  <ion-icon name={category.icon} class="text-sage text-base"></ion-icon>
+                  <span className="font-urbanist text-base font-500 text-charcoal group-hover:text-sage/80 transition-colors duration-300">{category.name}</span>
                 </label>
               ))}
             </div>
@@ -111,8 +111,8 @@ export default function FilterModal({ isOpen, isVisible, onClose, onApplyFilters
 
           {/* Rating Filter */}
           <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-sage/10 hover:border-sage/20 transition-all duration-300">
-            <h3 className="font-urbanist text-base md:text-xl font-600 text-charcoal mb-4 flex items-center">
-              <ion-icon name="star" class="text-sage mr-3 text-sm md:text-xl"></ion-icon>
+            <h3 className="font-urbanist text-base font-600 text-charcoal mb-4 flex items-center">
+              <ion-icon name="star" class="text-sage mr-3 text-base"></ion-icon>
               Minimum Rating
             </h3>
             <div className="grid grid-cols-1 gap-3">
@@ -128,10 +128,10 @@ export default function FilterModal({ isOpen, isVisible, onClose, onApplyFilters
                   <div className="flex items-center space-x-2">
                     <div className="flex">
                       {[...Array(rating)].map((_, i) => (
-                        <ion-icon key={i} name="star" class="text-sage text-sm md:text-lg"></ion-icon>
+                        <ion-icon key={i} name="star" class="text-sage text-base"></ion-icon>
                       ))}
                     </div>
-                    <span className="font-urbanist text-sm md:text-lg font-500 text-charcoal group-hover:text-sage/80 transition-colors duration-300">{rating}+ stars</span>
+                    <span className="font-urbanist text-base font-500 text-charcoal group-hover:text-sage/80 transition-colors duration-300">{rating}+ stars</span>
                   </div>
                 </label>
               ))}
@@ -140,8 +140,8 @@ export default function FilterModal({ isOpen, isVisible, onClose, onApplyFilters
 
           {/* Distance Filter */}
           <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-sage/10 hover:border-sage/20 transition-all duration-300">
-            <h3 className="font-urbanist text-base md:text-xl font-600 text-charcoal mb-4 flex items-center">
-              <ion-icon name="location" class="text-sage mr-3 text-sm md:text-xl"></ion-icon>
+            <h3 className="font-urbanist text-base font-600 text-charcoal mb-4 flex items-center">
+              <ion-icon name="location" class="text-sage mr-3 text-base"></ion-icon>
               Distance
             </h3>
             <div className="grid grid-cols-2 gap-3">
@@ -159,8 +159,8 @@ export default function FilterModal({ isOpen, isVisible, onClose, onApplyFilters
                     onChange={() => setSelectedDistance(item.distance)}
                     className="w-5 h-5 text-sage bg-white border-2 border-sage/30 focus:ring-4 focus:ring-sage/20 transition-all duration-300 group-hover:border-sage/50" 
                   />
-                  <ion-icon name={item.icon} class="text-sage text-sm md:text-lg"></ion-icon>
-                  <span className="font-urbanist text-sm md:text-lg font-500 text-charcoal group-hover:text-sage/80 transition-colors duration-300">{item.distance}</span>
+                  <ion-icon name={item.icon} class="text-sage text-base"></ion-icon>
+                  <span className="font-urbanist text-base font-500 text-charcoal group-hover:text-sage/80 transition-colors duration-300 whitespace-nowrap">{item.distance}</span>
                 </label>
               ))}
             </div>
@@ -171,13 +171,13 @@ export default function FilterModal({ isOpen, isVisible, onClose, onApplyFilters
         <div className="relative z-10 flex space-x-4 p-8 pt-6 bg-gradient-to-t from-white/80 to-transparent backdrop-blur-sm border-t border-sage/10 flex-shrink-0">
           <button
             onClick={handleClearAll}
-            className="flex-1 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-charcoal/20 hover:to-charcoal/10 text-charcoal font-urbanist font-600 py-4 px-8 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg border border-charcoal/10 hover:border-charcoal/20"
+            className="flex-1 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-charcoal/20 hover:to-charcoal/10 text-charcoal font-urbanist font-600 py-4 px-8 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg border border-charcoal/10 hover:border-charcoal/20 whitespace-nowrap"
           >
             Clear All
           </button>
           <button
             onClick={handleApplyFilters}
-            className="flex-1 bg-gradient-to-br from-sage to-sage/90 hover:from-sage/90 hover:to-sage text-white font-urbanist font-600 py-4 px-8 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-sage/20 hover:border-sage/40 flex items-center justify-center"
+            className="flex-1 bg-gradient-to-br from-sage to-sage/90 hover:from-sage/90 hover:to-sage text-white font-urbanist font-600 py-4 px-8 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-sage/20 hover:border-sage/40 flex items-center justify-center whitespace-nowrap"
           >
             <ion-icon name="checkmark" class="mr-2 text-white"></ion-icon>
             Apply Filters
