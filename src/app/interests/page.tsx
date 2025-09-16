@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { OnboardingRoute } from "../components/ProtectedRoute/ProtectedRoute";
-import { useRouter } from "next/navigation";
 
 interface Interest {
   id: string;
@@ -29,6 +28,7 @@ function InterestsContent() {
   const [showCursor, setShowCursor] = useState(true);
   const [isNavigating, setIsNavigating] = useState(false);
   const fullText = "Let's get to know you";
+  const hasLoadedInterests = useRef(false);
 
   const { user } = useAuth();
   const {
@@ -40,12 +40,14 @@ function InterestsContent() {
     isLoading: onboardingLoading,
     error: onboardingError
   } = useOnboarding();
-  const router = useRouter();
 
   // Load interests on mount
   useEffect(() => {
-    loadInterests();
-  }, [loadInterests]);
+    if (!hasLoadedInterests.current && availableInterests.length === 0 && !onboardingLoading) {
+      hasLoadedInterests.current = true;
+      loadInterests();
+    }
+  }, [loadInterests, availableInterests.length, onboardingLoading]);
 
   useEffect(() => {
     let currentIndex = 0;

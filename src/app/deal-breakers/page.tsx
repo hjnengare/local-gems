@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
-import { useOnboarding } from "../contexts/OnboardingContext";
 
 interface DealBreaker {
   id: string;
@@ -24,7 +23,7 @@ export default function DealBreakersPage() {
   const router = useRouter();
 
   const { user, updateUser } = useAuth();
-  const { canAccessRoute } = useOnboarding();
+  // Remove unused variable
 
   const toggle = useCallback((id: string) => {
     setSelected(prev => {

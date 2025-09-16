@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
-import { useOnboarding } from "../contexts/OnboardingContext";
 
 interface SubcategoryItem {
   id: string;
@@ -51,7 +50,7 @@ export default function SubcategoriesPage() {
   const fullText = "Tell us more...";
 
   const { user, updateUser } = useAuth();
-  const { canAccessRoute } = useOnboarding();
+  // Remove unused variable
 
   // typing headline
   useEffect(() => {

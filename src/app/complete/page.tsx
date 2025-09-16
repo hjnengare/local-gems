@@ -11,7 +11,7 @@ export default function CompletePage() {
   useEffect(() => {
     // Mark onboarding as complete
     updateUser({ onboardingComplete: true });
-    
+
     // Rain confetti effect on mount
     const duration = 2 * 1000; // 2 seconds
     const end = Date.now() + duration;
@@ -38,7 +38,7 @@ export default function CompletePage() {
         requestAnimationFrame(frame);
       }
     })();
-  }, []);
+  }, [updateUser]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-14 relative overflow-hidden">

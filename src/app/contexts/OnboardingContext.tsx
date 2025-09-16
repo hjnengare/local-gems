@@ -1,7 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { useAuth } from './AuthContext';
+import { useToast } from './ToastContext';
 import { getInterests, getSubInterests, saveUserSelections } from '../lib/supabase';
 
 interface Interest {
@@ -50,6 +51,7 @@ const ONBOARDING_STEPS = [
 
 export function OnboardingProvider({ children }: OnboardingProviderProps) {
   const { user, updateUser } = useAuth();
+  const { showToast } = useToast();
   const [interests, setInterests] = useState<Interest[]>([]);
   const [subInterests, setSubInterests] = useState<Interest[]>([]);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
@@ -60,33 +62,33 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
 
   const currentStep = user?.onboardingStep || 'interests';
 
-  const loadInterests = async () => {
+  const loadInterests = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
       const data = await getInterests();
       setInterests(data);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error loading interests:', error);
       setError('Failed to load interests');
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const loadSubInterests = async (parentIds?: string[]) => {
+  const loadSubInterests = useCallback(async (parentIds?: string[]) => {
     try {
       setIsLoading(true);
       setError(null);
       const data = await getSubInterests(parentIds);
       setSubInterests(data);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error loading sub-interests:', error);
       setError('Failed to load sub-interests');
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   const getNextStep = (current: string): string => {
     const currentIndex = ONBOARDING_STEPS.indexOf(current);
@@ -96,7 +98,20 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
     return ONBOARDING_STEPS[currentIndex + 1];
   };
 
-  const nextStep = async () => {
+  const getStepCompletionMessage = useCallback((step: string): string => {
+    switch (step) {
+      case 'interests':
+        return `Great! ${selectedInterests.length} interests selected. Let's explore sub-categories!`;
+      case 'subcategories':
+        return `Perfect! ${selectedSubInterests.length} sub-interests added. Now let's set your dealbreakers.`;
+      case 'deal-breakers':
+        return `Excellent! ${selectedDealbreakers.length} dealbreakers set. Almost done!`;
+      default:
+        return 'Step completed successfully!';
+    }
+  }, [selectedInterests.length, selectedSubInterests.length, selectedDealbreakers.length]);
+
+  const nextStep = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -106,7 +121,7 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
       const nextStepName = getNextStep(currentStep);
 
       // Save current step data
-      const updates: any = {
+      const updates: Record<string, unknown> = {
         onboardingStep: nextStepName
       };
 
@@ -138,15 +153,19 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
 
         await saveUserSelections(user.id, selections);
       }
-    } catch (error: any) {
+
+      // Show success toast for step completion
+      const completionMessage = getStepCompletionMessage(currentStep);
+      showToast(completionMessage, 'success', 3000);
+    } catch (error) {
       console.error('Error proceeding to next step:', error);
       setError('Failed to save progress');
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user, currentStep, selectedInterests, selectedSubInterests, selectedDealbreakers, updateUser, showToast, getStepCompletionMessage]);
 
-  const completeOnboarding = async () => {
+  const completeOnboarding = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -177,13 +196,16 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
 
         await saveUserSelections(user.id, selections);
       }
-    } catch (error: any) {
+
+      // Show completion toast
+      showToast('🎉 Welcome to Local Gems! Your profile is now complete.', 'success', 4000);
+    } catch (error) {
       console.error('Error completing onboarding:', error);
       setError('Failed to complete onboarding');
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user, selectedInterests, selectedSubInterests, selectedDealbreakers, updateUser, showToast]);
 
   const resetOnboarding = () => {
     setSelectedInterests([]);
