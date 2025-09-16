@@ -23,7 +23,7 @@ export default function BusinessRow({
     router.push(href);
   };
   return (
-    <section className="pb-8 sm:pt-2 bg-gradient-to-b from-off-white to-off-white/95 relative" aria-label="businesses" data-section>
+    <section className="pb-16 sm:pt-2 bg-gradient-to-b from-off-white to-off-white/95 relative" aria-label="businesses" data-section>
       {/* Subtle section decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 right-20 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl" />
@@ -48,7 +48,7 @@ export default function BusinessRow({
         </div>
 
         <div className="overflow-hidden">
-          <StaggerContainer className="horizontal-scroll flex snap-x gap-6 overflow-x-auto pb-6 -mb-6" staggerDelay={0.15}>
+          <StaggerContainer className="horizontal-scroll flex snap-x gap-6 overflow-x-auto pb-6" staggerDelay={0.15}>
             {businesses.map((business) => (
               <motion.div key={business.id} variants={staggerItemVariants}>
                 <BusinessCard business={business} />

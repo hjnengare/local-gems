@@ -31,7 +31,7 @@ export default function EventsSpecials({
         <div className="absolute bottom-20 right-10 w-24 h-24 bg-gradient-to-br from-sage/8 to-transparent rounded-full blur-xl" />
       </div>
       
-      <div className="container mx-auto max-w-[1300px] px-4 relative z-10 py-16">
+      <div className="container mx-auto max-w-[1300px] px-4 relative z-10 pt-16 pb-8">
         <div className="mb-12 flex flex-wrap items-center justify-between gap-[18px]">
           <h2 className="font-urbanist text-3xl font-800 text-charcoal relative">
             {title}
@@ -48,7 +48,7 @@ export default function EventsSpecials({
         </div>
 
         <div className="overflow-hidden">
-          <StaggerContainer className="horizontal-scroll flex snap-x gap-6 overflow-x-auto pb-6 -mb-6" staggerDelay={0.2}>
+          <StaggerContainer className="horizontal-scroll flex snap-x gap-6 overflow-x-auto pb-6" staggerDelay={0.2}>
             {events.map((event) => (
               <motion.div key={event.id} variants={staggerItemVariants}>
                 <EventCard event={event} />

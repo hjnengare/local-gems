@@ -51,7 +51,7 @@ export default function CommunityHighlights({
         <div className="absolute bottom-20 left-10 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-xl" />
       </div>
       
-      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10 py-8 sm:py-12 md:py-16">
+      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10 py-8 sm:py-12 md:py-16 pb-16">
         <div className="mb-12 flex flex-wrap items-center justify-between gap-[18px]">
           <h2 className="font-urbanist text-3xl font-800 text-charcoal relative">
             {title}
@@ -76,7 +76,7 @@ export default function CommunityHighlights({
           </div>
 
           <div className="overflow-hidden">
-            <ul className="horizontal-scroll flex snap-x gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6 -mb-4 sm:-mb-5 md:-mb-6">
+            <ul className="horizontal-scroll flex snap-x gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6">
               {topReviewers.map((reviewer) => (
                 <div key={reviewer.id}>
                   <ReviewerCard 
@@ -116,7 +116,7 @@ export default function CommunityHighlights({
             </div>
 
             <div className="overflow-hidden">
-              <ul className="horizontal-scroll flex snap-x gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6 -mb-4 sm:-mb-5 md:-mb-6">
+              <ul className="horizontal-scroll flex snap-x gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6">
                 {businessesOfTheMonth.map((business) => (
                   <div key={business.id}>
                     <BusinessOfTheMonthCard business={business} />

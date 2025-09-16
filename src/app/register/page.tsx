@@ -8,6 +8,18 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import FadeInUp from "../components/Animations/FadeInUp";
 import PremiumHover from "../components/Animations/PremiumHover";
 
+// CSS animations for decorative elements
+const styles = `
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-400 { animation-delay: 0.4s; }
+  .delay-600 { animation-delay: 0.6s; }
+`;
+
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -59,7 +71,9 @@ export default function RegisterPage() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+    <>
+      <style dangerouslySetInnerHTML={{ __html: styles }} />
+      <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
 
       {/* Back button with entrance animation */}
       <motion.div
@@ -76,35 +90,12 @@ export default function RegisterPage() {
       </motion.div>
 
 
-      {/* Decorative background enhancements */}
-      <motion.div
-        style={{ y: smoothOrbY }}
-        className="absolute inset-0 opacity-40 z-[1] will-change-transform"
-      >
-        {/* Sage orb */}
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.5, delay: 0.3, type: "spring", stiffness: 200 }}
-          style={{ y: orbFastY }}
-          className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-[var(--sage)]/35 to-[var(--sage)]/85 rounded-full blur-3xl will-change-transform"
-        />
-        {/* Coral orb */}
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.8, delay: 0.5, type: "spring", stiffness: 150 }}
-          className="absolute bottom-32 right-16 w-48 h-48 bg-gradient-to-br from-[var(--coral)]/30 to-[var(--coral)]/85 rounded-full blur-3xl will-change-transform"
-        />
-        {/* Charcoal orb */}
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.7, type: "spring", stiffness: 250 }}
-          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]) }}
-          className="absolute top-1/2 right-1/4 w-28 h-28 bg-gradient-to-br from-[var(--charcoal)]/15 to-[var(--charcoal)]/5 rounded-full blur-2xl will-change-transform"
-        />
-      </motion.div>
+      {/* Lightweight decorative elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-sage/30 to-sage/80 rounded-full blur-3xl opacity-0 animate-fade-in-up delay-200" />
+        <div className="absolute bottom-32 right-16 w-56 h-56 bg-gradient-to-br from-coral/25 to-coral/80 rounded-full blur-3xl opacity-0 animate-fade-in-up delay-400" />
+        <div className="absolute top-1/2 left-1/3 w-32 h-32 bg-gradient-to-br from-charcoal/20 to-charcoal/20 rounded-full blur-2xl opacity-0 animate-fade-in-up delay-600" />
+      </div>
 
       {/* Gradient overlays */}
       <motion.div
@@ -318,6 +309,7 @@ export default function RegisterPage() {
           </FadeInUp>
         </div>
       </motion.div>
-    </div>
+      </div>
+    </>
   );
 }

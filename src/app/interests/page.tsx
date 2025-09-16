@@ -5,6 +5,18 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useOnboarding } from "../contexts/OnboardingContext";
 
+// CSS animations for decorative elements
+const styles = `
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-400 { animation-delay: 0.4s; }
+  .delay-600 { animation-delay: 0.6s; }
+`;
+
 interface Interest {
   id: string;
   name: string;
@@ -106,7 +118,9 @@ function InterestsContent() {
   }, [canProceed, nextStep, onboardingLoading]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+    <>
+      <style dangerouslySetInnerHTML={{ __html: styles }} />
+      <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
       {/* Back button - top left */}
       <div className="absolute top-6 left-6 z-20">
         <Link href="/register" className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full">
@@ -114,15 +128,11 @@ function InterestsContent() {
         </Link>
       </div>
 
-      {/* Enhanced background decorative elements */}
-      <div className="absolute inset-0 opacity-4">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sage/80 to-sage/80 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-coral/80 to-coral/80 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-gradient-to-br from-charcoal/10 to-charcoal/3 rounded-full blur-2xl animate-pulse delay-500"></div>
-
-        {/* Subtle geometric accents */}
-        <div className="absolute top-16 right-20 w-1 h-1 bg-sage/30 rounded-full animate-ping delay-2000"></div>
-        <div className="absolute bottom-20 left-20 w-1 h-1 bg-coral/30 rounded-full animate-ping delay-1500"></div>
+      {/* Lightweight decorative elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-sage/30 to-sage/80 rounded-full blur-3xl opacity-0 animate-fade-in-up delay-200" />
+        <div className="absolute bottom-32 right-16 w-56 h-56 bg-gradient-to-br from-coral/25 to-coral/80 rounded-full blur-3xl opacity-0 animate-fade-in-up delay-400" />
+        <div className="absolute top-1/2 left-1/3 w-32 h-32 bg-gradient-to-br from-charcoal/20 to-charcoal/20 rounded-full blur-2xl opacity-0 animate-fade-in-up delay-600" />
       </div>
 
       {/* Subtle mesh gradient overlay */}
@@ -241,7 +251,8 @@ function InterestsContent() {
           </p>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
