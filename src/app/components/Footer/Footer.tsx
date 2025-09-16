@@ -221,31 +221,45 @@ export default function Footer({ variant = 'default' }: FooterProps) {
 
             {/* App download links */}
             <div className="flex items-center space-x-4">
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 bg-white/80 hover:bg-white border border-sage/20 hover:border-sage/40 rounded-xl px-4 py-2 transition-all duration-300 shadow-sm hover:shadow-md"
+              <motion.div
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="relative flex items-center space-x-3 bg-gradient-to-r from-white/90 to-white/95 hover:from-white hover:to-white border border-charcoal/10 hover:border-charcoal/20 rounded-2xl px-5 py-3 transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer overflow-hidden"
               >
-                <ion-icon name="logo-apple" style={{ fontSize: "20px", color: "#211e1d" }} />
-                <div className="text-left">
-                  <div className="font-urbanist text-8 text-charcoal/60">Download on</div>
-                  <div className="font-urbanist text-7 font-600 text-charcoal">App Store</div>
-                </div>
-              </motion.a>
+                {/* Background gradient effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-sage/5 to-coral/5 opacity-0 hover:opacity-100 transition-opacity duration-300" />
 
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 bg-white/80 hover:bg-white border border-sage/20 hover:border-sage/40 rounded-xl px-4 py-2 transition-all duration-300 shadow-sm hover:shadow-md"
-              >
-                <ion-icon name="logo-google-playstore" style={{ fontSize: "20px", color: "#211e1d" }} />
-                <div className="text-left">
-                  <div className="font-urbanist text-8 text-charcoal/60">Get it on</div>
-                  <div className="font-urbanist text-7 font-600 text-charcoal">Google Play</div>
+                <div className="relative z-10 flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-slate-800 to-black rounded-xl flex items-center justify-center shadow-sm">
+                    <ion-icon name="logo-apple" style={{ fontSize: "22px", color: "white" }} />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-urbanist text-xs text-charcoal/60 mb-0.5">Download on the</div>
+                    <div className="font-urbanist text-sm font-700 text-charcoal">App Store</div>
+                    <div className="font-urbanist text-xs text-coral font-600 mt-0.5">Coming Soon</div>
+                  </div>
                 </div>
-              </motion.a>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="relative flex items-center space-x-3 bg-gradient-to-r from-white/90 to-white/95 hover:from-white hover:to-white border border-charcoal/10 hover:border-charcoal/20 rounded-2xl px-5 py-3 transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer overflow-hidden"
+              >
+                {/* Background gradient effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-sage/5 to-coral/5 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+
+                <div className="relative z-10 flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-green-500 via-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-sm">
+                    <ion-icon name="logo-google-playstore" style={{ fontSize: "22px", color: "white" }} />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-urbanist text-xs text-charcoal/60 mb-0.5">Get it on</div>
+                    <div className="font-urbanist text-sm font-700 text-charcoal">Google Play</div>
+                    <div className="font-urbanist text-xs text-coral font-600 mt-0.5">Coming Soon</div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
 
           </div>

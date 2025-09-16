@@ -26,7 +26,7 @@ export default function Hero({
     : {};
 
   const variantClasses = {
-    default: 'min-h-screen',
+    default: 'min-h-dvh',
     onboarding: 'min-h-[80vh]',
     simple: 'py-section'
   };

@@ -122,248 +122,42 @@ function BusinessCard({ business }: { business: Business }) {
             <span className="font-urbanist text-sm font-700">{business.totalRating.toFixed(1)}</span>
           </span>
 
-          {/* Enhanced Card Actions - mobile click, desktop hover/focus */}
-          <AnimatePresence>
-            {showActions && (
-              <motion.div
-                initial={{ opacity: 0, x: 20, scale: 0.9 }}
-                animate={{
-                  opacity: 1,
-                  x: 0,
-                  scale: 1
-                }}
-                exit={{ opacity: 0, x: 20, scale: 0.9 }}
-                transition={{ duration: 0.4, ease: "easeOut", staggerChildren: 0.1 }}
-                className="absolute inset-0 flex items-center justify-center z-30 sm:hidden"
-              >
-                {/* Beautiful backdrop */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-charcoal/40 backdrop-blur-sm rounded-t-[6px]"
-                />
-
-                {/* Action buttons container - vertically centered */}
-                <motion.div className="relative z-10 flex items-center justify-center space-x-4">
-                  {[
-                    { icon: "create-outline", color: "sage", label: "Review", handler: handleWriteReview },
-                    { icon: "bookmark-outline", color: "coral", label: "Save", handler: handleBookmark },
-                    { icon: "share-outline", color: "charcoal", label: "Share", handler: handleShare }
-                  ].map((action, index) => (
-                    <motion.button
-                      key={action.icon}
-                      initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ delay: index * 0.1, duration: 0.3 }}
-                      whileHover={{
-                        scale: 1.2,
-                        y: -5,
-                        transition: { duration: 0.2 }
-                      }}
-                      whileTap={{ scale: 0.9 }}
-                      className={`
-                        group/btn relative w-14 h-14 md:w-16 md:h-16
-                        bg-gradient-to-br from-off-white via-white to-off-white/90
-                        backdrop-blur-xl rounded-2xl
-                        flex items-center justify-center
-                        shadow-2xl border border-white/20
-                        transition-all duration-300
-                        hover:shadow-3xl hover:border-white/40
-                      `}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        action.handler();
-                      }}
-                    >
-                      {/* Gradient background on hover */}
-                      <div className={`
-                        absolute inset-0 rounded-2xl opacity-0 group-hover/btn:opacity-20 transition-opacity duration-300
-                        bg-gradient-to-br from-${action.color} to-${action.color}/70
-                      `} />
-
-                      {/* Icon */}
-                      <ion-icon
-                        name={action.icon}
-                        class={`text-${action.color} group-hover/btn:text-${action.color}/80 transition-colors duration-300 relative z-10`}
-                        style={{fontSize: '28px'}}
-                      />
-
-                      {/* Label tooltip */}
-                      <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-charcoal/90 text-white text-xs font-urbanist font-500 px-2 py-1 rounded-full opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
-                        {action.label}
-                      </span>
-                    </motion.button>
-                  ))}
-                </motion.div>
-
-                {/* Close button for mobile */}
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="absolute top-3 right-3 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg sm:hidden"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowActions(false);
-                  }}
-                >
-                  <ion-icon name="close" style={{fontSize: '20px'}} class="text-charcoal" />
-                </motion.button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Desktop hover/focus actions - appear on image hover */}
-          <div className="hidden sm:block absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-all duration-400 ease-out z-30">
-            <div className="absolute inset-0 bg-charcoal/40 backdrop-blur-sm rounded-t-[6px]"></div>
-
-            <div className="relative z-10 flex items-center justify-center h-full space-x-4">
-              {[
-                { icon: "create-outline", color: "sage", label: "Review", handler: handleWriteReview },
-                { icon: "bookmark-outline", color: "coral", label: "Save", handler: handleBookmark },
-                { icon: "share-outline", color: "charcoal", label: "Share", handler: handleShare }
-              ].map((action, index) => (
-                <motion.button
-                  key={action.icon}
-                  initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ delay: index * 0.1, duration: 0.3 }}
-                  whileHover={{
-                    scale: 1.2,
-                    y: -5,
-                    transition: { duration: 0.2 }
-                  }}
-                  whileTap={{ scale: 0.9 }}
-                  className={`
-                    group/btn relative w-14 h-14 md:w-16 md:h-16
-                    bg-gradient-to-br from-off-white via-white to-off-white/90
-                    backdrop-blur-xl rounded-2xl
-                    flex items-center justify-center
-                    shadow-2xl border border-white/20
-                    transition-all duration-300
-                    hover:shadow-3xl hover:border-white/40
-                    focus:outline-none focus:ring-2 focus:ring-${action.color}/50
-                  `}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    action.handler();
-                  }}
-                  tabIndex={0}
-                >
-                  {/* Gradient background on hover */}
-                  <div className={`
-                    absolute inset-0 rounded-2xl opacity-0 group-hover/btn:opacity-20 group-focus/btn:opacity-20 transition-opacity duration-300
-                    bg-gradient-to-br from-${action.color} to-${action.color}/70
-                  `} />
-
-                  {/* Icon */}
-                  <ion-icon
-                    name={action.icon}
-                    class={`text-${action.color} group-hover/btn:text-${action.color}/80 group-focus/btn:text-${action.color}/80 transition-colors duration-300 relative z-10`}
-                    style={{fontSize: '28px'}}
-                  />
-
-                  {/* Label tooltip */}
-                  <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-charcoal/90 text-white text-xs font-urbanist font-500 px-2 py-1 rounded-full opacity-0 group-hover/btn:opacity-100 group-focus/btn:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
-                    {action.label}
-                  </span>
-                </motion.button>
-              ))}
-            </div>
+          {/* Simple card actions - slide in from right on hover - hidden on mobile */}
+          <div className="hidden sm:flex absolute right-2 top-1/2 transform -translate-y-1/2 z-20 flex-col gap-2 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-out">
+            <button
+              className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleWriteReview();
+              }}
+            >
+              <svg className="w-5 h-5 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+            </button>
+            <button
+              className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleBookmark();
+              }}
+            >
+              <svg className="w-5 h-5 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </button>
+            <button
+              className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleShare();
+              }}
+            >
+              <svg className="w-5 h-5 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+              </svg>
+            </button>
           </div>
-
-          {/* Mobile click overlay */}
-          <AnimatePresence>
-            {showActions && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
-                className="sm:hidden absolute inset-0 bg-charcoal/40 backdrop-blur-sm rounded-t-[6px] z-40 flex items-center justify-center"
-              >
-                {/* Beautiful backdrop */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-charcoal/40 backdrop-blur-sm rounded-t-[6px]"
-                />
-
-                {/* Action buttons container - vertically centered */}
-                <motion.div className="relative z-10 flex items-center justify-center space-x-4">
-                  {[
-                    { icon: "create-outline", color: "sage", label: "Review", handler: handleWriteReview },
-                    { icon: "bookmark-outline", color: "coral", label: "Save", handler: handleBookmark },
-                    { icon: "share-outline", color: "charcoal", label: "Share", handler: handleShare }
-                  ].map((action, index) => (
-                    <motion.button
-                      key={action.icon}
-                      initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ delay: index * 0.1, duration: 0.3 }}
-                      whileHover={{
-                        scale: 1.2,
-                        y: -5,
-                        transition: { duration: 0.2 }
-                      }}
-                      whileTap={{ scale: 0.9 }}
-                      className={`
-                        group/btn relative w-14 h-14 md:w-16 md:h-16
-                        bg-gradient-to-br from-off-white via-white to-off-white/90
-                        backdrop-blur-xl rounded-2xl
-                        flex items-center justify-center
-                        shadow-2xl border border-white/20
-                        transition-all duration-300
-                        hover:shadow-3xl hover:border-white/40
-                      `}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        action.handler();
-                      }}
-                    >
-                      {/* Gradient background on hover */}
-                      <div className={`
-                        absolute inset-0 rounded-2xl opacity-0 group-hover/btn:opacity-20 transition-opacity duration-300
-                        bg-gradient-to-br from-${action.color} to-${action.color}/70
-                      `} />
-
-                      {/* Icon */}
-                      <ion-icon
-                        name={action.icon}
-                        class={`text-${action.color} group-hover/btn:text-${action.color}/80 transition-colors duration-300 relative z-10`}
-                        style={{fontSize: '28px'}}
-                      />
-
-                      {/* Label tooltip */}
-                      <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-charcoal/90 text-white text-xs font-urbanist font-500 px-2 py-1 rounded-full opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
-                        {action.label}
-                      </span>
-                    </motion.button>
-                  ))}
-                </motion.div>
-
-                {/* Close button for mobile */}
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="absolute top-3 right-3 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg sm:hidden"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowActions(false);
-                  }}
-                >
-                  <ion-icon name="close" style={{fontSize: '20px'}} class="text-charcoal" />
-                </motion.button>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
 
         </div>

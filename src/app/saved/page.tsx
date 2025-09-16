@@ -20,7 +20,7 @@ export default function SavedPage() {
   const categories = ["All", "Restaurants", "Services", "Shopping"];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative">
+    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative">
       {/* Background decorative elements */}
       <div className="fixed inset-0 pointer-events-none opacity-20">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-3xl" />

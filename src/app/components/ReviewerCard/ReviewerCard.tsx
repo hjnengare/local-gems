@@ -92,19 +92,35 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
             </div>
 
             {/* Badge info at bottom */}
-            {reviewerData?.badge && (
-              <div className="flex items-center gap-2">
-                <div className={`px-3 py-1.5 rounded-full text-sm font-urbanist font-700 ${
+            <div className="flex items-center gap-2 flex-wrap">
+              {reviewerData?.badge && (
+                <div className={`px-2 py-1 rounded-full text-xs font-urbanist font-600 ${
                   reviewerData.badge === 'top' ? 'bg-amber-100 text-amber-700' :
                   reviewerData.badge === 'verified' ? 'bg-blue-100 text-blue-700' :
                   'bg-sage/10 text-sage'
                 }`}>
-                  {reviewerData.badge === 'top' ? '🏆 Top Reviewer' : 
-                   reviewerData.badge === 'verified' ? '✓ Verified' : 
+                  {reviewerData.badge === 'top' ? '🏆 Top Reviewer' :
+                   reviewerData.badge === 'verified' ? '✓ Verified' :
                    '📍 Local Expert'}
                 </div>
-              </div>
-            )}
+              )}
+
+              {reviewerData?.trophyBadge && (
+                <div className={`px-2 py-1 rounded-full text-xs font-urbanist font-600 ${
+                  reviewerData.trophyBadge === 'gold' ? 'bg-yellow-50 text-yellow-700 border border-yellow-200' :
+                  reviewerData.trophyBadge === 'silver' ? 'bg-gray-50 text-gray-700 border border-gray-200' :
+                  reviewerData.trophyBadge === 'bronze' ? 'bg-orange-50 text-orange-700 border border-orange-200' :
+                  reviewerData.trophyBadge === 'rising-star' ? 'bg-purple-50 text-purple-700 border border-purple-200' :
+                  'bg-pink-50 text-pink-700 border border-pink-200'
+                }`}>
+                  {reviewerData.trophyBadge === 'gold' ? '🏆 Gold Champion' :
+                   reviewerData.trophyBadge === 'silver' ? '🥈 Silver Star' :
+                   reviewerData.trophyBadge === 'bronze' ? '🥉 Bronze Winner' :
+                   reviewerData.trophyBadge === 'rising-star' ? '⭐ Rising Star' :
+                   '❤️ Community Favorite'}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </li>
@@ -113,7 +129,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
 
   return (
     <li className="snap-start w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[320px]">
-      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] group cursor-pointer h-[280px] flex flex-col">
+      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] group cursor-pointer h-[280px] flex flex-col relative overflow-hidden">
         <div className="flex items-start gap-4 mb-4">
           <div className="relative">
             <ProfilePicture
@@ -129,7 +145,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
               </div>
             )}
           </div>
-          
+
           <div className="flex-1 min-w-0">
             <h3 className="font-urbanist font-700 text-charcoal truncate">{review?.reviewer.name}</h3>
             <ReviewerStats
@@ -137,6 +153,19 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
               rating={review?.reviewer.rating || 0}
               location={review?.reviewer.location || ''}
             />
+          </div>
+
+          {/* Card Actions - slide in from right on hover - hidden on mobile */}
+          <div className="hidden sm:flex absolute right-4 top-4 z-20 flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-out">
+            <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100">
+              <ion-icon name="person-add-outline" class="text-charcoal" style={{fontSize: '20px'}} />
+            </button>
+            <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100">
+              <ion-icon name="chatbubble-outline" class="text-charcoal" style={{fontSize: '20px'}} />
+            </button>
+            <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100">
+              <ion-icon name="share-outline" class="text-charcoal" style={{fontSize: '20px'}} />
+            </button>
           </div>
         </div>
 

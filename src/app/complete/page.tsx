@@ -55,7 +55,7 @@ export default function CompletePage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-14 relative overflow-hidden">
+      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-14 relative overflow-hidden">
       {/* Lightweight decorative elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-sage/30 to-sage/80 rounded-full blur-3xl opacity-0 animate-fade-in-up delay-200" />

@@ -94,7 +94,7 @@ export default function Header({ showSearch = true, showProfile = true }: Header
   }, []);
 
 
-  const headerClassName = `fixed top-0 left-0 right-0 z-50 bg-off-white/80 backdrop-blur-sm overflow-hidden py-2 transition-all duration-300 ease-in-out hover:shadow-sm ${isVisible ? 'translate-y-0' : '-translate-y-full'}`;
+  const headerClassName = `fixed top-0 left-0 right-0 z-50 bg-off-white/80 backdrop-blur-sm overflow-hidden py-1 transition-all duration-300 ease-in-out hover:shadow-sm ${isVisible ? 'translate-y-0' : '-translate-y-full'}`;
 
   const searchOverlayClassName = `fixed left-0 right-0 z-70 bg-gradient-to-b from-white/98 to-off-white/98 backdrop-blur-lg border-b border-sage/20 shadow-2xl transition-all duration-500 ease-out ${isSearchOpen ? 'top-0 translate-y-0 opacity-100' : 'top-0 -translate-y-full opacity-0'}`;
 
@@ -140,7 +140,7 @@ export default function Header({ showSearch = true, showProfile = true }: Header
           <div className="flex items-center justify-between px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
             {/* Logo - mobile first */}
             <Link href="/home" className="flex items-center group">
-              <span className="font-urbanist text-xl sm:text-2xl md:text-3xl lg:text-4xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative">
+              <span className="font-urbanist text-xl lg:text-2xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative">
                 KLIO
                 <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-sage to-sage/60 group-hover:w-full transition-all duration-300 rounded-full"></div>
               </span>
@@ -152,11 +152,11 @@ export default function Header({ showSearch = true, showProfile = true }: Header
               {showSearch && (
                 <button
                   onClick={toggleSearch}
-                  className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-2 border border-charcoal/5 hover:border-sage/20"
+                  className="w-10 h-10 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-2 border border-charcoal/5 hover:border-sage/20"
                 >
                   <ion-icon
                     name={isSearchOpen ? "close" : "search"}
-                    class="text-xl sm:text-2xl text-charcoal/70 hover:text-sage transition-colors duration-300"
+                    class="text-base text-charcoal/70 hover:text-sage transition-colors duration-300"
                   />
                 </button>
               )}
@@ -165,11 +165,11 @@ export default function Header({ showSearch = true, showProfile = true }: Header
               {showProfile && (
                 <Link
                   href="/profile"
-                  className="group w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-2 border border-charcoal/5 hover:border-sage/20"
+                  className="group w-10 h-10 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-2 border border-charcoal/5 hover:border-sage/20"
                 >
                   <ion-icon
                     name="person"
-                    class="text-xl sm:text-2xl text-charcoal/70 group-hover:text-sage transition-colors duration-300"
+                    class="text-base text-charcoal/70 group-hover:text-sage transition-colors duration-300"
                   />
                 </Link>
               )}
@@ -187,11 +187,11 @@ export default function Header({ showSearch = true, showProfile = true }: Header
           {/* Close button - top right corner */}
           <button
             onClick={toggleSearch}
-            className="absolute top-6 right-6 w-12 h-12 bg-charcoal/10 hover:bg-sage/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg border border-charcoal/10 hover:border-sage/30 z-20"
+            className="absolute top-6 right-6 w-10 h-10 bg-charcoal/10 hover:bg-sage/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg border border-charcoal/10 hover:border-sage/30 z-20"
           >
             <ion-icon
               name="close"
-              class="text-2xl text-charcoal/60 hover:text-sage transition-colors duration-300"
+              class="text-base text-charcoal/60 hover:text-sage transition-colors duration-300"
             />
           </button>
 
@@ -204,10 +204,10 @@ export default function Header({ showSearch = true, showProfile = true }: Header
             
             {/* Premium search suggestions */}
             <div className="mt-8 text-center">
-              <p className="font-urbanist text-lg font-500 text-sage/80 mb-2">
+              <p className="font-urbanist text-sm font-500 text-sage/80 mb-2">
                 ✨ Curated Recommendations
               </p>
-              <p className="font-urbanist text-base font-400 text-charcoal/60">
+              <p className="font-urbanist text-sm font-400 text-charcoal/60">
                 Search for award-winning restaurants • artisan coffee shops • boutique experiences • cultural landmarks
               </p>
             </div>

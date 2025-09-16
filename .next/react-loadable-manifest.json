@@ -1,0 +1,20 @@
+{
+  "..\\node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts": {
+    "id": "..\\node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js"
+    ]
+  },
+  "app\\components\\Performance\\WebVitals.tsx -> web-vitals": {
+    "id": "app\\components\\Performance\\WebVitals.tsx -> web-vitals",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_web-vitals_dist_web-vitals_js.js"
+    ]
+  },
+  "app\\components\\Providers\\PageTransitionProvider.tsx -> ../Loading/PageLoading": {
+    "id": "app\\components\\Providers\\PageTransitionProvider.tsx -> ../Loading/PageLoading",
+    "files": [
+      "static/chunks/_app-pages-browser_src_app_components_Loading_PageLoading_tsx.js"
+    ]
+  }
+}

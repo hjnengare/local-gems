@@ -245,7 +245,7 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    .min-h-screen {
+    .min-h-dvh {
       min-height: 100vh;
       min-height: -webkit-fill-available;
     }
@@ -316,7 +316,7 @@
   }
 
   /* Viewport height utilities */
-  .min-h-screen-safe {
+  .min-h-dvh-safe {
     min-height: 100vh;
   }
 
@@ -332,8 +332,8 @@
 
   /* Mobile viewport utilities for all devices */
   @media only screen and (max-width: 768px) {
-    .min-h-screen-safe,
-    .min-h-screen {
+    .min-h-dvh-safe,
+    .min-h-dvh {
       min-height: 100vh;
       min-height: calc(var(--vh, 1vh) * 100);
     }
@@ -365,7 +365,7 @@
 
   /* iOS Safari specific viewport height */
   @supports (-webkit-touch-callout: none) {
-    .min-h-screen-safe {
+    .min-h-dvh-safe {
       min-height: -webkit-fill-available;
     }
 

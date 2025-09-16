@@ -1,5 +1,7 @@
 {
-  "/home/page": "app/home/page.js",
-  "/business/[id]/review/page": "app/business/[id]/review/page.js",
-  "/business/[id]/page": "app/business/[id]/page.js"
+  "/subcategories/page": "app/subcategories/page.js",
+  "/deal-breakers/page": "app/deal-breakers/page.js",
+  "/complete/page": "app/complete/page.js",
+  "/login/page": "app/login/page.js",
+  "/onboarding/page": "app/onboarding/page.js"
 }

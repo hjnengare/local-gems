@@ -40,7 +40,7 @@ export default function ExploreGemsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative overflow-hidden">
+    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative overflow-hidden">
       {/* Static background layers */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-sage/3 via-transparent to-coral/3" />

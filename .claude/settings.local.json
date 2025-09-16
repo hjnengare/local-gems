@@ -15,7 +15,8 @@
       "Bash(set ANALYZE=true)",
       "Bash(dir:*)",
       "Bash(findstr:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []

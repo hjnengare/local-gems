@@ -5,26 +5,14 @@ import { motion } from "framer-motion";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center px-4">
+    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="text-center max-w-md mx-auto"
       >
-        {/* Animated 404 Icon */}
-        <motion.div
-          initial={{ scale: 0.8 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="w-24 h-24 mx-auto mb-8 bg-gradient-to-br from-sage via-sage/90 to-sage/80 rounded-2xl flex items-center justify-center shadow-xl"
-        >
-          <ion-icon
-            name="diamond-outline"
-            style={{ fontSize: "48px" }}
-            class="text-white drop-shadow-sm"
-          />
-        </motion.div>
+        
 
         <motion.h1
           initial={{ opacity: 0, y: 10 }}
@@ -66,12 +54,6 @@ export default function NotFound() {
             Go to Home
           </Link>
 
-          <Link
-            href="/onboarding"
-            className="inline-block w-full py-4 px-8 bg-white/80 backdrop-blur-sm border border-sage/20 text-charcoal font-urbanist font-600 text-lg rounded-2xl hover:bg-sage/10 hover:border-sage transition-all duration-300 hover:scale-[1.02]"
-          >
-            Start Over
-          </Link>
         </motion.div>
       </motion.div>
     </div>

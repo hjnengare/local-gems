@@ -95,7 +95,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
         <div className="p-5 relative">
           {/* Business name - left aligned as in wireframe */}
           <div className="mb-1">
-            <h3 className="font-urbanist text-7 font-600 text-charcoal transition-colors duration-200 group-hover:text-sage">
+            <h3 className="font-urbanist text-base md:text-lg font-600 text-charcoal transition-colors duration-200 group-hover:text-sage">
               <Link href={business.href || "#"} className="hover:underline decoration-2 underline-offset-2">
                 {business.name}
               </Link>
@@ -103,14 +103,14 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           </div>
 
           {/* Category line - left aligned and subtle */}
-          <p className="mb-3 font-urbanist text-8 font-400 text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
+          <p className="mb-3 font-urbanist text-sm font-400 text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
             {business.category} • {business.location}
           </p>
 
           {/* Stars + reviews - left aligned */}
           <div className="mb-4 flex items-center gap-2">
             <Stars value={business.rating} />
-            <p className="font-urbanist text-8 font-400 leading-none text-charcoal/70 transition-colors duration-200">{business.reviews} reviews</p>
+            <p className="font-urbanist text-sm font-400 leading-none text-charcoal/70 transition-colors duration-200">{business.reviews} reviews</p>
           </div>
 
           {/* Month achievement at bottom */}

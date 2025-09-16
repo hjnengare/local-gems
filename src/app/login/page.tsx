@@ -54,7 +54,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+    <div ref={containerRef} className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
       {/* Back button with entrance animation */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -145,24 +145,14 @@ export default function LoginPage() {
         <div className="text-center mb-12 md:mb-16">
           <FadeInUp delay={0.4} duration={1} distance={60}>
             <div className="inline-block relative mb-6">
-              <h1 className="font-urbanist text-2 md:text-5xl lg:text-5xl font-700 text-charcoal mb-4 relative">
+              <h2 className="font-urbanist text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-5 md:mb-6 text-center leading-snug px-2 tracking-[0.01em]">
                 Welcome back
-              </h1>
-              <motion.div
-                initial={{ width: "0%" }}
-                animate={{ width: ["0%", "100%", "50%"] }}
-                transition={{
-                  duration: 2.4,
-                  delay: 1.4,
-                  ease: [0.25, 0.25, 0.25, 0.75],
-                  times: [0, 0.5, 1]
-                }}
-                className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-sage via-coral to-sage rounded-full"
-              />
+              </h2>
+              
             </div>
           </FadeInUp>
           <FadeInUp delay={0.7} duration={0.8} distance={30}>
-            <p className="font-urbanist text-6 md:text-5 font-400 text-charcoal/70 max-w-md mx-auto leading-relaxed">
+            <p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 mb-10 md:mb-12 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto">
               Sign in to continue discovering KLIO
             </p>
           </FadeInUp>

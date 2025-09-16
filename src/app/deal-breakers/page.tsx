@@ -50,7 +50,7 @@ export default function DealBreakersPage() {
   }, [canContinue, user, router, selected, updateUser]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
       {/* Back button - top left */}
       <div className="absolute top-6 left-6 z-20">
         <Link
@@ -78,7 +78,7 @@ export default function DealBreakersPage() {
             <h2 className="font-urbanist text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-5 md:mb-6 text-center leading-snug px-2 tracking-[0.01em]">
               Your deal-breakers
             </h2>
-            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-sage via-coral to-sage rounded-full"></div>
+          
           </div>
           <p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 mb-10 md:mb-12 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto">
             (Pick 2–3 that matter most to you)

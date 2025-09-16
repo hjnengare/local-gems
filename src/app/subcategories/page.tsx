@@ -100,7 +100,7 @@ export default function SubcategoriesPage() {
   }, [user, router, selected, updateUser]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
       {/* Back */}
       <div className="absolute top-6 left-6 z-20">
         <Link href="/interests" className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full">

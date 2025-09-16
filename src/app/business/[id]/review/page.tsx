@@ -46,7 +46,7 @@ export default function WriteReviewPage() {
 
   if (authLoading || businessLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
@@ -58,7 +58,7 @@ export default function WriteReviewPage() {
 
   if (!business) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
         <div className="text-center">
           <h1 className="font-urbanist text-2xl font-600 text-charcoal mb-4">Business not found</h1>
           <Link
@@ -114,7 +114,7 @@ export default function WriteReviewPage() {
   const isFormValid = overallRating > 0 && reviewText.trim().length > 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
+    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
       {/* Ambient background elements */}
       <div className="absolute inset-0 opacity-20">
         <motion.div

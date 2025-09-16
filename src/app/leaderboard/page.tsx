@@ -6,6 +6,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const BottomNav = dynamic(() => import("../components/Navigation/BottomNav"));
+const Footer = dynamic(() => import("../components/Footer/Footer"), {
+  loading: () => null,
+  ssr: false,
+});
 
 interface LeaderboardUser {
   rank: number;
@@ -103,7 +107,7 @@ const businessOfMonth: BusinessOfMonth[] = [
 
 export default function LeaderboardPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 pb-24 md:pb-6 relative overflow-hidden">
+    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 pb-24 md:pb-6 relative overflow-hidden">
       {/* Premium background elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-sage/8 via-sage/4 to-transparent rounded-full blur-3xl animate-pulse" />
@@ -416,6 +420,9 @@ export default function LeaderboardPage() {
           </div>
         </motion.div>
       </div>
+
+      {/* Footer - only on larger screens */}
+      <Footer />
 
       {/* Bottom Navigation */}
       <BottomNav />

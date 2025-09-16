@@ -73,7 +73,7 @@ export default function RegisterPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+      <div ref={containerRef} className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
 
       {/* Back button with entrance animation */}
       <motion.div

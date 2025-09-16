@@ -45,12 +45,17 @@ const BottomNav = dynamic(() => import("../components/Navigation/BottomNav"), {
   loading: () => null,
 });
 
+const Footer = dynamic(() => import("../components/Footer/Footer"), {
+  loading: () => null,
+  ssr: false,
+});
+
 // Memoized BusinessRow component
 const MemoizedBusinessRow = memo(BusinessRow);
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative overflow-hidden">
+    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative overflow-hidden">
       {/* Static background layers */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-sage/3 via-transparent to-coral/3" />
@@ -96,6 +101,9 @@ export default function Home() {
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-br from-coral/8 to-transparent rounded-full blur-2xl" />
       </div>
+
+      {/* Footer - only on larger screens */}
+      <Footer />
 
       {/* Bottom Navigation */}
       <BottomNav />

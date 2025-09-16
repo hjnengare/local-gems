@@ -50,7 +50,7 @@ export default function BusinessProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
+    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
       {/* Ambient background elements */}
       <div className="absolute inset-0 opacity-20">
         <motion.div

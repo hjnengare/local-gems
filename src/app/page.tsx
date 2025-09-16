@@ -22,7 +22,7 @@ export default function HomePage() {
   }, [router, user, isLoading]);
 
   return (
-    <div className="min-h-screen bg-off-white flex items-center justify-center">
+    <div className="min-h-dvh bg-off-white flex items-center justify-center">
       <div className="text-center">
         <div className="w-12 h-12 mx-auto mb-4">
           <div className="w-full h-full border-4 border-sage border-t-transparent rounded-full animate-spin"></div>

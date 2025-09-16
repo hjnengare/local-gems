@@ -5,6 +5,7 @@ export interface Reviewer {
   reviewCount: number;
   rating: number;
   badge?: "top" | "verified" | "local";
+  trophyBadge?: "gold" | "silver" | "bronze" | "rising-star" | "community-favorite";
   location: string;
 }
 
@@ -20,6 +21,16 @@ export interface Review {
   images?: string[];
 }
 
+// Utility function to randomly assign trophy badges
+const getRandomTrophyBadge = (): Reviewer['trophyBadge'] | undefined => {
+  const trophies: (Reviewer['trophyBadge'])[] = ["gold", "silver", "bronze", "rising-star", "community-favorite"];
+  const shouldHaveTrophy = Math.random() > 0.3; // 70% chance of having a trophy
+
+  if (!shouldHaveTrophy) return undefined;
+
+  return trophies[Math.floor(Math.random() * trophies.length)];
+};
+
 export const TOP_REVIEWERS: Reviewer[] = [
   {
     id: "1",
@@ -28,15 +39,17 @@ export const TOP_REVIEWERS: Reviewer[] = [
     reviewCount: 127,
     rating: 4.8,
     badge: "top",
+    trophyBadge: "gold",
     location: "Downtown"
   },
   {
-    id: "2", 
+    id: "2",
     name: "Marcus Johnson",
     profilePicture: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
     reviewCount: 89,
     rating: 4.7,
     badge: "verified",
+    trophyBadge: "community-favorite",
     location: "Midtown"
   },
   {
@@ -46,6 +59,7 @@ export const TOP_REVIEWERS: Reviewer[] = [
     reviewCount: 156,
     rating: 4.9,
     badge: "local",
+    trophyBadge: "silver",
     location: "Arts District"
   },
   {
@@ -54,6 +68,7 @@ export const TOP_REVIEWERS: Reviewer[] = [
     profilePicture: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
     reviewCount: 73,
     rating: 4.6,
+    trophyBadge: "rising-star",
     location: "Westside"
   }
 ];
