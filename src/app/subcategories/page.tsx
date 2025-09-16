@@ -153,7 +153,7 @@ export default function SubcategoriesPage() {
                   const active = selected.includes(sc.id);
 
                   const base =
-                    "w-full py-4 md:py-5 px-3 md:px-4 rounded-full font-urbanist text-6 md:text-5 font-600 text-center transition-all duration-300 ease-cubic-out " +
+                    "w-full py-4 md:py-5 px-3 md:px-4 rounded-full font-urbanist text-6 md:text-5 font-600 text-center transition-all duration-300 ease-out " +
                     "focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2";
 
                   const state = active

@@ -95,12 +95,12 @@ export default function DealBreakersPage() {
                 key={item.id}
                 onClick={() => toggle(item.id)}
                 aria-pressed={isOn}
-                className="relative w-full max-w-[260px] aspect-square rounded-full transform-gpu transition-transform duration-500 ease-cubic-out"
+                className="relative w-full max-w-[260px] aspect-square rounded-full transform-gpu transition-transform duration-500 ease-out"
                 style={{ perspective: "1200px" }}
               >
                 {/* Flipper */}
                 <div
-                  className="relative w-full h-full rounded-full transition-transform duration-500 ease-cubic-out"
+                  className="relative w-full h-full rounded-full transition-transform duration-500 ease-out"
                   style={{
                     transformStyle: "preserve-3d",
                     transform: isOn ? "rotateY(180deg)" : "",

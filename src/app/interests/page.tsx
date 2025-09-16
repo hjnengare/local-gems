@@ -8,19 +8,18 @@ import { OnboardingRoute } from "../components/ProtectedRoute/ProtectedRoute";
 
 interface Interest {
   id: string;
-  label: string;
-  subcategory: string;
+  name: string;
 }
 
 const interests: Interest[] = [
-  { id: "food-drink", label: "Food & Drink", subcategory: "food-drink" },
-  { id: "beauty-wellness", label: "Beauty & Wellness", subcategory: "beauty-wellness" },
-  { id: "home-services", label: "Home & Services", subcategory: "home-services" },
-  { id: "outdoors-adventure", label: "Outdoors & Adventure", subcategory: "outdoors-adventure" },
-  { id: "nightlife-entertainment", label: "Nightlife & Entertainment", subcategory: "nightlife-entertainment" },
-  { id: "arts-culture", label: "Arts & Culture", subcategory: "arts-culture" },
-  { id: "family-pets", label: "Family & Pets", subcategory: "family-pets" },
-  { id: "shopping-lifestyle", label: "Shopping & Lifestyle", subcategory: "shopping-lifestyle" },
+  { id: "food-drink", name: "Food & Drink" },
+  { id: "beauty-wellness", name: "Beauty & Wellness" },
+  { id: "home-services", name: "Home & Services" },
+  { id: "outdoors-adventure", name: "Outdoors & Adventure" },
+  { id: "nightlife-entertainment", name: "Nightlife & Entertainment" },
+  { id: "arts-culture", name: "Arts & Culture" },
+  { id: "family-pets", name: "Family & Pets" },
+  { id: "shopping-lifestyle", name: "Shopping & Lifestyle" },
 ];
 
 function InterestsContent() {
@@ -179,7 +178,7 @@ function InterestsContent() {
                   key={interest.id}
                   onClick={() => handleInterestToggle(interest.id)}
                   className={`
-                    relative z-30 w-[85%] aspect-square rounded-full border-2 transition-all duration-300 ease-cubic-out mx-auto
+                    relative z-30 w-[85%] aspect-square rounded-full border-2 transition-all duration-300 ease-out mx-auto
                     ${selectedInterests.includes(interest.id)
                       ? 'bg-coral border-coral text-white shadow-lg animate-bounce'
                       : 'bg-sage border-sage text-white hover:bg-sage/90'
@@ -189,7 +188,7 @@ function InterestsContent() {
                 >
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
                     <span className="font-urbanist text-7 md:text-6 font-600 text-center leading-tight">
-                      {interest.name || interest.label}
+                      {interest.name}
                     </span>
                     {selectedInterests.includes(interest.id) && (
                       <div className="absolute top-2 right-2">
