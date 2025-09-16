@@ -73,9 +73,6 @@ export default function RootLayout({
         <link rel="canonical" href="/" />
       </head>
       <body className={urbanist.className}>
-        <a href="#main-content" className="skip-link">
-          Skip to main content
-        </a>
         <WebVitals />
         <ErrorBoundary>
           <ToastProvider>
