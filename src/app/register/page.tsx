@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import FadeInUp from "../components/Animations/FadeInUp";
 import PremiumHover from "../components/Animations/PremiumHover";
 
@@ -30,23 +30,6 @@ export default function RegisterPage() {
   const { showToast } = useToast();
 
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
-  });
-
-  // Advanced parallax transforms with GPU acceleration
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const orbSlowY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
-  const orbFastY = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const cardY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
-
-  // Spring physics for smooth motion
-  const springConfig = { damping: 15, stiffness: 100, mass: 0.8 };
-  const smoothBackgroundY = useSpring(backgroundY, springConfig);
-  const smoothOrbY = useSpring(orbSlowY, springConfig);
-  const smoothContentY = useSpring(contentY, springConfig);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,14 +56,14 @@ export default function RegisterPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div ref={containerRef} className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+      <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-6 sm:py-8 relative overflow-hidden">
 
       {/* Back button with entrance animation */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="absolute top-6 left-6 z-20"
+        className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20"
       >
         <PremiumHover scale={1.1} duration={0.2}>
           <Link href="/onboarding" className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-3 hover:bg-charcoal/5 rounded-full block">
@@ -90,57 +73,29 @@ export default function RegisterPage() {
       </motion.div>
 
 
-      {/* Lightweight decorative elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-sage/30 to-sage/80 rounded-full blur-3xl opacity-0 animate-fade-in-up delay-200" />
-        <div className="absolute bottom-32 right-16 w-56 h-56 bg-gradient-to-br from-coral/25 to-coral/80 rounded-full blur-3xl opacity-0 animate-fade-in-up delay-400" />
-        <div className="absolute top-1/2 left-1/3 w-32 h-32 bg-gradient-to-br from-charcoal/20 to-charcoal/20 rounded-full blur-2xl opacity-0 animate-fade-in-up delay-600" />
-      </div>
-
-      {/* Gradient overlays */}
-      <motion.div
-        style={{ y: smoothBackgroundY }}
-        className="absolute inset-0 bg-gradient-to-t from-[var(--off-white)]/40 via-transparent to-[var(--off-white)]/30 pointer-events-none will-change-transform z-0"
-      />
-      <motion.div
-        style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]) }}
-        className="absolute inset-0 bg-gradient-to-r from-[var(--sage)]/4 via-transparent to-[var(--coral)]/40 pointer-events-none will-change-transform z-0"
-      />
 
 
-      <motion.div
-        style={{ y: smoothContentY }}
-        className="w-[90%] max-w-[700px] mx-auto relative z-10 will-change-transform"
-      >
+      <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12">
         {/* Header with premium styling and animations */}
-        <div className="text-center mb-10 md:mb-14">
+        <div className="text-center mb-6 sm:mb-8 md:mb-12">
           <FadeInUp delay={0.4} duration={1} distance={60}>
             <div className="inline-block relative mb-3">
-              <h2 className="font-urbanist text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-5 md:mb-6 text-center leading-snug px-2 tracking-[0.01em]">
+              <h2 className="font-urbanist text-xl sm:text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-3 sm:mb-4 md:mb-6 text-center leading-snug px-2 tracking-[0.01em]">
                 Create your account
               </h2>
             </div>
           </FadeInUp>
           <FadeInUp delay={0.7} duration={0.8} distance={30}>
-            <p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 mb-10 md:mb-12 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto">
+            <p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 mb-6 sm:mb-8 md:mb-10 leading-relaxed px-2 max-w-lg mx-auto">
               Join the <span className="font-bold text-charcoal leading-snug">KLIO</span> community and discover authentic experiences!
             </p>
           </FadeInUp>
         </div>
 
-        {/* Premium Form Card with parallax */}
-        <motion.div
-          style={{ y: cardY }}
-          className="bg-off-white/95 backdrop-blur-lg rounded-3 shadow-xl p-6 md:p-16 mb-8 relative overflow-hidden will-change-transform"
-          initial={{ opacity: 0, y: 50, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.8, delay: 1, type: "spring", stiffness: 200 }}
-        >
-          {/* Card decorative elements */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
+        {/* Form Card */}
+        <div className="bg-off-white/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 lg:p-12 mb-4 sm:mb-6 relative overflow-hidden">
 
-          <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8 relative z-10">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6 relative z-10">
             {/* Error Message */}
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
@@ -150,7 +105,7 @@ export default function RegisterPage() {
 
             {/* Email with icon */}
             <div className="relative group">
-              <div className="absolute left-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 group-focus-within:text-sage transition-colors duration-300 z-10">
+              <div className="absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 group-focus-within:text-sage transition-colors duration-300 z-10">
                 <ion-icon name="mail-outline" size="small"></ion-icon>
               </div>
               <input
@@ -158,13 +113,13 @@ export default function RegisterPage() {
                 placeholder="email@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-cultured-1/50 border border-light-gray/50 rounded-3 pl-14 pr-4 py-4 md:py-5 font-urbanist text-6 font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
+                className="w-full bg-cultured-1/50 border border-light-gray/50 rounded-2xl sm:rounded-3xl pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50 min-h-[44px]"
               />
             </div>
 
             {/* Password with enhanced styling */}
             <div className="relative group">
-              <div className="absolute left-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 group-focus-within:text-sage transition-colors duration-300 z-10">
+              <div className="absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 group-focus-within:text-sage transition-colors duration-300 z-10">
                 <ion-icon name="lock-closed-outline" size="small"></ion-icon>
               </div>
               <input
@@ -222,13 +177,13 @@ export default function RegisterPage() {
             </div>
 
             {/* Create Account Button with premium effects */}
-            <div className="pt-8 flex justify-center">
-              <div className="w-1/2">
+            <div className="pt-2 sm:pt-4 md:pt-6 flex justify-center">
+              <div className="w-full sm:w-3/4 lg:w-1/2">
                 <PremiumHover scale={1.02} shadowIntensity="strong">
                   <motion.button
                     type="submit"
                     disabled={isLoading}
-                    className="group block w-full bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white font-urbanist text-sm md:text-base font-600 py-3.5 md:py-4 px-6 md:px-8 rounded-2xl md:rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/20 hover:focus:ring-coral/20 focus:ring-offset-1 relative overflow-hidden text-center hover:scale-[1.02]"
+                    className="group block w-full bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white font-urbanist text-sm sm:text-base font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-xl sm:rounded-2xl md:rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/20 hover:focus:ring-coral/20 focus:ring-offset-1 relative overflow-hidden text-center hover:scale-[1.02] min-h-[44px]"
                     whileTap={{ scale: 0.98 }}
                     transition={{ duration: 0.1 }}
                   >
@@ -244,8 +199,8 @@ export default function RegisterPage() {
           </form>
 
           {/* Enhanced footer */}
-          <div className="text-center mt-8 pt-6 border-t border-light-gray/30">
-            <div className="font-urbanist text-7 font-400 text-charcoal/70">
+          <div className="text-center mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-light-gray/30">
+            <div className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70">
               Already have an account?{" "}
               <Link
                 href="/login"
@@ -256,59 +211,59 @@ export default function RegisterPage() {
               </Link>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Premium Trust Indicators with spring animations */}
-        <div className="flex justify-center items-center space-x-8 md:space-x-12 text-charcoal/60 text-center">
+        <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-12 text-charcoal/60 text-center pt-4 sm:pt-6">
           <FadeInUp delay={1.6} duration={0.6} distance={20}>
             <PremiumHover scale={1.1} duration={0.3}>
-              <div className="flex flex-col items-center space-y-2">
+              <div className="flex flex-col items-center space-y-1 sm:space-y-2">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.6, delay: 1.8, type: "spring", stiffness: 300 }}
-                  className="w-12 h-12 md:w-14 md:h-14 bg-sage/10 rounded-full flex items-center justify-center"
+                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-sage/10 rounded-full flex items-center justify-center"
                 >
                   <ion-icon name="shield-checkmark-outline" style={{ color: "#749176" }} size="small"></ion-icon>
                 </motion.div>
-                <span className="font-urbanist text-8 md:text-7 font-500">Secure</span>
+                <span className="font-urbanist text-xs sm:text-sm md:text-base font-500">Secure</span>
               </div>
             </PremiumHover>
           </FadeInUp>
 
           <FadeInUp delay={1.8} duration={0.6} distance={20}>
             <PremiumHover scale={1.1} duration={0.3}>
-              <div className="flex flex-col items-center space-y-2">
+              <div className="flex flex-col items-center space-y-1 sm:space-y-2">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.6, delay: 2.0, type: "spring", stiffness: 300 }}
-                  className="w-12 h-12 md:w-14 md:h-14 bg-coral/10 rounded-full flex items-center justify-center"
+                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-coral/10 rounded-full flex items-center justify-center"
                 >
                   <ion-icon name="people-outline" style={{ color: "#d67469" }} size="small"></ion-icon>
                 </motion.div>
-                <span className="font-urbanist text-8 md:text-7 font-500">Community</span>
+                <span className="font-urbanist text-xs sm:text-sm md:text-base font-500">Community</span>
               </div>
             </PremiumHover>
           </FadeInUp>
 
           <FadeInUp delay={2.0} duration={0.6} distance={20}>
             <PremiumHover scale={1.1} duration={0.3}>
-              <div className="flex flex-col items-center space-y-2">
+              <div className="flex flex-col items-center space-y-1 sm:space-y-2">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.6, delay: 2.2, type: "spring", stiffness: 300 }}
-                  className="w-12 h-12 md:w-14 md:h-14 bg-charcoal/10 rounded-full flex items-center justify-center"
+                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-charcoal/10 rounded-full flex items-center justify-center"
                 >
                   <ion-icon name="star-outline" style={{ color: "#211e1d" }} size="small"></ion-icon>
                 </motion.div>
-                <span className="font-urbanist text-8 md:text-7 font-500">Quality</span>
+                <span className="font-urbanist text-xs sm:text-sm md:text-base font-500">Quality</span>
               </div>
             </PremiumHover>
           </FadeInUp>
         </div>
-      </motion.div>
+      </div>
       </div>
     </>
   );

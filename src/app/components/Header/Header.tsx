@@ -6,6 +6,7 @@ import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
 import { motion } from "framer-motion";
 import KlioLogo from "../Logo/KlioLogo";
+import useScrollDirection from "../../hooks/useScrollDirection";
 
 interface HeaderProps {
   showSearch?: boolean;
@@ -13,33 +14,10 @@ interface HeaderProps {
 }
 
 export default function Header({ showSearch = true, showProfile = true }: HeaderProps) {
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const { isVisible } = useScrollDirection({ threshold: 100, throttleMs: 16 });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
-
-  useEffect(() => {
-    const controlNavbar = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY <= 10) {
-        // Always show navbar when at top
-        setIsVisible(true);
-      } else if (currentScrollY < lastScrollY) {
-        // Show navbar when scrolling up
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        // Hide navbar when scrolling down
-        setIsVisible(false);
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener('scroll', controlNavbar, { passive: true });
-    return () => window.removeEventListener('scroll', controlNavbar);
-  }, [lastScrollY]);
 
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);

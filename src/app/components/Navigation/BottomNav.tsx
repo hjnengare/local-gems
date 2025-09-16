@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import useMobileBottomNav from "../../hooks/useMobileBottomNav";
 
 interface NavItem {
   name: string;
@@ -26,43 +26,16 @@ const navItems: NavItem[] = [
 
 export default function BottomNav() {
   const pathname = usePathname();
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
   // Only show bottom nav on home page and leaderboard
   const allowedPages = ['/home', '/leaderboard'];
-  const shouldShowNav = allowedPages.some(page => pathname === page || pathname.startsWith(page));
 
-  useEffect(() => {
-    const controlBottomNav = () => {
-      if (!shouldShowNav) {
-        setIsVisible(false);
-        return;
-      }
-
-      const currentScrollY = window.scrollY;
-
-      // Hide bottom nav when at top (scroll position is 0 or very close)
-      if (currentScrollY <= 10) {
-        setIsVisible(false);
-      }
-      
-      else if (currentScrollY < lastScrollY) {
-        setIsVisible(false);
-      }
-      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(true);
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener('scroll', controlBottomNav, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', controlBottomNav);
-    };
-  }, [lastScrollY, shouldShowNav]);
+  const { isVisible, shouldShowNav } = useMobileBottomNav({
+    allowedPages,
+    pathname,
+    scrollThreshold: 50,
+    throttleMs: 16
+  });
 
   // Don't render nav at all if not on allowed pages
   if (!shouldShowNav) {

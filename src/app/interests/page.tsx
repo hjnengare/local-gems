@@ -120,27 +120,18 @@ function InterestsContent() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-6 sm:py-8 relative overflow-hidden">
       {/* Back button - top left */}
-      <div className="absolute top-6 left-6 z-20">
+      <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
         <Link href="/register" className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full">
           <ion-icon name="arrow-back-outline" size="small"></ion-icon>
         </Link>
       </div>
 
-      {/* Lightweight decorative elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-sage/30 to-sage/80 rounded-full blur-3xl opacity-0 animate-fade-in-up delay-200" />
-        <div className="absolute bottom-32 right-16 w-56 h-56 bg-gradient-to-br from-coral/25 to-coral/80 rounded-full blur-3xl opacity-0 animate-fade-in-up delay-400" />
-        <div className="absolute top-1/2 left-1/3 w-32 h-32 bg-gradient-to-br from-charcoal/20 to-charcoal/20 rounded-full blur-2xl opacity-0 animate-fade-in-up delay-600" />
-      </div>
 
-      {/* Subtle mesh gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-off-white/30 via-transparent to-off-white/20 pointer-events-none"></div>
-
-      <div className="w-[90%] max-w-[700px] mx-auto relative z-10">
+      <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12">
         {/* Header with premium styling */}
-        <div className="text-center mb-12 md:mb-16">
+        <div className="text-center mb-6 sm:mb-8 md:mb-12">
           <div className="inline-block relative mb-6">
             <h2 className="font-urbanist text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-3 md:mb-3 text-center leading-snug px-2 tracking-[0.01em]">
               <span className="relative">
@@ -158,10 +149,7 @@ function InterestsContent() {
         </div>
 
         {/* Premium Interests Card */}
-        <div className="bg-off-white/95 backdrop-blur-lg rounded-3 p-6 md:p-16 mb-8 relative overflow-visible md:py-10">
-          {/* Card decorative elements */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
+        <div className="bg-off-white/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-12 mb-4 sm:mb-6 relative overflow-visible">
 
           <div className="relative z-10 py-8">
             {/* Error Message */}
