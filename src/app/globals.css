@@ -73,18 +73,44 @@
 }
 
 @layer base {
+  /* Reset browser defaults */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
   html {
     font-family: 'Urbanist', sans-serif;
     font-size: 100%; /* Standard 16px base for accessibility */
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    min-height: 100vh;
+    scroll-behavior: smooth;
   }
 
   body {
     @apply text-base; /* Use token system: 16px with 1.6 line-height */
     color: hsl(0, 0%, 0%);
     background-color: hsl(0, 0%, 100%);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100vw;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+    /* Prevent overscroll bounce on mobile */
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Reset default margins and paddings */
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre, dl, dd, ol, ul, form, fieldset, legend, figure, table, th, td, caption, hr {
+    margin: 0;
+    padding: 0;
   }
 
   /* Heading hierarchy */
@@ -94,26 +120,76 @@
   h4 { @apply text-lg md:text-xl font-600; }
   h5 { @apply text-base md:text-lg font-500; }
   h6 { @apply text-sm md:text-base font-500; }
-  
+
   a {
     color: inherit;
     text-decoration: none;
   }
-  
+
   img {
     max-width: 100%;
     height: auto;
+    border: 0;
   }
-  
+
   button {
     background: none;
     border: none;
     cursor: pointer;
     font-family: inherit;
+    margin: 0;
+    padding: 0;
   }
-  
+
   ul, ol {
     list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Remove default form element margins */
+  input, textarea, select, button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-family: inherit;
+    max-width: 100%;
+  }
+
+  /* Prevent horizontal overflow for specific elements */
+  div, section, article, main, aside, header, footer, nav {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Handle long text content */
+  p, span, a, strong, em, code {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  /* Ensure images and media don't exceed container width */
+  img, video, canvas, svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Prevent table overflow */
+  table {
+    max-width: 100%;
+    table-layout: fixed;
+    overflow-wrap: break-word;
+  }
+
+  /* Handle pre and code elements */
+  pre, code {
+    max-width: 100%;
+    overflow-x: auto;
+    word-wrap: break-word;
+    white-space: pre-wrap;
   }
 
   /* iOS Safari zoom prevention */
@@ -153,13 +229,29 @@
     scroll-snap-stop: always;
   }
 
-  /* Fix iOS safari viewport height issues */
+  /* Fix iOS safari viewport height issues and prevent unintended scroll */
   @supports (-webkit-touch-callout: none) {
+    html {
+      height: 100vh;
+      height: -webkit-fill-available;
+      overflow: hidden;
+    }
+
+    body {
+      height: 100vh;
+      height: -webkit-fill-available;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .min-h-screen {
+      min-height: 100vh;
       min-height: -webkit-fill-available;
     }
 
     .h-screen {
+      height: 100vh;
       height: -webkit-fill-available;
     }
   }
@@ -199,7 +291,102 @@
     0%, 50% { opacity: 1; }
     51%, 100% { opacity: 0; }
   }
-  
+
+  /* Width constraint utilities */
+  .max-w-full-safe {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .container-safe {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    overflow-x: hidden;
+  }
+
+  /* Prevent any element from causing horizontal scroll */
+  .no-overflow {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Viewport height utilities */
+  .min-h-screen-safe {
+    min-height: 100vh;
+  }
+
+  .h-screen-safe {
+    height: 100vh;
+  }
+
+  /* Force full viewport height */
+  .full-viewport {
+    min-height: 100vh !important;
+    height: 100vh !important;
+  }
+
+  /* Mobile viewport utilities for all devices */
+  @media only screen and (max-width: 768px) {
+    .min-h-screen-safe,
+    .min-h-screen {
+      min-height: 100vh;
+      min-height: calc(var(--vh, 1vh) * 100);
+    }
+
+    .h-screen-safe,
+    .h-screen {
+      height: 100vh;
+      height: calc(var(--vh, 1vh) * 100);
+    }
+
+    .full-viewport {
+      min-height: 100vh !important;
+      height: 100vh !important;
+      min-height: calc(var(--vh, 1vh) * 100) !important;
+      height: calc(var(--vh, 1vh) * 100) !important;
+      overflow-x: hidden !important;
+    }
+
+    /* Prevent unintended scroll on mobile pages */
+    .mobile-page {
+      height: 100vh;
+      height: calc(var(--vh, 1vh) * 100);
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: none;
+    }
+  }
+
+  /* iOS Safari specific viewport height */
+  @supports (-webkit-touch-callout: none) {
+    .min-h-screen-safe {
+      min-height: -webkit-fill-available;
+    }
+
+    .h-screen-safe {
+      height: -webkit-fill-available;
+    }
+
+    .full-viewport {
+      min-height: -webkit-fill-available !important;
+      height: -webkit-fill-available !important;
+    }
+
+    .mobile-page {
+      height: -webkit-fill-available;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: none;
+    }
+  }
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     * {

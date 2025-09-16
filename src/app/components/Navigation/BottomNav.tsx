@@ -46,13 +46,12 @@ export default function BottomNav() {
       if (currentScrollY <= 10) {
         setIsVisible(false);
       }
-      // Show bottom nav when scrolling up (header becomes hidden)
+      
       else if (currentScrollY < lastScrollY) {
-        setIsVisible(true);
-      }
-      // Hide bottom nav when scrolling down
-      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsVisible(false);
+      }
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(true);
       }
 
       setLastScrollY(currentScrollY);
@@ -85,7 +84,7 @@ export default function BottomNav() {
       }}
       className="fixed bottom-0 left-0 right-0 z-50 bg-off-white/95 backdrop-blur-xl border-t border-sage/10 md:hidden"
     >
-      <div className="flex items-center justify-around py-3 px-4 max-w-md mx-auto">
+      <div className="flex items-center justify-around py-2 px-4 max-w-md mx-auto">
         {navItems.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href);
 

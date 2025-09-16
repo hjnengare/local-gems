@@ -1,12 +1,39 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface PageLoadingProps {
   text?: string;
 }
 
+type Particle = {
+  x: number;
+  y: number;
+  left: string;
+  top: string;
+  delay: number;
+  duration: number;
+};
+
 export default function PageLoading({ text = "Loading..." }: PageLoadingProps) {
+  const [mounted, setMounted] = useState(false);
+  const [particles, setParticles] = useState<Particle[]>([]);
+
+  // Generate deterministic particles after mount to avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+    const particleCount = 6;
+    const newParticles: Particle[] = Array.from({ length: particleCount }, (_, i) => ({
+      x: (i * 13) % 40 - 20, // Deterministic but varied values
+      y: (i * 17) % 60 - 30,
+      left: `${20 + (i * 11) % 60}%`, // Spread across 20-80%
+      top: `${30 + (i * 7) % 40}%`,   // Spread across 30-70%
+      delay: (i * 0.5) % 3,           // 0-2.5s delays
+      duration: 3 + (i % 3),          // 3-5s durations
+    }));
+    setParticles(newParticles);
+  }, []);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -146,26 +173,26 @@ export default function PageLoading({ text = "Loading..." }: PageLoadingProps) {
         />
       </motion.div>
 
-      {/* Floating particles for extra premium feel */}
-      {[...Array(6)].map((_, i) => (
+      {/* Floating particles for extra premium feel - hydration-safe */}
+      {mounted && particles.map((particle, i) => (
         <motion.div
           key={i}
           animate={{
             y: [-20, -60, -20],
-            x: [Math.random() * 40 - 20, Math.random() * 60 - 30, Math.random() * 40 - 20],
+            x: [particle.x, particle.y, particle.x],
             opacity: [0, 0.6, 0],
             scale: [0.5, 1, 0.5]
           }}
           transition={{
-            duration: 3 + Math.random() * 2,
+            duration: particle.duration,
             repeat: Infinity,
-            delay: Math.random() * 3,
+            delay: particle.delay,
             ease: "easeInOut"
           }}
           className="absolute w-1 h-1 bg-sage/30 rounded-full blur-sm"
           style={{
-            left: `${20 + Math.random() * 60}%`,
-            top: `${30 + Math.random() * 40}%`
+            left: particle.left,
+            top: particle.top
           }}
         />
       ))}

@@ -33,13 +33,13 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
   {
     path: "/subcategories",
     name: "Subcategories",
-    isComplete: (user) => !!user?.subcategories && user.subcategories.length > 0,
+    isComplete: (user) => !!user?.subInterests && user.subInterests.length > 0,
     requiredPrevious: ["/interests"]
   },
   {
     path: "/deal-breakers",
     name: "Deal Breakers",
-    isComplete: (user) => !!user?.dealBreakers && user.dealBreakers.length >= 2 && user.dealBreakers.length <= 3,
+    isComplete: (user) => !!user?.dealbreakers && user.dealbreakers.length >= 2 && user.dealbreakers.length <= 3,
     requiredPrevious: ["/subcategories"]
   },
   {

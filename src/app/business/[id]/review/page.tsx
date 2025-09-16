@@ -1,10 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useRouter, useParams } from "next/navigation";
+import { useBusiness } from "../../../hooks/useBusinesses";
+import { useReviewSubmission } from "../../../hooks/useReviews";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const FadeInUp = dynamic(() => import("../../../components/Animations/FadeInUp"), {
   ssr: false,
@@ -16,12 +20,59 @@ const PremiumHover = dynamic(() => import("../../../components/Animations/Premiu
 
 const BottomNav = dynamic(() => import("../../../components/Navigation/BottomNav"));
 
+const ImageUpload = dynamic(() => import("../../../components/ReviewForm/ImageUpload"), {
+  ssr: false,
+});
+
 export default function WriteReviewPage() {
+  const router = useRouter();
+  const params = useParams();
+  const { user, loading: authLoading } = useAuth();
+  const { business, loading: businessLoading } = useBusiness(undefined, params.id as string);
+  const { submitting, submitReview } = useReviewSubmission();
+
   const [overallRating, setOverallRating] = useState(0);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [reviewText, setReviewText] = useState("");
+  const [reviewTitle, setReviewTitle] = useState("");
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
-  const businessName = "Mama's Kitchen"; // In real app, get from params
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/login?redirect=' + encodeURIComponent(window.location.pathname));
+    }
+  }, [user, authLoading, router]);
+
+  if (authLoading || businessLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          className="w-8 h-8 border-2 border-sage border-t-transparent rounded-full"
+        />
+      </div>
+    );
+  }
+
+  if (!business) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="font-urbanist text-2xl font-600 text-charcoal mb-4">Business not found</h1>
+          <Link
+            href="/home"
+            className="text-sage hover:text-sage/80 font-urbanist font-500"
+          >
+            ← Back to Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const businessName = business.name;
 
   const quickTags = [
     "Trustworthy",
@@ -41,6 +92,26 @@ export default function WriteReviewPage() {
   const handleStarClick = (rating: number) => {
     setOverallRating(rating);
   };
+
+  const handleSubmitReview = async () => {
+    if (!business || !user) return;
+
+    const success = await submitReview({
+      business_id: business.id,
+      rating: overallRating,
+      title: reviewTitle.trim() || undefined,
+      content: reviewText.trim(),
+      tags: selectedTags,
+      images: selectedImages.length > 0 ? selectedImages : undefined
+    });
+
+    if (success) {
+      // Navigate back to business page
+      router.push(`/business/${params.id}`);
+    }
+  };
+
+  const isFormValid = overallRating > 0 && reviewText.trim().length > 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
@@ -72,7 +143,7 @@ export default function WriteReviewPage() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link href="/business/mamas-kitchen" className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full">
+            <Link href={`/business/${params.id}`} className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full">
               <ion-icon name="arrow-back-outline" size="small"></ion-icon>
             </Link>
           </motion.div>
@@ -107,14 +178,20 @@ export default function WriteReviewPage() {
                 >
                   <div className="relative group">
                     <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden ring-4 ring-sage/20 group-hover:ring-sage/40 transition-all duration-500">
-                      <Image
-                        src="/images/product-01.jpg"
-                        alt={`${businessName} photo`}
-                        width={96}
-                        height={96}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        priority
-                      />
+                      {business.image_url ? (
+                        <Image
+                          src={business.image_url}
+                          alt={`${businessName} photo`}
+                          width={96}
+                          height={96}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          priority
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-sage/20 to-sage/10 flex items-center justify-center">
+                          <ion-icon name="business" style={{ fontSize: '32px', color: 'var(--sage)' }} />
+                        </div>
+                      )}
                       {/* Shimmer overlay on hover */}
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 group-hover:translate-x-full"></div>
                     </div>
@@ -128,7 +205,9 @@ export default function WriteReviewPage() {
                     >
                       <div className="flex items-center space-x-1">
                         <ion-icon name="star" style={{ color: 'white', fontSize: '12px' }} />
-                        <span className="font-urbanist text-xs font-700 text-white">4.8</span>
+                        <span className="font-urbanist text-xs font-700 text-white">
+                          {business.stats?.average_rating?.toFixed(1) || '0.0'}
+                        </span>
                       </div>
                     </motion.div>
                   </div>
@@ -226,6 +305,33 @@ export default function WriteReviewPage() {
                   </div>
                 </motion.div>
 
+                {/* Review Title */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.75, duration: 0.6 }}
+                  className="mb-6"
+                >
+                  <h3 className="font-urbanist text-lg md:text-2xl font-600 text-charcoal mb-3 flex items-center justify-center md:justify-start">
+                    <motion.div
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
+                      className="w-6 h-6 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mr-3"
+                    >
+                      <ion-icon name="pencil-outline" style={{ color: 'var(--sage)', fontSize: '16px' }} />
+                    </motion.div>
+                    Review Title (Optional)
+                  </h3>
+                  <motion.input
+                    type="text"
+                    value={reviewTitle}
+                    onChange={(e) => setReviewTitle(e.target.value)}
+                    placeholder="Summarize your experience in a few words..."
+                    whileFocus={{ scale: 1.01 }}
+                    className="w-full bg-white/80 backdrop-blur-sm border border-sage/20 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 font-urbanist text-[14px] md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 shadow-sm"
+                  />
+                </motion.div>
+
                 {/* Review Text */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -253,48 +359,49 @@ export default function WriteReviewPage() {
                   />
                 </motion.div>
 
-                {/* Action Buttons */}
+                {/* Image Upload */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9, duration: 0.6 }}
-                  className="grid grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8 mt-auto"
+                  transition={{ delay: 0.85, duration: 0.6 }}
+                  className="mb-8"
                 >
-                  <motion.button
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm text-charcoal/70 font-urbanist text-xs md:text-lg font-600 py-3 md:py-4 px-4 md:px-6 rounded-xl md:rounded-2xl border border-sage/20 hover:border-sage/40 hover:text-charcoal transition-all duration-300 flex items-center justify-center space-x-1 md:space-x-2 group"
-                  >
-                    <ion-icon name="mic-outline" class="text-sage group-hover:text-sage/80" />
-                    <span>Add Voice Note</span>
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm text-charcoal/70 font-urbanist text-xs md:text-lg font-600 py-3 md:py-4 px-4 md:px-6 rounded-xl md:rounded-2xl border border-sage/20 hover:border-sage/40 hover:text-charcoal transition-all duration-300 flex items-center justify-center space-x-1 md:space-x-2 group"
-                  >
-                    <ion-icon name="camera-outline" class="text-sage group-hover:text-sage/80" />
-                    <span>Add Photo</span>
-                  </motion.button>
+                  <h3 className="font-urbanist text-lg md:text-3xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
+                    <motion.div
+                      animate={{ rotate: [0, 10, -10, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
+                      className="w-6 h-6 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mr-3"
+                    >
+                      <ion-icon name="camera-outline" style={{ color: 'var(--sage)', fontSize: '16px' }} />
+                    </motion.div>
+                    Add Photos (Optional)
+                  </h3>
+                  <ImageUpload
+                    onImagesChange={setSelectedImages}
+                    maxImages={5}
+                    disabled={submitting}
+                  />
                 </motion.div>
+
 
                 {/* Submit Button */}
                 <motion.button
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1, duration: 0.6 }}
-                  whileHover={overallRating > 0 && reviewText.trim() ? { scale: 1.02, y: -2 } : {}}
-                  whileTap={overallRating > 0 && reviewText.trim() ? { scale: 0.98 } : {}}
+                  transition={{ delay: 0.9, duration: 0.6 }}
+                  whileHover={isFormValid && !submitting ? { scale: 1.02, y: -2 } : {}}
+                  whileTap={isFormValid && !submitting ? { scale: 0.98 } : {}}
+                  onClick={handleSubmitReview}
                   className={`
                     w-full py-4 md:py-5 px-6 md:px-8 rounded-xl md:rounded-2xl font-urbanist text-base md:text-2xl font-600 transition-all duration-300 relative overflow-hidden
-                    ${overallRating > 0 && reviewText.trim()
+                    ${isFormValid && !submitting
                       ? 'bg-gradient-to-r from-sage to-sage/90 text-white hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2 group'
                       : 'bg-charcoal/20 text-charcoal/40 cursor-not-allowed'
                     }
                   `}
-                  disabled={overallRating === 0 || !reviewText.trim()}
+                  disabled={!isFormValid || submitting}
                 >
-                  {overallRating > 0 && reviewText.trim() && (
+                  {isFormValid && !submitting && (
                     <motion.div
                       initial={{ x: '-100%' }}
                       whileHover={{ x: '100%' }}
@@ -303,14 +410,27 @@ export default function WriteReviewPage() {
                     />
                   )}
                   <span className="relative z-10 flex items-center justify-center space-x-2">
-                    <span>Submit Review</span>
-                    {overallRating > 0 && reviewText.trim() && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: 1 }}
-                      >
-                        <ion-icon name="arrow-forward-outline" />
-                      </motion.div>
+                    {submitting ? (
+                      <>
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                        />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Submit Review</span>
+                        {isFormValid && (
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            whileHover={{ opacity: 1 }}
+                          >
+                            <ion-icon name="arrow-forward-outline" />
+                          </motion.div>
+                        )}
+                      </>
                     )}
                   </span>
                 </motion.button>

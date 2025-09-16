@@ -41,7 +41,7 @@ export default function PageLoader({ onComplete, duration = 1.5 }: PageLoaderPro
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-urbanist text-5xl md:text-6xl font-800 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage to-charcoal mb-4"
+            className="font-urbanist text-5xl md:text-5xl font-800 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage to-charcoal mb-4"
           >
             Local Gems
           </motion.h1>

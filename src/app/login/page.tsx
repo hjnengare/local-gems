@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useToast } from "../contexts/ToastContext";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import FadeInUp from "../components/Animations/FadeInUp";
 import PremiumHover from "../components/Animations/PremiumHover";
@@ -14,6 +15,7 @@ export default function LoginPage() {
   const [error, setError] = useState("");
 
   const { login, isLoading, error: authError } = useAuth();
+  const { showToast } = useToast();
 
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -44,7 +46,9 @@ export default function LoginPage() {
     }
     
     const success = await login(email, password);
-    if (!success) {
+    if (success) {
+      showToast("Welcome back! Redirecting...", 'success', 2000);
+    } else {
       setError(authError || "Invalid email or password");
     }
   };
@@ -141,7 +145,7 @@ export default function LoginPage() {
         <div className="text-center mb-12 md:mb-16">
           <FadeInUp delay={0.4} duration={1} distance={60}>
             <div className="inline-block relative mb-6">
-              <h1 className="font-urbanist text-2 md:text-6xl lg:text-5xl font-700 text-charcoal mb-4 relative">
+              <h1 className="font-urbanist text-2 md:text-5xl lg:text-5xl font-700 text-charcoal mb-4 relative">
                 Welcome back
               </h1>
               <motion.div

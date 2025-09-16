@@ -23,9 +23,11 @@ function WebVitals() {
         webVitals.onFCP(reportMetric);
         webVitals.onLCP(reportMetric);
         webVitals.onTTFB(reportMetric);
-      }).catch(() => {
-        // Silently fail if web-vitals is not available
-        console.warn('Web Vitals library not available');
+      }).catch((error) => {
+        // Only log in development
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('Web Vitals library not available:', error.message);
+        }
       });
     }
   }, []);

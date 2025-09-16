@@ -52,7 +52,7 @@ export default function CompletePage() {
 
       <div className="w-[90%] max-w-[700px] mx-auto relative z-10 text-center">
         {/* Headline & subhead */}
-        <h1 className="font-urbanist text-2 md:text-6xl lg:text-5xl font-700 text-charcoal mb-4">
+        <h1 className="font-urbanist text-2 md:text-5xl lg:text-5xl font-700 text-charcoal mb-4">
           You&apos;re all set!
         </h1>
         <p className="font-urbanist text-6 md:text-5 font-400 text-charcoal/70 mb-12">

@@ -124,7 +124,7 @@ export default function SubcategoriesPage() {
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
           <div className="inline-block relative mb-6">
-            <h1 className="font-urbanist text-2 md:text-6xl lg:text-5xl font-700 text-charcoal mb-4 relative min-h-[3rem] md:min-h-[5rem] flex items-center justify-center">
+            <h1 className="font-urbanist text-2 md:text-5xl lg:text-5xl font-700 text-charcoal mb-4 relative min-h-[3rem] md:min-h-[5rem] flex items-center justify-center">
               <span className="relative">
                 {displayedText}
                 <span

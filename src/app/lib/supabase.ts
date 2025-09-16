@@ -4,14 +4,42 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables')
+  console.warn('Missing Supabase environment variables - authentication will not work')
+}
+
+// Validate URL format
+const isValidUrl = (url: string) => {
+  try {
+    new URL(url)
+    return true
+  } catch {
+    return false
+  }
+}
+
+if (supabaseUrl && !isValidUrl(supabaseUrl)) {
+  console.error('Invalid Supabase URL format:', supabaseUrl)
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,
-    detectSessionInUrl: true
+    detectSessionInUrl: true,
+    flowType: 'pkce'
+  },
+  global: {
+    headers: {
+      'X-Client-Info': 'local-gems-web'
+    }
+  },
+  db: {
+    schema: 'public'
+  },
+  realtime: {
+    params: {
+      eventsPerSecond: 10
+    }
   }
 })
 
@@ -42,7 +70,7 @@ export interface UserTaxonomy {
   created_at: string
 }
 
-// Database helper functions
+// Database helper functions with performance optimizations
 export const createProfile = async (userId: string) => {
   const { data, error } = await supabase
     .from('profiles')
@@ -58,6 +86,7 @@ export const createProfile = async (userId: string) => {
     ])
     .select()
     .single()
+    .abortSignal(AbortSignal.timeout(10000)) // 10 second timeout
 
   if (error) throw error
   return data
@@ -69,6 +98,7 @@ export const getProfile = async (userId: string) => {
     .select('*')
     .eq('id', userId)
     .single()
+    .abortSignal(AbortSignal.timeout(5000)) // 5 second timeout
 
   if (error) throw error
   return data
@@ -81,6 +111,7 @@ export const updateProfile = async (userId: string, updates: Partial<Profile>) =
     .eq('id', userId)
     .select()
     .single()
+    .abortSignal(AbortSignal.timeout(5000))
 
   if (error) throw error
   return data
@@ -91,6 +122,8 @@ export const getInterests = async () => {
     .from('v_interests')
     .select('*')
     .order('name', { ascending: true })
+    .limit(50) // Reasonable limit
+    .abortSignal(AbortSignal.timeout(3000))
 
   if (error) throw error
   return data || []
@@ -101,12 +134,13 @@ export const getSubInterests = async (parentIds?: string[]) => {
     .from('v_sub_interests')
     .select('*')
     .order('name', { ascending: true })
+    .limit(100) // Reasonable limit
 
   if (parentIds && parentIds.length > 0) {
     query = query.in('parent_id', parentIds)
   }
 
-  const { data, error } = await query
+  const { data, error } = await query.abortSignal(AbortSignal.timeout(3000))
 
   if (error) throw error
   return data || []

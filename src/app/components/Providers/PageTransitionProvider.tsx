@@ -2,8 +2,20 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { AnimatePresence } from "framer-motion";
-import PageLoading from "../Loading/PageLoading";
+import dynamic from 'next/dynamic';
+
+// Lazy load animated components
+const LazyPageLoading = dynamic(() =>
+  import("../Loading/PageLoading").then(mod => ({ default: mod.default })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-off-white">
+        <div className="w-8 h-8 border-4 border-sage border-t-transparent rounded-full animate-spin" />
+      </div>
+    )
+  }
+);
 
 interface PageTransitionContextType {
   isLoading: boolean;
@@ -50,9 +62,7 @@ export default function PageTransitionProvider({ children }: PageTransitionProvi
 
   return (
     <PageTransitionContext.Provider value={contextValue}>
-      <AnimatePresence mode="wait">
-        {isLoading && <PageLoading key="loading" />}
-      </AnimatePresence>
+      {isLoading && <LazyPageLoading />}
       {children}
     </PageTransitionContext.Provider>
   );

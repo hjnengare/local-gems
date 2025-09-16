@@ -75,7 +75,7 @@ export default function DealBreakersPage() {
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
           <div className="inline-block relative mb-6">
-            <h1 className="font-urbanist text-2 md:text-6xl lg:text-5xl font-700 text-charcoal mb-4">
+            <h1 className="font-urbanist text-2 md:text-5xl lg:text-5xl font-700 text-charcoal mb-4">
               Your deal-breakers
             </h1>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-sage via-coral to-sage rounded-full"></div>
