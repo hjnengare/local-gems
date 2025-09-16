@@ -10,6 +10,7 @@
     "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
     "canvas-confetti": "^1.9.3",
     "framer-motion": "^12.23.12",
     "next": "15.5.3",

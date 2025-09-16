@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   authors: [{ name: "KLIO" }],
   creator: "KLIO",
   openGraph: {
-    title: "KLIO - Discover trusted KLIO near you",
+    title: "KLIO - Discover trusted local gems near you!",
     description: "Find amazing local businesses, restaurants, and experiences in your area with personalized recommendations and trusted reviews.",
     url: "/",
     siteName: "KLIO",

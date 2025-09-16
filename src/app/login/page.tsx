@@ -69,39 +69,54 @@ export default function LoginPage() {
         </PremiumHover>
       </motion.div>
 
-      {/* Enhanced background decorative elements with advanced parallax */}
+      {/* Enhanced background decorative elements with advanced parallax and glowy effects */}
       <motion.div
         style={{ y: smoothOrbY }}
         className="absolute inset-0 opacity-4 will-change-transform"
       >
-        {/* Layered orbs with independent motion */}
+        {/* Large glowy orbs with enhanced blur and opacity */}
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1.4, delay: 0.2, type: "spring", stiffness: 180 }}
           style={{ y: orbFastY }}
-          className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sage/22 to-sage/6 rounded-full blur-3xl will-change-transform"
+          className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-sage/30 to-sage/80 rounded-full blur-3xl will-change-transform"
         />
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1.6, delay: 0.4, type: "spring", stiffness: 160 }}
-          className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-coral/18 to-coral/6 rounded-full blur-3xl will-change-transform"
+          className="absolute bottom-32 right-16 w-56 h-56 bg-gradient-to-br from-coral/25 to-coral/80 rounded-full blur-3xl will-change-transform"
         />
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1.1, delay: 0.6, type: "spring", stiffness: 220 }}
           style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "-70%"]) }}
-          className="absolute top-1/2 right-1/4 w-24 h-24 bg-gradient-to-br from-charcoal/12 to-charcoal/4 rounded-full blur-2xl will-change-transform"
+          className="absolute top-1/2 left-1/3 w-32 h-32 bg-gradient-to-br from-charcoal/20 to-charcoal/60 rounded-full blur-2xl will-change-transform"
         />
 
-        {/* Animated geometric accents with different patterns */}
+        {/* Additional glowy elements for more atmosphere */}
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.8, delay: 0.8, type: "spring", stiffness: 140 }}
+          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]) }}
+          className="absolute top-1/3 right-10 w-28 h-28 bg-gradient-to-br from-sage/20 to-sage/60 rounded-full blur-2xl will-change-transform"
+        />
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.3, delay: 1.0, type: "spring", stiffness: 200 }}
+          className="absolute bottom-1/4 left-1/4 w-36 h-36 bg-gradient-to-br from-coral/15 to-coral/50 rounded-full blur-3xl will-change-transform"
+        />
+
+        {/* Animated geometric accents with glowing effect */}
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{
             scale: [0, 1, 1.4, 1],
-            opacity: [0, 0.35, 0.7, 0.35],
+            opacity: [0, 0.4, 0.8, 0.4],
           }}
           transition={{
             duration: 2.5,
@@ -109,13 +124,13 @@ export default function LoginPage() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-16 right-20 w-2 h-2 bg-sage/35 rounded-full"
+          className="absolute top-16 right-20 w-3 h-3 bg-sage/60 rounded-full shadow-lg shadow-sage/30 blur-sm"
         />
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{
             scale: [0, 1, 1.2, 1],
-            opacity: [0, 0.3, 0.65, 0.3],
+            opacity: [0, 0.35, 0.7, 0.35],
           }}
           transition={{
             duration: 3.5,
@@ -123,7 +138,21 @@ export default function LoginPage() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute bottom-20 left-20 w-2 h-2 bg-coral/35 rounded-full"
+          className="absolute bottom-20 left-20 w-3 h-3 bg-coral/60 rounded-full shadow-lg shadow-coral/30 blur-sm"
+        />
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{
+            scale: [0, 1, 1.3, 1],
+            opacity: [0, 0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 4.0,
+            delay: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-2/3 left-16 w-2 h-2 bg-charcoal/50 rounded-full shadow-lg shadow-charcoal/20 blur-sm"
         />
       </motion.div>
 
@@ -299,7 +328,7 @@ export default function LoginPage() {
 
           {/* Enhanced footer */}
           <div className="text-center mt-8 pt-6 border-t border-light-gray/30">
-            <p className="font-urbanist text-7 font-400 text-charcoal/70">
+            <div className="font-urbanist text-7 font-400 text-charcoal/70">
               {"Don&apos;t have an account? "}
               <Link
                 href="/register"
@@ -308,7 +337,7 @@ export default function LoginPage() {
                 <span>Sign up</span>
                 <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-coral/30 group-hover:bg-coral/60 transition-colors duration-300 rounded-full"></div>
               </Link>
-            </p>
+            </div>
           </div>
         </motion.div>
 
