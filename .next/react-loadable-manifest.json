@@ -1,20 +1,166 @@
 {
-  "..\\node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts": {
-    "id": "..\\node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts",
+  "..\\node_modules\\@supabase\\auth-js\\dist\\module\\lib\\helpers.js -> @supabase/node-fetch": {
+    "id": 3537,
+    "files": []
+  },
+  "..\\node_modules\\@supabase\\functions-js\\dist\\module\\helper.js -> @supabase/node-fetch": {
+    "id": 3537,
+    "files": []
+  },
+  "..\\node_modules\\@supabase\\realtime-js\\dist\\module\\RealtimeClient.js -> @supabase/node-fetch": {
+    "id": 3537,
+    "files": []
+  },
+  "..\\node_modules\\@supabase\\storage-js\\dist\\module\\lib\\helpers.js -> @supabase/node-fetch": {
+    "id": 3537,
+    "files": []
+  },
+  "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
+    "id": 5139,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js"
+      "static/css/e00b42916fdecf71.css",
+      "static/chunks/vendors-17a7dd71a4d0f4ea.js"
+    ]
+  },
+  "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
+    "id": 1646,
+    "files": [
+      "static/css/e00b42916fdecf71.css",
+      "static/chunks/vendors-17a7dd71a4d0f4ea.js"
+    ]
+  },
+  "app\\all\\page.tsx -> ../components/Navigation/BottomNav": {
+    "id": 8866,
+    "files": [
+      "static/chunks/866.accea8486b5cea39.js"
+    ]
+  },
+  "app\\business\\[id]\\page.tsx -> ../../components/Animations/FadeInUp": {
+    "id": 7275,
+    "files": [
+      "static/chunks/275.2f3cec85ee5a683c.js"
+    ]
+  },
+  "app\\business\\[id]\\page.tsx -> ../../components/Animations/PremiumHover": {
+    "id": 9104,
+    "files": [
+      "static/chunks/104.4281f9e006c2db21.js"
+    ]
+  },
+  "app\\business\\[id]\\review\\page.tsx -> ../../../components/Animations/FadeInUp": {
+    "id": 7275,
+    "files": [
+      "static/chunks/275.2f3cec85ee5a683c.js"
+    ]
+  },
+  "app\\business\\[id]\\review\\page.tsx -> ../../../components/Animations/PremiumHover": {
+    "id": 9104,
+    "files": [
+      "static/chunks/104.4281f9e006c2db21.js"
+    ]
+  },
+  "app\\business\\[id]\\review\\page.tsx -> ../../../components/Navigation/BottomNav": {
+    "id": 8866,
+    "files": [
+      "static/chunks/866.accea8486b5cea39.js"
+    ]
+  },
+  "app\\business\\[id]\\review\\page.tsx -> ../../../components/ReviewForm/ImageUpload": {
+    "id": 3655,
+    "files": [
+      "static/css/e00b42916fdecf71.css",
+      "static/chunks/vendors-17a7dd71a4d0f4ea.js",
+      "static/chunks/655.a8d7cef6a892625f.js"
     ]
   },
   "app\\components\\Performance\\WebVitals.tsx -> web-vitals": {
-    "id": "app\\components\\Performance\\WebVitals.tsx -> web-vitals",
+    "id": 3412,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_web-vitals_dist_web-vitals_js.js"
+      "static/css/e00b42916fdecf71.css",
+      "static/chunks/vendors-17a7dd71a4d0f4ea.js"
     ]
   },
   "app\\components\\Providers\\PageTransitionProvider.tsx -> ../Loading/PageLoading": {
-    "id": "app\\components\\Providers\\PageTransitionProvider.tsx -> ../Loading/PageLoading",
+    "id": 7805,
     "files": [
-      "static/chunks/_app-pages-browser_src_app_components_Loading_PageLoading_tsx.js"
+      "static/chunks/framer-motion.58fdf09a2c7e90aa.js",
+      "static/css/e00b42916fdecf71.css",
+      "static/chunks/vendors-17a7dd71a4d0f4ea.js",
+      "static/chunks/805.68b186957eda4d59.js"
+    ]
+  },
+  "app\\home\\page.tsx -> ../components/Animations/FloatingElements": {
+    "id": 9382,
+    "files": [
+      "static/chunks/382.3e1f7cd9b1aa773c.js"
+    ]
+  },
+  "app\\home\\page.tsx -> ../components/Animations/ScrollReveal": {
+    "id": 3495,
+    "files": [
+      "static/chunks/495.c708a4f27bb02476.js"
+    ]
+  },
+  "app\\home\\page.tsx -> ../components/CommunityHighlights/CommunityHighlights": {
+    "id": 5422,
+    "files": [
+      "static/chunks/422.b4868c4ba41d2969.js"
+    ]
+  },
+  "app\\home\\page.tsx -> ../components/EventsSpecials/EventsSpecials": {
+    "id": 1294,
+    "files": [
+      "static/chunks/532.0efa1083d8b089f3.js"
+    ]
+  },
+  "app\\home\\page.tsx -> ../components/Footer/Footer": {
+    "id": 7606,
+    "files": [
+      "static/chunks/606.952453021f07d7d1.js"
+    ]
+  },
+  "app\\home\\page.tsx -> ../components/Navigation/BottomNav": {
+    "id": 8866,
+    "files": [
+      "static/chunks/866.accea8486b5cea39.js"
+    ]
+  },
+  "app\\leaderboard\\page.tsx -> ../components/Footer/Footer": {
+    "id": 7606,
+    "files": [
+      "static/chunks/606.952453021f07d7d1.js"
+    ]
+  },
+  "app\\leaderboard\\page.tsx -> ../components/Navigation/BottomNav": {
+    "id": 8866,
+    "files": [
+      "static/css/e00b42916fdecf71.css",
+      "static/chunks/vendors-17a7dd71a4d0f4ea.js",
+      "static/chunks/485.accea8486b5cea39.js"
+    ]
+  },
+  "app\\profile\\page.tsx -> ../components/Animations/ScrollReveal": {
+    "id": 3495,
+    "files": [
+      "static/chunks/495.c708a4f27bb02476.js"
+    ]
+  },
+  "app\\profile\\page.tsx -> ../components/Navigation/BottomNav": {
+    "id": 8866,
+    "files": [
+      "static/chunks/866.accea8486b5cea39.js"
+    ]
+  },
+  "app\\saved\\page.tsx -> ../components/Animations/ScrollReveal": {
+    "id": 3495,
+    "files": [
+      "static/chunks/495.c708a4f27bb02476.js"
+    ]
+  },
+  "app\\saved\\page.tsx -> ../components/Navigation/BottomNav": {
+    "id": 8866,
+    "files": [
+      "static/chunks/866.accea8486b5cea39.js"
     ]
   }
 }
