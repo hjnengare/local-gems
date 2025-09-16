@@ -248,7 +248,7 @@ export default function LoginPage() {
                   <motion.button
                     type="submit"
                     disabled={isLoading}
-                    className="group block w-full bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/30 hover:focus:ring-coral/30 focus:ring-offset-2 relative overflow-hidden text-center disabled:opacity-50 disabled:cursor-not-allowed will-change-transform"
+                    className="group block w-full bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white font-urbanist text-sm md:text-base font-600 py-3.5 md:py-4 px-6 md:px-8 rounded-2xl md:rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/20 hover:focus:ring-coral/20 focus:ring-offset-1 relative overflow-hidden text-center hover:scale-[1.02]"
                     whileTap={{ scale: 0.98 }}
                     transition={{ duration: 0.1 }}
                   >
