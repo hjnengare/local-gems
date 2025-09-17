@@ -7,6 +7,52 @@ import { useAuth } from "../contexts/AuthContext";
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useToast } from "../contexts/ToastContext";
 
+// Lightweight CSS animations
+const styles = `
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideInLine {
+    from { width: 0%; }
+    to { width: 100%; }
+  }
+  @keyframes scaleIn {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0) scale(1); }
+    40% { transform: translateY(-10px) scale(1.05); }
+    60% { transform: translateY(-5px) scale(1.02); }
+  }
+  @keyframes bubbly {
+    0% { transform: scale(1); }
+    20% { transform: scale(1.15) rotate(-3deg); }
+    40% { transform: scale(1.1) rotate(2deg); }
+    60% { transform: scale(1.08) rotate(-1deg); }
+    80% { transform: scale(1.05) rotate(1deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+  .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+  .animate-scale-in { animation: scaleIn 0.6s ease-out forwards; }
+  .animate-line { animation: slideInLine 1.2s ease-out 1.1s forwards; }
+  .animate-bounce { animation: bounce 0.6s ease-out; }
+  .animate-bubbly { animation: bubbly 0.7s ease-out; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-400 { animation-delay: 0.4s; }
+  .delay-600 { animation-delay: 0.6s; }
+  .delay-800 { animation-delay: 0.8s; }
+  .delay-1000 { animation-delay: 1s; }
+  .delay-1200 { animation-delay: 1.2s; }
+  .delay-1400 { animation-delay: 1.4s; }
+  .delay-1600 { animation-delay: 1.6s; }
+`;
+
 // Detect reduced motion preference
 const prefersReduced = typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -21,16 +67,25 @@ interface InterestTileProps {
 }
 
 const InterestTile = ({ id, name, selected, disabled, onToggle }: InterestTileProps) => {
+  const [isAnimating, setIsAnimating] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   const handleClick = () => {
     if (disabled && !selected) {
       // Show tooltip feedback for disabled state
       return;
     }
+
+    // Trigger bounce animation
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(false), 700); // Match animation duration
+
     onToggle();
   };
 
   return (
     <button
+      ref={buttonRef}
       onClick={handleClick}
       disabled={disabled && !selected}
       aria-pressed={selected}
@@ -38,6 +93,7 @@ const InterestTile = ({ id, name, selected, disabled, onToggle }: InterestTilePr
       className={`
         h-12 rounded-xl border-2 font-600 text-sm transition-all duration-200 min-h-[44px]
         focus:outline-none focus:ring-4 focus:ring-sage/25 focus:ring-offset-1
+        ${isAnimating ? 'animate-bubbly' : ''}
         ${selected
           ? 'bg-sage border-sage text-white shadow-md'
           : disabled
@@ -88,6 +144,8 @@ function InterestsContent() {
   const [isNavigating, setIsNavigating] = useState(false);
   const [hasPrefetched, setHasPrefetched] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
+  const [displayedText, setDisplayedText] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
   const hasLoadedInterests = useRef(false);
   const offlineQueue = useRef<string[]>([]);
   const analyticsTracked = useRef({
@@ -103,6 +161,38 @@ function InterestsContent() {
   // Constants for min/max selection
   const MIN_SELECTIONS = 3;
   const MAX_SELECTIONS = 6;
+
+  // Typing animation effect
+  useEffect(() => {
+    if (!mounted) return;
+
+    const fullText = "What interests you?";
+    let index = 0;
+
+    const typeText = () => {
+      if (index < fullText.length) {
+        setDisplayedText(fullText.slice(0, index + 1));
+        index++;
+        setTimeout(typeText, 100);
+      } else {
+        // Start cursor blinking
+        setShowCursor(true);
+      }
+    };
+
+    // Start typing after component mounts
+    const timer = setTimeout(typeText, 500);
+
+    // Cursor blinking effect
+    const cursorTimer = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 530);
+
+    return () => {
+      clearTimeout(timer);
+      clearInterval(cursorTimer);
+    };
+  }, [mounted]);
 
   // Route protection - redirect if not authenticated
   useEffect(() => {
@@ -132,11 +222,11 @@ function InterestsContent() {
 
       if (wasOffline && nowOnline && offlineQueue.current.length > 0) {
         // Process offline queue when coming back online
-        showToast('Back online! Syncing your changes...', 'success', 2000);
+        showToast('Back online! Syncing your changes...', 'sage', 2000);
         saveInterests(offlineQueue.current).then(success => {
           if (success) {
             offlineQueue.current = [];
-            showToast('All changes synced successfully!', 'success', 2000);
+            showToast('All changes synced successfully!', 'sage', 2000);
           }
         });
       } else if (!nowOnline) {
@@ -302,9 +392,9 @@ function InterestsContent() {
     // Show contextual feedback
     if (!isCurrentlySelected) {
       if (newSelection.length === MIN_SELECTIONS) {
-        showToast('🎉 Great! You can continue now', 'success', 2000);
+        showToast('🎉 Great! You can continue now', 'sage', 2000);
       } else if (newSelection.length === MAX_SELECTIONS) {
-        showToast('✨ Perfect selection!', 'success', 2000);
+        showToast('✨ Perfect selection!', 'sage', 2000);
       }
     }
 

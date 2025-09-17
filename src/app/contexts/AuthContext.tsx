@@ -100,7 +100,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const { user: authUser, error: authError } = await AuthService.signUp({ email, password });
 
       if (authError) {
-        setError(authError.message);
+        // Handle specific error cases
+        let errorMessage = authError.message;
+        if (authError.message.includes('User already registered') || authError.message.includes('already registered')) {
+          errorMessage = 'An account with this email already exists. Please try logging in instead.';
+        }
+        setError(errorMessage);
         setIsLoading(false);
         return false;
       }
