@@ -53,7 +53,7 @@ export default function CommunityHighlights({
       
       <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10 py-8 sm:py-12 md:py-16 pb-16">
         <div className="mb-12 flex flex-wrap items-center justify-between gap-[18px]">
-          <h2 className="font-urbanist text-3xl font-800 text-charcoal relative">
+          <h2 className="font-urbanist text-xl font-800 text-charcoal relative">
             {title}
             <div className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-sage to-coral rounded-full" />
           </h2>
@@ -70,7 +70,7 @@ export default function CommunityHighlights({
         {/* Top Reviewers Subsection */}
         <div className="mt-12 sm:mt-14 md:mt-16">
           <div className="mb-8 flex flex-wrap items-center justify-between gap-[18px]">
-            <h3 className="font-urbanist text-2xl font-700 text-charcoal relative">
+            <h3 className="font-urbanist text-base font-700 text-charcoal relative">
               Top Reviewers This Month In Claremont
             </h3>
           </div>
@@ -93,7 +93,7 @@ export default function CommunityHighlights({
         {businessesOfTheMonth && businessesOfTheMonth.length > 0 && (
           <div className="mt-12 sm:mt-14 md:mt-16">
             <div className="mb-8 flex flex-wrap items-center justify-between gap-[18px]">
-              <h3 className="font-urbanist text-2xl font-700 text-charcoal relative">
+              <h3 className="font-urbanist text-base font-700 text-charcoal relative">
                 Businesses of the Month
               </h3>
               <button
@@ -109,7 +109,7 @@ export default function CommunityHighlights({
             <div className="mb-4 sm:mb-5 md:mb-6 text-center">
               <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-coral/10 rounded-full px-3 sm:px-4 py-1.5 sm:py-2">
                 <ion-icon name="trophy" class="text-coral text-base sm:text-lg" />
-                <span className="font-urbanist font-600 text-coral text-[14px] sm:text-base">
+                <span className="font-urbanist font-600 text-coral text-base">
                   September 2025 Winners
                 </span>
               </div>

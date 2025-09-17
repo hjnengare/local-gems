@@ -120,7 +120,7 @@ function InterestsContent() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-screen bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-6 sm:py-8 relative overflow-hidden">
+      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-6 sm:py-8 relative overflow-hidden">
       {/* Back button - top left */}
       <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
         <Link href="/register" className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full">

@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import BusinessCard, { Business } from "../components/BusinessCard/BusinessCard";
 import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 import { TRENDING_BUSINESSES, NEARBY_FAVORITES } from "../data/businessData";
 
 
@@ -13,6 +15,7 @@ const BottomNav = dynamic(() => import("../components/Navigation/BottomNav"));
 const allBusinesses: Business[] = [...TRENDING_BUSINESSES, ...NEARBY_FAVORITES];
 
 export default function ExploreGemsPage() {
+  const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedRating, setSelectedRating] = useState("All Ratings");
   const [selectedDistance, setSelectedDistance] = useState("All Distances");
@@ -87,6 +90,22 @@ export default function ExploreGemsPage() {
         {/* Main businesses grid */}
         <div className="px-4 sm:px-6 md:px-8">
           <div className="max-w-[1300px] mx-auto">
+            {/* Back home arrow */}
+            <button
+              onClick={() => router.push("/home")}
+              className="group flex items-center gap-2 mb-6 font-urbanist font-600 text-charcoal/70 transition-all duration-300 hover:text-sage text-sm"
+            >
+              <svg
+                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-[-1px]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              <span>Back Home</span>
+            </button>
+
             <div className="mb-6">
               <p className="font-urbanist text-charcoal/70 font-600">
                 Showing {filteredBusinesses.length} results
@@ -111,6 +130,9 @@ export default function ExploreGemsPage() {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
 
       {/* Bottom Navigation */}
       <BottomNav />
