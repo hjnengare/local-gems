@@ -156,12 +156,14 @@ export default function RegisterPage() {
       if (!email?.trim() || !password?.trim()) {
         setError("Please fill in all fields");
         showToast("Please fill in all fields", 'sage', 3000);
+        setSubmitting(false);
         return;
       }
 
       if (!validateEmail(email.trim())) {
         setError("Please enter a valid email address");
         showToast("Please enter a valid email address", 'sage', 3000);
+        setSubmitting(false);
         return;
       }
 
@@ -169,6 +171,7 @@ export default function RegisterPage() {
       if (!consent) {
         setError("Please accept the Terms and Privacy Policy");
         showToast("Please accept the Terms and Privacy Policy", 'sage', 3000);
+        setSubmitting(false);
         return;
       }
 
@@ -176,6 +179,7 @@ export default function RegisterPage() {
       if (passwordError) {
         setError(passwordError);
         showToast(passwordError, 'sage', 4000);
+        setSubmitting(false);
         return;
       }
 
@@ -184,6 +188,7 @@ export default function RegisterPage() {
       if (strength.score < 3) {
         setError("Please create a stronger password");
         showToast("Please create a stronger password", 'sage', 3000);
+        setSubmitting(false);
         return;
       }
 
@@ -191,6 +196,7 @@ export default function RegisterPage() {
       if (!isOnline) {
         setError("You're offline. Please check your connection and try again.");
         showToast("You're offline. Please check your connection and try again.", 'sage', 4000);
+        setSubmitting(false);
         return;
       }
 
@@ -451,9 +457,9 @@ export default function RegisterPage() {
                 <PremiumHover scale={1.02} shadowIntensity="strong">
                   <motion.button
                     type="submit"
-                    disabled={submitting || isLoading || !consent || passwordStrength.score < 3 || !!getEmailError() || !email || !password}
+                    disabled={submitting || isLoading || !consent || passwordStrength.score < 3 || !email || !password || !validateEmail(email)}
                     className={`group block w-full font-urbanist text-sm sm:text-base font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-xl sm:rounded-2xl md:rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[44px] whitespace-nowrap ${
-                      submitting || isLoading || !consent || passwordStrength.score < 3 || !!getEmailError() || !email || !password
+                      submitting || isLoading || !consent || passwordStrength.score < 3 || !email || !password || !validateEmail(email)
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
                         : 'bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white focus:ring-sage/20 hover:focus:ring-coral/20 hover:scale-[1.02]'
                     }`}
