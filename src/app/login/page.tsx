@@ -257,7 +257,7 @@ export default function LoginPage() {
 
             {/* Sign In Button with premium effects */}
             <div className="pt-2 sm:pt-4 flex justify-center">
-              <div className="w-full sm:w-3/4 lg:w-1/2">
+              <div className="w-full">
                 <PremiumHover scale={1.02} shadowIntensity="strong">
                   <motion.button
                     type="submit"
