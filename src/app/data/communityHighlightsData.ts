@@ -35,7 +35,7 @@ export const TOP_REVIEWERS: Reviewer[] = [
   {
     id: "1",
     name: "Sarah Chen",
-    profilePicture: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face&auto=format",
+    profilePicture: "https://images.unsplash.com/photo-1494790108755-2616b332e234?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
     reviewCount: 127,
     rating: 4.8,
     badge: "top",
@@ -45,7 +45,7 @@ export const TOP_REVIEWERS: Reviewer[] = [
   {
     id: "2",
     name: "Marcus Johnson",
-    profilePicture: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+    profilePicture: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
     reviewCount: 89,
     rating: 4.7,
     badge: "verified",
@@ -55,7 +55,7 @@ export const TOP_REVIEWERS: Reviewer[] = [
   {
     id: "3",
     name: "Elena Rodriguez",
-    profilePicture: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+    profilePicture: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80",
     reviewCount: 156,
     rating: 4.9,
     badge: "local",
@@ -65,7 +65,7 @@ export const TOP_REVIEWERS: Reviewer[] = [
   {
     id: "4",
     name: "David Kim",
-    profilePicture: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+    profilePicture: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
     reviewCount: 73,
     rating: 4.6,
     trophyBadge: "rising-star",

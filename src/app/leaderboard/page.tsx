@@ -21,14 +21,14 @@ interface LeaderboardUser {
 }
 
 const topReviewers: LeaderboardUser[] = [
-  { rank: 1, username: "Observer", reviews: 25, badge: "🥇", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Observer&backgroundColor=708090&size=96", totalRating: 4.9 },
-  { rank: 2, username: "Ghost", reviews: 20, badge: "🥈", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ghost&backgroundColor=F4A261&size=96", totalRating: 4.8 },
-  { rank: 3, username: "Reviewer", reviews: 15, badge: "🥉", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Reviewer&backgroundColor=708090&size=96", totalRating: 4.7 },
-  { rank: 4, username: "LocalGuru", reviews: 12, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=LocalGuru&backgroundColor=F4A261&size=96", totalRating: 4.6 },
-  { rank: 5, username: "TasteExplorer", reviews: 10, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=TasteExplorer&backgroundColor=708090&size=96", totalRating: 4.5 },
-  { rank: 6, username: "CityScout", reviews: 8, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=CityScout&backgroundColor=F4A261&size=96", totalRating: 4.4 },
-  { rank: 7, username: "GemHunter", reviews: 7, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=GemHunter&backgroundColor=708090&size=96", totalRating: 4.3 },
-  { rank: 8, username: "ReviewMaster", reviews: 6, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=ReviewMaster&backgroundColor=F4A261&size=96", totalRating: 4.2 }
+  { rank: 1, username: "Observer", reviews: 25, badge: "🥇", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.9 },
+  { rank: 2, username: "Ghost", reviews: 20, badge: "🥈", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.8 },
+  { rank: 3, username: "Reviewer", reviews: 15, badge: "🥉", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.7 },
+  { rank: 4, username: "LocalGuru", reviews: 12, avatar: "https://images.unsplash.com/photo-1494790108755-2616b332e234?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.6 },
+  { rank: 5, username: "TasteExplorer", reviews: 10, avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.5 },
+  { rank: 6, username: "CityScout", reviews: 8, avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.4 },
+  { rank: 7, username: "GemHunter", reviews: 7, avatar: "https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.3 },
+  { rank: 8, username: "ReviewMaster", reviews: 6, avatar: "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.2 }
 ];
 
 interface BusinessOfMonth {
