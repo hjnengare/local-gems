@@ -21,7 +21,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "2",
     name: "Artisan Coffee Co.",
-    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2047&q=80",
     alt: "Artisan Coffee Co.",
     category: "Coffee Shop",
     location: "Arts District",
@@ -53,7 +53,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "4",
     name: "Vintage & Vine",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2086&q=80",
     alt: "Vintage & Vine bookstore",
     category: "Bookstore",
     location: "Old Town",
@@ -119,7 +119,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "22",
     name: "Urban Roastery",
-    image: "https://images.unsplash.com/photo-1442975631115-c4f7b05b8a2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Urban Roastery coffee shop",
     category: "Coffee Shop",
     location: "Industrial District",
@@ -151,7 +151,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "24",
     name: "The Literary Corner",
-    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2086&q=80",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "The Literary Corner bookstore",
     category: "Bookstore",
     location: "University District",
@@ -216,7 +216,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "28",
     name: "Metro Brew House",
-    image: "https://images.unsplash.com/photo-1504502350688-00f5d59bbdeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
+    image: "https://images.unsplash.com/photo-1442975631115-c4f7b05b8a2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Metro Brew House",
     category: "Coffee Shop",
     location: "Metro Station",
@@ -331,7 +331,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "35",
     name: "Coastal Café",
-    image: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
+    image: "https://images.unsplash.com/photo-1504502350688-00f5d59bbdeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
     alt: "Coastal Café",
     category: "Coffee Shop",
     location: "Beachside",
@@ -431,7 +431,7 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "7",
     name: "Rustic Reads",
-    image: "/images/product-07.jpg", // Another bookstore image
+    image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Rustic Reads bookstore",
     category: "Bookstore",
     location: "Historic Quarter",
@@ -447,7 +447,7 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "8",
     name: "Harmony Healing",
-    image: "/images/product-08.jpg", // Wellness/spa image
+    image: "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Harmony Healing spa",
     category: "Wellness",
     location: "Spa District",
@@ -463,7 +463,7 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "9",
     name: "Corner Deli & More",
-    image: "/images/production-09.jpg", // Deli/food image
+    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80",
     alt: "Corner Deli & More",
     category: "Deli",
     location: "Neighborhood",
@@ -479,7 +479,7 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "10",
     name: "Sketch & Sip Studio",
-    image: "/images/production-10.jpg", // Art studio image
+    image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2058&q=80",
     alt: "Sketch & Sip Studio",
     category: "Art Studio",
     location: "Creative District",
@@ -495,7 +495,7 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "11",
     name: "Peak Performance Gym",
-    image: "/images/product-03.jpg", // Fitness/wellness image (reusing similar)
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Peak Performance Gym",
     category: "Fitness",
     location: "Sports Complex",
@@ -512,7 +512,7 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "12",
     name: "Golden Hour Cafe",
-    image: "/images/product-02.jpg", // Coffee shop image (reusing)
+    image: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
     alt: "Golden Hour Cafe",
     category: "Coffee Shop",
     location: "Sunset Boulevard",
