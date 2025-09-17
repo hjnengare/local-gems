@@ -18,6 +18,8 @@ export default function RegisterPage() {
   const [submitting, setSubmitting] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [consent, setConsent] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState({
     score: 0,
     feedback: "",
@@ -109,9 +111,24 @@ export default function RegisterPage() {
     return { score, feedback, checks, color };
   };
 
+  const getEmailError = () => {
+    if (!emailTouched) return "";
+    if (!email) return "Email is required";
+    if (!validateEmail(email)) return "Please enter a valid email address";
+    return "";
+  };
+
+  const getPasswordError = () => {
+    if (!passwordTouched) return "";
+    if (!password) return "Password is required";
+    const validation = validatePassword(password);
+    return validation;
+  };
+
   const handleEmailChange = (value: string) => {
     setEmail(value);
     setEmailError("");
+    if (!emailTouched) setEmailTouched(true);
 
     if (value.length > 0 && !validateEmail(value)) {
       setEmailError("📧 Please enter a valid email address");
@@ -120,6 +137,7 @@ export default function RegisterPage() {
 
   const handlePasswordChange = (value: string) => {
     setPassword(value);
+    if (!passwordTouched) setPasswordTouched(true);
     const strength = checkPasswordStrength(value);
     setPasswordStrength(strength);
   };
@@ -297,44 +315,77 @@ export default function RegisterPage() {
 
             {/* Email with icon */}
             <div className="relative group">
-              <div className="absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 group-focus-within:text-sage transition-colors duration-300 z-10">
-                <ion-icon name="mail-outline" size="small"></ion-icon>
+              <div className={`absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 transition-colors duration-300 z-10 ${
+                getEmailError() ? 'text-red-500' :
+                email && !getEmailError() && emailTouched ? 'text-green-500' :
+                'text-charcoal/40 group-focus-within:text-sage'
+              }`}>
+                <ion-icon name={
+                  getEmailError() ? "alert-circle" :
+                  email && !getEmailError() && emailTouched ? "checkmark-circle" :
+                  "mail-outline"
+                } size="small"></ion-icon>
               </div>
               <input
                 type="email"
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => handleEmailChange(e.target.value)}
-                className="w-full bg-cultured-1/50 border border-light-gray/50 pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
+                onBlur={() => setEmailTouched(true)}
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
+                  getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
+                  email && !getEmailError() && emailTouched ? 'border-green-300 focus:border-green-500 focus:ring-green-500/20' :
+                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
+                }`}
                 disabled={submitting || isLoading}
               />
             </div>
 
-            {/* Email Error */}
-            {emailError && (
-              <p className="text-xs text-red-600 flex items-center gap-1" role="alert">
+            {/* Email validation feedback */}
+            {getEmailError() && (
+              <p className="text-xs text-red-600 flex items-center gap-1 mt-1" role="alert">
                 <ion-icon name="alert-circle" style={{ fontSize: '12px' }} />
-                {emailError}
+                {getEmailError()}
+              </p>
+            )}
+            {email && !getEmailError() && emailTouched && (
+              <p className="text-xs text-green-600 flex items-center gap-1 mt-1" role="status">
+                <ion-icon name="checkmark-circle" style={{ fontSize: '12px' }} />
+                Email looks good!
               </p>
             )}
 
             {/* Password with enhanced styling */}
             <div className="relative group">
-              <div className="absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 group-focus-within:text-sage transition-colors duration-300 z-10">
-                <ion-icon name="lock-closed-outline" size="small"></ion-icon>
+              <div className={`absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 transition-colors duration-300 z-10 ${
+                passwordStrength.score >= 3 && passwordTouched ? 'text-green-500' :
+                passwordStrength.score > 0 && passwordStrength.score < 3 ? 'text-orange-500' :
+                'text-charcoal/40 group-focus-within:text-sage'
+              }`}>
+                <ion-icon name={
+                  passwordStrength.score >= 3 && passwordTouched ? "checkmark-circle" :
+                  passwordStrength.score > 0 && passwordStrength.score < 3 ? "alert-circle" :
+                  "lock-closed-outline"
+                } size="small"></ion-icon>
               </div>
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Create a strong password"
                 value={password}
                 onChange={(e) => handlePasswordChange(e.target.value)}
-                className="w-full bg-cultured-1/50 border border-light-gray/50 pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage focus:bg-white transition-all duration-300 hover:border-sage/50"
+                onBlur={() => setPasswordTouched(true)}
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
+                  passwordStrength.score >= 3 && passwordTouched ? 'border-green-300 focus:border-green-500 focus:ring-green-500/20' :
+                  passwordStrength.score > 0 && passwordStrength.score < 3 ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
+                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
+                }`}
                 disabled={submitting || isLoading}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-4 sm:right-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 hover:text-charcoal transition-colors duration-300 p-1 z-10"
+                disabled={submitting || isLoading}
               >
                 <ion-icon
                   name={showPassword ? "eye-off-outline" : "eye-outline"}
@@ -400,18 +451,46 @@ export default function RegisterPage() {
                 <PremiumHover scale={1.02} shadowIntensity="strong">
                   <motion.button
                     type="submit"
-                    disabled={submitting || isLoading || !consent || passwordStrength.score < 3}
-                    className="group block w-full bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white font-urbanist text-sm sm:text-base font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-xl sm:rounded-2xl md:rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/20 hover:focus:ring-coral/20 focus:ring-offset-1 relative overflow-hidden text-center hover:scale-[1.02] min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-                    whileTap={{ scale: 0.98 }}
+                    disabled={submitting || isLoading || !consent || passwordStrength.score < 3 || !!getEmailError() || !email || !password}
+                    className={`group block w-full font-urbanist text-sm sm:text-base font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-xl sm:rounded-2xl md:rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[44px] whitespace-nowrap ${
+                      submitting || isLoading || !consent || passwordStrength.score < 3 || !!getEmailError() || !email || !password
+                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
+                        : 'bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white focus:ring-sage/20 hover:focus:ring-coral/20 hover:scale-[1.02]'
+                    }`}
+                    whileTap={{ scale: submitting || isLoading ? 1 : 0.98 }}
                     transition={{ duration: 0.1 }}
                   >
-                    <span className="relative z-10">
+                    <span className="relative z-10 flex items-center justify-center gap-2">
+                      {(submitting || isLoading) && (
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      )}
                       {submitting || isLoading ? "Creating account..." : "Create account"}
                     </span>
                     <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </motion.button>
                 </PremiumHover>
               </div>
+            </div>
+
+            {/* Registration progress indicator */}
+            <div className="text-center space-y-2 pt-2">
+              <div className="flex items-center justify-center gap-4 text-xs">
+                <div className={`flex items-center gap-1 ${email && !getEmailError() ? 'text-green-600' : 'text-gray-400'}`}>
+                  <ion-icon name={email && !getEmailError() ? "checkmark-circle" : "ellipse-outline"} style={{ fontSize: '14px' }}></ion-icon>
+                  <span>Email</span>
+                </div>
+                <div className={`flex items-center gap-1 ${passwordStrength.score >= 3 ? 'text-green-600' : 'text-gray-400'}`}>
+                  <ion-icon name={passwordStrength.score >= 3 ? "checkmark-circle" : "ellipse-outline"} style={{ fontSize: '14px' }}></ion-icon>
+                  <span>Strong Password</span>
+                </div>
+                <div className={`flex items-center gap-1 ${consent ? 'text-green-600' : 'text-gray-400'}`}>
+                  <ion-icon name={consent ? "checkmark-circle" : "ellipse-outline"} style={{ fontSize: '14px' }}></ion-icon>
+                  <span>Terms</span>
+                </div>
+              </div>
+              <p className="text-xs text-charcoal/60">
+                Next: pick your interests
+              </p>
             </div>
 
             {/* Divider */}
