@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import ReviewerCard from "../ReviewerCard/ReviewerCard";
+import ScrollableSection from "../ScrollableSection/ScrollableSection";
 import { Reviewer } from "../../data/communityHighlightsData";
 
 interface TopReviewersProps {
@@ -47,17 +48,17 @@ export default function TopReviewers({
           </button>
         </div>
 
-        <div className="overflow-hidden">
-          <ul className="horizontal-scroll flex snap-x gap-6 overflow-x-auto pb-6 -mb-6">
+        <ScrollableSection className="gap-6 -mb-6">
+          <ul className="flex snap-x gap-6">
             {reviewers.map((reviewer) => (
               <div key={reviewer.id}>
-                <ReviewerCard 
+                <ReviewerCard
                   reviewer={reviewer}
                 />
               </div>
             ))}
           </ul>
-        </div>
+        </ScrollableSection>
       </div>
     </section>
   );

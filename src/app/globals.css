@@ -224,6 +224,57 @@
     display: none;
   }
 
+  /* Custom scrollbar styling for vertical scrolling - Design System */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(116, 145, 118, 0.05); /* sage/5 */
+    border-radius: 8px;
+    margin: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg,
+      rgba(116, 145, 118, 0.3) 0%,
+      rgba(116, 145, 118, 0.5) 50%,
+      rgba(214, 116, 105, 0.3) 100%
+    ); /* sage to coral gradient */
+    border-radius: 8px;
+    border: 1px solid rgba(116, 145, 118, 0.1);
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg,
+      rgba(116, 145, 118, 0.6) 0%,
+      rgba(116, 145, 118, 0.8) 50%,
+      rgba(214, 116, 105, 0.5) 100%
+    );
+    border-color: rgba(116, 145, 118, 0.3);
+    box-shadow: 0 2px 8px rgba(116, 145, 118, 0.2);
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(135deg,
+      rgba(116, 145, 118, 0.8) 0%,
+      rgba(214, 116, 105, 0.6) 100%
+    );
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: rgba(116, 145, 118, 0.05);
+  }
+
+  /* Firefox scrollbar styling */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(116, 145, 118, 0.4) rgba(116, 145, 118, 0.05);
+  }
+
   .horizontal-scroll > * {
     scroll-snap-align: start;
     scroll-snap-stop: always;
@@ -387,12 +438,190 @@
     }
   }
 
+  /* Premium CSS Animations */
+  @keyframes bounceRight {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slideInFromBottom {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes gentleFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* Arrow bounce animation */
+  .arrow-bounce {
+    animation: bounceRight 2s ease-in-out infinite;
+  }
+
+  /* Scroll reveal animations */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .scroll-reveal.reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .scroll-reveal-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .scroll-reveal-left.reveal {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .scroll-reveal-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .scroll-reveal-right.reveal {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .scroll-reveal-scale {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .scroll-reveal-scale.reveal {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Staggered animation delays */
+  .stagger-1 { transition-delay: 0.1s; }
+  .stagger-2 { transition-delay: 0.2s; }
+  .stagger-3 { transition-delay: 0.3s; }
+  .stagger-4 { transition-delay: 0.4s; }
+  .stagger-5 { transition-delay: 0.5s; }
+  .stagger-6 { transition-delay: 0.6s; }
+
+  /* Scroll arrow animations */
+  .scroll-arrow {
+    animation: fadeInScale 0.4s ease-out;
+  }
+
+  .scroll-arrow-left {
+    animation: fadeInLeft 0.4s ease-out;
+  }
+
+  .scroll-arrow-right {
+    animation: fadeInRight 0.4s ease-out;
+  }
+
+  /* Premium hover effects */
+  .premium-hover {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .premium-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(116, 145, 118, 0.15);
+  }
+
+  /* Card entrance animations */
+  .card-entrance {
+    animation: slideInFromBottom 0.6s ease-out forwards;
+  }
+
+  .card-entrance-1 { animation-delay: 0.1s; }
+  .card-entrance-2 { animation-delay: 0.2s; }
+  .card-entrance-3 { animation-delay: 0.3s; }
+  .card-entrance-4 { animation-delay: 0.4s; }
+  .card-entrance-5 { animation-delay: 0.5s; }
+  .card-entrance-6 { animation-delay: 0.6s; }
+
+  /* Floating elements */
+  .gentle-float {
+    animation: gentleFloat 3s ease-in-out infinite;
+  }
+
+  .gentle-float-delayed {
+    animation: gentleFloat 3s ease-in-out infinite;
+    animation-delay: 1.5s;
+  }
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     * {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+    }
+
+    .scroll-reveal,
+    .scroll-reveal-left,
+    .scroll-reveal-right,
+    .scroll-reveal-scale {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
     }
   }
 }

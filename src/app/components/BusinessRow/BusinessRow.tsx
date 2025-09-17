@@ -2,9 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import BusinessCard, { Business } from "../BusinessCard/BusinessCard";
-import StaggerContainer, { staggerItemVariants } from "../Animations/StaggerContainer";
-import MagneticButton from "../Animations/MagneticButton";
-import { motion } from "framer-motion";
+import ScrollableSection from "../ScrollableSection/ScrollableSection";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
 
 export default function BusinessRow({
   title,
@@ -18,12 +17,14 @@ export default function BusinessRow({
   href?: string;
 }) {
   const router = useRouter();
+  const titleRef = useScrollReveal({ className: 'scroll-reveal-left' });
+  const sectionRef = useScrollReveal({ className: 'scroll-reveal' });
 
   const handleSeeMore = () => {
     router.push(href);
   };
   return (
-    <section className="pb-16 sm:pt-2 bg-gradient-to-b from-off-white to-off-white/95 relative" aria-label="businesses" data-section>
+    <section ref={sectionRef} className="pb-16 sm:pt-2 bg-gradient-to-b from-off-white to-off-white/95 relative" aria-label="businesses" data-section>
       {/* Subtle section decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 right-20 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl" />
@@ -31,31 +32,34 @@ export default function BusinessRow({
       </div>
       
       <div className="container mx-auto max-w-[1300px] px-4 relative z-10">
-        <div className="mb-12 flex flex-wrap items-center justify-between gap-[18px]">
+        <div ref={titleRef} className="mb-12 flex flex-wrap items-center justify-between gap-[18px]">
           <h2 className="font-urbanist text-xl font-800 text-charcoal relative">
             {title}
             <div className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-sage to-coral rounded-full" />
           </h2>
-          <MagneticButton
+          <button
             onClick={handleSeeMore}
-            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base"
-            strength={0.4}
+            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base premium-hover"
           >
             <span className="transition-transform duration-300 group-hover:translate-x-[-1px]">
               See More...
             </span>
-          </MagneticButton>
+          </button>
         </div>
 
-        <div className="overflow-hidden">
-          <StaggerContainer className="horizontal-scroll flex snap-x gap-6 overflow-x-auto pb-6" staggerDelay={0.15}>
-            {businesses.map((business) => (
-              <motion.div key={business.id} variants={staggerItemVariants}>
+        <ScrollableSection className="gap-6">
+          <div className="flex snap-x gap-6">
+            {businesses.map((business, index) => (
+              <div
+                key={business.id}
+                className={`premium-hover card-entrance card-entrance-${Math.min(index + 1, 6)}`}
+                data-scroll-reveal
+              >
                 <BusinessCard business={business} />
-              </motion.div>
+              </div>
             ))}
-          </StaggerContainer>
-        </div>
+          </div>
+        </ScrollableSection>
       </div>
     </section>
   );

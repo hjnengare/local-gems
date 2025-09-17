@@ -4,6 +4,7 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import Header from "../components/Header/Header";
 import BusinessCard from "../components/BusinessCard/BusinessCard";
+import ScrollableSection from "../components/ScrollableSection/ScrollableSection";
 import { TRENDING_BUSINESSES } from "../data/businessData";
 
 // Dynamic import for bottom navigation
@@ -47,21 +48,23 @@ export default function SavedPage() {
 
             {/* Category Filter */}
             <ScrollReveal delay={0.2}>
-              <div className="horizontal-scroll flex space-x-3 mb-8 overflow-x-auto pb-2">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`px-6 py-3 rounded-full font-urbanist text-7 font-500 whitespace-nowrap transition-all duration-300 ${
-                      selectedCategory === category
-                        ? "bg-sage text-white shadow-lg"
-                        : "bg-white/80 text-charcoal/70 hover:bg-sage/10 hover:text-sage border border-sage/20"
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
+              <ScrollableSection className="mb-8">
+                <div className="flex space-x-3">
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => setSelectedCategory(category)}
+                      className={`px-6 py-3 rounded-full font-urbanist text-7 font-500 whitespace-nowrap transition-all duration-300 ${
+                        selectedCategory === category
+                          ? "bg-sage text-white shadow-lg"
+                          : "bg-white/80 text-charcoal/70 hover:bg-sage/10 hover:text-sage border border-sage/20"
+                      }`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              </ScrollableSection>
             </ScrollReveal>
 
             {/* Saved Businesses */}

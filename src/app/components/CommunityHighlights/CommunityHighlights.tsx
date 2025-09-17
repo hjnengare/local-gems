@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import ReviewerCard from "../ReviewerCard/ReviewerCard";
 import BusinessOfTheMonthCard from "../BusinessCard/BusinessOfTheMonthCard";
+import ScrollableSection from "../ScrollableSection/ScrollableSection";
 import { Review, Reviewer, BusinessOfTheMonth } from "../../data/communityHighlightsData";
 
 interface CommunityHighlightsProps {
@@ -21,7 +22,7 @@ export default function CommunityHighlights({
   topReviewers,
   businessesOfTheMonth,
   cta = "See Leaderboard...",
-  href = "/community",
+  href = "/leaderboard",
   variant = "reviews"
 }: CommunityHighlightsProps) {
   const router = useRouter();
@@ -75,18 +76,18 @@ export default function CommunityHighlights({
             </h3>
           </div>
 
-          <div className="overflow-hidden">
-            <ul className="horizontal-scroll flex snap-x gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6">
+          <ScrollableSection>
+            <ul className="flex snap-x gap-4 sm:gap-5 md:gap-6">
               {topReviewers.map((reviewer) => (
                 <div key={reviewer.id}>
-                  <ReviewerCard 
+                  <ReviewerCard
                     reviewer={reviewer}
                     variant="reviewer"
                   />
                 </div>
               ))}
             </ul>
-          </div>
+          </ScrollableSection>
         </div>
 
         {/* Businesses of the Month Subsection */}
@@ -96,14 +97,6 @@ export default function CommunityHighlights({
               <h3 className="font-urbanist text-base font-700 text-charcoal relative">
                 Businesses of the Month
               </h3>
-              <button
-                onClick={() => router.push('/awards')}
-                className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-coral text-base"
-              >
-                <span className="transition-transform duration-300 group-hover:translate-x-[-1px]">
-                  View All Awards
-                </span>
-              </button>
             </div>
 
             <div className="mb-4 sm:mb-5 md:mb-6 text-center">
@@ -115,15 +108,15 @@ export default function CommunityHighlights({
               </div>
             </div>
 
-            <div className="overflow-hidden">
-              <ul className="horizontal-scroll flex snap-x gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6">
+            <ScrollableSection>
+              <ul className="flex snap-x gap-4 sm:gap-5 md:gap-6">
                 {businessesOfTheMonth.map((business) => (
                   <div key={business.id}>
                     <BusinessOfTheMonthCard business={business} />
                   </div>
                 ))}
               </ul>
-            </div>
+            </ScrollableSection>
           </div>
         )}
       </div>

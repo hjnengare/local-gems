@@ -4,6 +4,7 @@ import { memo } from "react";
 import dynamic from "next/dynamic";
 import Header from "../components/Header/Header";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
+import { useScrollRevealMultiple } from "../hooks/useScrollReveal";
 import { TRENDING_BUSINESSES, NEARBY_FAVORITES } from "../data/businessData";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";
 import { FEATURED_REVIEWS, TOP_REVIEWERS, BUSINESSES_OF_THE_MONTH } from "../data/communityHighlightsData";
@@ -31,11 +32,6 @@ const CommunityHighlights = dynamic(() => import("../components/CommunityHighlig
   ssr: false,
 });
 
-const ScrollReveal = dynamic(() => import("../components/Animations/ScrollReveal"), {
-  ssr: false,
-  loading: () => <div style={{ opacity: 0 }} />,
-});
-
 const FloatingElements = dynamic(() => import("../components/Animations/FloatingElements"), {
   ssr: false,
   loading: () => null,
@@ -54,6 +50,9 @@ const Footer = dynamic(() => import("../components/Footer/Footer"), {
 const MemoizedBusinessRow = memo(BusinessRow);
 
 export default function Home() {
+  // Initialize scroll reveal for all data-scroll-reveal elements
+  useScrollRevealMultiple({ staggerDelay: 150 });
+
   return (
     <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative overflow-hidden">
       {/* Static background layers */}
@@ -71,35 +70,35 @@ export default function Home() {
       {/* Main content */}
       <div className="pt-[124px] md:pt-[144px] pb-24 md:pb-6 relative z-10">
       
-        {/* Business Rows with Enhanced Scroll Animations */}
-        <ScrollReveal delay={0.2} threshold={0.2} distance={100} direction="up">
+        {/* Business Rows with Enhanced CSS Scroll Animations */}
+        <div className="scroll-reveal stagger-1" data-scroll-reveal>
           <MemoizedBusinessRow title="For You" businesses={TRENDING_BUSINESSES} cta="View All Trending" />
-        </ScrollReveal>
+        </div>
 
-        <ScrollReveal delay={0.1} threshold={0.15} distance={80} direction="right">
+        <div className="scroll-reveal-right stagger-2" data-scroll-reveal>
           <MemoizedBusinessRow title="Trending Now" businesses={NEARBY_FAVORITES} cta="View All Favorites" />
-        </ScrollReveal>
+        </div>
 
-        <ScrollReveal delay={0.3} threshold={0.2} distance={120} direction="left">
+        <div className="scroll-reveal-left stagger-3" data-scroll-reveal>
           <EventsSpecials events={EVENTS_AND_SPECIALS} />
-        </ScrollReveal>
+        </div>
 
-        <ScrollReveal delay={0.4} threshold={0.25} distance={90} direction="up">
+        <div className="scroll-reveal-scale stagger-4" data-scroll-reveal>
           <CommunityHighlights
             reviews={FEATURED_REVIEWS}
             topReviewers={TOP_REVIEWERS}
             businessesOfTheMonth={BUSINESSES_OF_THE_MONTH}
             variant="reviews"
           />
-        </ScrollReveal>
+        </div>
 
        
       </div>
 
-      {/* Static background elements */}
+      {/* Floating background elements */}
       <div className="fixed inset-0 pointer-events-none opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-br from-coral/8 to-transparent rounded-full blur-2xl" />
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-3xl gentle-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-br from-coral/8 to-transparent rounded-full blur-2xl gentle-float-delayed" />
       </div>
 
       {/* Footer - only on larger screens */}
