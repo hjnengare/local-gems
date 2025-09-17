@@ -18,11 +18,23 @@ const styles = `
 `;
 
 export default function CompletePage() {
-  const { updateUser } = useAuth();
+  const { updateUser, user } = useAuth();
   
   useEffect(() => {
     // Mark onboarding as complete
-    updateUser({ onboardingComplete: true });
+    updateUser({
+      profile: {
+        ...user?.profile,
+        onboarding_complete: true,
+        onboarding_step: 'complete',
+        interests: user?.profile?.interests || [],
+        sub_interests: user?.profile?.sub_interests || [],
+        dealbreakers: user?.profile?.dealbreakers || [],
+        created_at: user?.profile?.created_at || new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        id: user?.id || ''
+      }
+    });
 
     // Rain confetti effect on mount
     const duration = 2 * 1000; // 2 seconds

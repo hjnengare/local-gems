@@ -84,19 +84,82 @@ export default function SubcategoriesPage() {
   const fromUrl = interests.filter((k) => availableKeys.includes(k));
   const sectionsToShow = fromUrl.length > 0 ? fromUrl : ["food-drink", "arts-culture"];
 
+  // Preselect popular subcategories based on interests
+  const getPreselectedItems = useCallback(() => {
+    const preselected: string[] = [];
+
+    sectionsToShow.forEach(interest => {
+      const items = subcategories[interest];
+      if (items) {
+        // Preselect the first 1-2 most popular items per interest
+        if (interest === "food-drink") {
+          preselected.push("casual-eats", "cafes");
+        } else if (interest === "arts-culture") {
+          preselected.push("galleries", "live-music");
+        } else if (interest === "beauty-wellness") {
+          // Add beauty-wellness subcategories when available
+        } else if (interest === "outdoors-adventure") {
+          // Add outdoor subcategories when available
+        }
+        // Add more interest-specific preselections as needed
+      }
+    });
+
+    return preselected;
+  }, [sectionsToShow]);
+
+  // Initialize with preselected items when component mounts
+  useEffect(() => {
+    if (selected.length === 0) {
+      const preselected = getPreselectedItems();
+      setSelected(preselected);
+    }
+  }, [selected.length, getPreselectedItems]);
+
   const toggle = useCallback((id: string) =>
     setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id])),
     []
   );
 
-  const handleNext = useCallback(() => {
+  const handleNext = useCallback(async () => {
     if (!user) return;
 
     // Optimistic navigation - navigate immediately
     router.push("/deal-breakers");
 
+    // Save subcategories to API (implement similar to interests)
+    if (selected.length > 0) {
+      try {
+        const response = await fetch('/api/user/subcategories', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ subcategories: selected })
+        });
+
+        if (!response.ok) {
+          console.error('Failed to save subcategories');
+        } else {
+          console.log('Subcategories saved successfully');
+        }
+      } catch (error) {
+        console.error('Error saving subcategories:', error);
+      }
+    }
+
     // Update user data asynchronously
-    updateUser({ subcategories: selected });
+    updateUser({
+      profile: {
+        ...user?.profile,
+        sub_interests: selected,
+        onboarding_step: 'deal-breakers',
+        onboarding_complete: false,
+        interests: user?.profile?.interests || [],
+        dealbreakers: user?.profile?.dealbreakers || [],
+        created_at: user?.profile?.created_at || new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        id: user?.id || ''
+      }
+    });
   }, [user, router, selected, updateUser]);
 
   return (

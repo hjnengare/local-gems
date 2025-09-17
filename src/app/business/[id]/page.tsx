@@ -88,7 +88,7 @@ export default function BusinessProfilePage() {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="font-urbanist text-2xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal"
+            className="font-urbanist text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal"
           >
             {business.name}
           </motion.h1>
@@ -148,7 +148,7 @@ export default function BusinessProfilePage() {
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.5, duration: 0.6 }}
-                      className="font-urbanist text-3xl lg:text-4xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-4"
+                      className="font-urbanist text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-4"
                     >
                       {business.name}
                     </motion.h2>
@@ -165,9 +165,9 @@ export default function BusinessProfilePage() {
                         transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
                         className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full shadow-lg"
                       >
-                        <ion-icon name="star" style={{ color: 'white', fontSize: '20px' }} />
+                        <ion-icon name="star" style={{ color: 'var(--white)', fontSize: '18px' }} />
                       </motion.div>
-                      <span className="font-urbanist text-2xl font-700 text-charcoal">{business.rating}</span>
+                      <span className="font-urbanist text-base font-700 text-charcoal">{business.rating}</span>
                     </motion.div>
 
                     {/* Trust Metrics */}
@@ -190,13 +190,13 @@ export default function BusinessProfilePage() {
                           whileHover={{ scale: 1.05, y: -5 }}
                           className="text-center group"
                         >
-                          <div className={`w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br ${
+                          <div className={`w-10 h-10 mx-auto mb-3 rounded-full bg-gradient-to-br ${
                             metric.color === 'sage' ? 'from-sage/20 to-sage/10' : 'from-coral/20 to-coral/10'
                           } flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300`}>
                             <motion.div
                               animate={{ scale: [1, 1.2, 1] }}
                               transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
-                              className={`font-urbanist text-lg font-700 ${
+                              className={`font-urbanist text-base font-700 ${
                                 metric.color === 'sage' ? 'text-sage' : 'text-coral'
                               }`}
                             >
@@ -228,7 +228,7 @@ export default function BusinessProfilePage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5, duration: 0.6 }}
-                  className="font-urbanist text-2xl font-600 text-charcoal mb-6 flex items-center"
+                  className="font-urbanist text-xl font-600 text-charcoal mb-6 flex items-center"
                 >
                   <motion.div
                     animate={{ rotate: [0, 5, -5, 0] }}
@@ -262,7 +262,7 @@ export default function BusinessProfilePage() {
                           />
                         </motion.div>
                         <div>
-                          <h4 className="font-urbanist text-lg font-600 text-charcoal mb-1 group-hover:text-sage transition-colors duration-300">
+                          <h4 className="font-urbanist text-base font-600 text-charcoal mb-1 group-hover:text-sage transition-colors duration-300">
                             {special.name}
                           </h4>
                           <p className="font-urbanist text-sm font-400 text-charcoal/70">
@@ -291,7 +291,7 @@ export default function BusinessProfilePage() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.7, duration: 0.6 }}
-                    className="font-urbanist text-2xl font-600 text-charcoal flex items-center"
+                    className="font-urbanist text-xl font-600 text-charcoal flex items-center"
                   >
                     <motion.div
                       animate={{ scale: [1, 1.1, 1] }}

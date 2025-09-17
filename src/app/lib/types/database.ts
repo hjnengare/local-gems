@@ -7,6 +7,42 @@ export interface User {
   updated_at: string;
 }
 
+export interface Profile {
+  id: string;
+  onboarding_step: string;
+  onboarding_complete: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface UserInterest {
+  id: string;
+  user_id: string;
+  interest_id: string;
+  created_at: string;
+}
+
+export interface AuthUser extends User {
+  profile?: Profile;
+  interests?: string[];
+}
+
+export interface AuthError {
+  message: string;
+  code?: string;
+  details?: unknown;
+}
+
+export interface SignUpData {
+  email: string;
+  password: string;
+}
+
+export interface SignInData {
+  email: string;
+  password: string;
+}
+
 export interface Business {
   id: string;
   name: string;

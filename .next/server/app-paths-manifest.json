@@ -1,19 +1,7 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/all/page": "app/all/page.js",
-  "/business/[id]/page": "app/business/[id]/page.js",
-  "/business/[id]/review/page": "app/business/[id]/review/page.js",
-  "/complete/page": "app/complete/page.js",
-  "/deal-breakers/page": "app/deal-breakers/page.js",
-  "/onboarding/page": "app/onboarding/page.js",
-  "/home/page": "app/home/page.js",
-  "/interests/page": "app/interests/page.js",
-  "/login/page": "app/login/page.js",
-  "/leaderboard/page": "app/leaderboard/page.js",
-  "/profile/page": "app/profile/page.js",
   "/page": "app/page.js",
   "/register/page": "app/register/page.js",
-  "/saved/page": "app/saved/page.js",
-  "/subcategories/page": "app/subcategories/page.js"
+  "/interests/page": "app/interests/page.js",
+  "/onboarding/page": "app/onboarding/page.js"
 }

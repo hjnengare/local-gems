@@ -2,25 +2,16 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-
-interface User {
-  id: string;
-  email: string;
-  onboardingStep: string;
-  onboardingComplete: boolean;
-  interests: string[];
-  subInterests: string[];
-  subcategories: string[];
-  dealbreakers: string[];
-  createdAt: string;
-}
+import { supabase } from '../lib/supabase';
+import { AuthService } from '../lib/auth';
+import type { AuthUser } from '../lib/types/database';
 
 interface AuthContextType {
-  user: User | null;
+  user: AuthUser | null;
   login: (email: string, password: string) => Promise<boolean>;
   register: (email: string, password: string) => Promise<boolean>;
   logout: () => Promise<void>;
-  updateUser: (userData: Partial<User>) => Promise<void>;
+  updateUser: (userData: Partial<AuthUser>) => Promise<void>;
   isLoading: boolean;
   error: string | null;
 }
@@ -32,114 +23,162 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  // Create a dummy user for testing
-  const createDummyUser = (email: string): User => ({
-    id: 'dummy-user-id',
-    email,
-    onboardingStep: 'interests',
-    onboardingComplete: false,
-    interests: [],
-    subInterests: [],
-    subcategories: [],
-    dealbreakers: [],
-    createdAt: new Date().toISOString()
-  });
-
-  // Load dummy user on mount
+  // Initialize auth state
   useEffect(() => {
-    // Simulate loading delay
-    setIsLoading(true);
-    setTimeout(() => {
-      // Check if user was already "logged in"
-      const savedUser = localStorage.getItem('dummyUser');
-      if (savedUser) {
-        setUser(JSON.parse(savedUser));
+    const initializeAuth = async () => {
+      setIsLoading(true);
+
+      try {
+        const currentUser = await AuthService.getCurrentUser();
+        setUser(currentUser);
+      } catch (error) {
+        console.error('Error initializing auth:', error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
-    }, 100);
+    };
+
+    initializeAuth();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session?.user) {
+        const currentUser = await AuthService.getCurrentUser();
+        setUser(currentUser);
+      } else if (event === 'SIGNED_OUT') {
+        setUser(null);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     setError(null);
 
-    // Basic validation
-    if (!email?.trim() || !password?.trim()) {
-      setError('Email and password are required');
+    try {
+      const { user: authUser, error: authError } = await AuthService.signIn({ email, password });
+
+      if (authError) {
+        setError(authError.message);
+        setIsLoading(false);
+        return false;
+      }
+
+      if (authUser) {
+        setUser(authUser);
+
+        // Redirect based on onboarding status
+        if (authUser.profile?.onboarding_complete) {
+          router.push('/home');
+        } else {
+          router.push(`/${authUser.profile?.onboarding_step || 'interests'}`);
+        }
+      }
+
+      setIsLoading(false);
+      return true;
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Login failed';
+      setError(message);
       setIsLoading(false);
       return false;
     }
-
-    // Simulate loading delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    // Always succeed for dummy auth
-    const dummyUser = createDummyUser(email.trim().toLowerCase());
-    setUser(dummyUser);
-    localStorage.setItem('dummyUser', JSON.stringify(dummyUser));
-
-    // Redirect based on onboarding status
-    if (dummyUser.onboardingComplete) {
-      router.push('/home');
-    } else {
-      router.push(`/${dummyUser.onboardingStep}`);
-    }
-
-    setIsLoading(false);
-    return true;
   };
 
   const register = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     setError(null);
 
-    // Basic validation
-    if (!email?.trim() || !password?.trim()) {
-      setError('Email and password are required');
+    try {
+      const { user: authUser, error: authError } = await AuthService.signUp({ email, password });
+
+      if (authError) {
+        setError(authError.message);
+        setIsLoading(false);
+        return false;
+      }
+
+      if (authUser) {
+        setUser(authUser);
+        // Navigate to interests page after registration
+        router.push('/interests');
+      }
+
+      setIsLoading(false);
+      return true;
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Registration failed';
+      setError(message);
       setIsLoading(false);
       return false;
     }
-
-    // Simulate loading delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    // Always succeed for dummy auth
-    const dummyUser = createDummyUser(email.trim().toLowerCase());
-    setUser(dummyUser);
-    localStorage.setItem('dummyUser', JSON.stringify(dummyUser));
-
-    // Navigate to interests page after registration
-    router.push('/interests');
-    setIsLoading(false);
-    return true;
   };
 
   const logout = async (): Promise<void> => {
     setIsLoading(true);
-    setUser(null);
     setError(null);
-    localStorage.removeItem('dummyUser');
-    router.push('/onboarding');
-    setIsLoading(false);
+
+    try {
+      const { error: signOutError } = await AuthService.signOut();
+
+      if (signOutError) {
+        setError(signOutError.message);
+      } else {
+        setUser(null);
+        router.push('/onboarding');
+      }
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Logout failed';
+      setError(message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const updateUser = async (userData: Partial<User>): Promise<void> => {
+  const updateUser = async (userData: Partial<AuthUser>): Promise<void> => {
     if (!user) return;
 
     setIsLoading(true);
     setError(null);
 
-    // Update user data locally
-    const updatedUser = { ...user, ...userData };
-    setUser(updatedUser);
-    localStorage.setItem('dummyUser', JSON.stringify(updatedUser));
+    try {
+      // Update user profile in Supabase if profile data is being updated
+      if (userData.profile) {
+        const { error } = await supabase
+          .from('profiles')
+          .update({
+            onboarding_step: userData.profile.onboarding_step,
+            onboarding_complete: userData.profile.onboarding_complete,
+            interests: userData.profile.interests,
+            sub_interests: userData.profile.sub_interests,
+            dealbreakers: userData.profile.dealbreakers,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', user.id);
 
-    setIsLoading(false);
+        if (error) throw error;
+      }
+
+      // Update local user state
+      const updatedUser = {
+        ...user,
+        ...userData,
+        profile: userData.profile ? { ...user.profile, ...userData.profile } : user.profile
+      };
+      setUser(updatedUser);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Update failed';
+      setError(message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const value: AuthContextType = {
@@ -167,4 +206,4 @@ export function useAuth() {
   return context;
 }
 
-export type { User };
+export type { AuthUser };

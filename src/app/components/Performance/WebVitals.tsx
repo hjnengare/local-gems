@@ -4,6 +4,11 @@ import { useEffect } from 'react';
 
 function WebVitals() {
   useEffect(() => {
+    // Skip in development to improve performance
+    if (process.env.NODE_ENV === 'development') {
+      return;
+    }
+
     // Only load web-vitals in the browser and if available
     if (typeof window !== 'undefined') {
       import('web-vitals').then((webVitals) => {
@@ -18,11 +23,16 @@ function WebVitals() {
         };
 
         // Measure and report Core Web Vitals
-        webVitals.onCLS(reportMetric);
-        webVitals.onFID(reportMetric);
-        webVitals.onFCP(reportMetric);
-        webVitals.onLCP(reportMetric);
-        webVitals.onTTFB(reportMetric);
+        webVitals.onCLS?.(reportMetric);
+        // onFID is deprecated in favor of onINP in newer versions
+        if (webVitals.onINP) {
+          webVitals.onINP(reportMetric);
+        } else if (webVitals.onFID) {
+          webVitals.onFID(reportMetric);
+        }
+        webVitals.onFCP?.(reportMetric);
+        webVitals.onLCP?.(reportMetric);
+        webVitals.onTTFB?.(reportMetric);
       }).catch((error) => {
         // Only log in development
         if (process.env.NODE_ENV === 'development') {

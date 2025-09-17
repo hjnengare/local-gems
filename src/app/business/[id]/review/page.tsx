@@ -27,8 +27,8 @@ const ImageUpload = dynamic(() => import("../../../components/ReviewForm/ImageUp
 export default function WriteReviewPage() {
   const router = useRouter();
   const params = useParams();
-  const { user, loading: authLoading } = useAuth();
-  const { business, loading: businessLoading } = useBusiness(undefined, params.id as string);
+  const { user, isLoading: authLoading } = useAuth();
+  const { business, loading: businessLoading } = useBusiness(undefined, params?.id as string);
   const { submitting, submitReview } = useReviewSubmission();
 
   const [overallRating, setOverallRating] = useState(0);
@@ -107,7 +107,7 @@ export default function WriteReviewPage() {
 
     if (success) {
       // Navigate back to business page
-      router.push(`/business/${params.id}`);
+      router.push(`/business/${params?.id}`);
     }
   };
 
@@ -143,7 +143,7 @@ export default function WriteReviewPage() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link href={`/business/${params.id}`} className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full">
+            <Link href={`/business/${params?.id}`} className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full">
               <ion-icon name="arrow-back-outline" size="small"></ion-icon>
             </Link>
           </motion.div>
