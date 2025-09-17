@@ -32,35 +32,5 @@
     "files": [
       "static/chunks/_app-pages-browser_src_app_components_Loading_PageLoading_tsx.js"
     ]
-  },
-  "app\\home\\page.tsx -> ../components/Animations/FloatingElements": {
-    "id": "app\\home\\page.tsx -> ../components/Animations/FloatingElements",
-    "files": [
-      "static/chunks/_app-pages-browser_src_app_components_Animations_FloatingElements_tsx.js"
-    ]
-  },
-  "app\\home\\page.tsx -> ../components/CommunityHighlights/CommunityHighlights": {
-    "id": "app\\home\\page.tsx -> ../components/CommunityHighlights/CommunityHighlights",
-    "files": [
-      "static/chunks/_app-pages-browser_src_app_components_CommunityHighlights_CommunityHighlights_tsx.js"
-    ]
-  },
-  "app\\home\\page.tsx -> ../components/EventsSpecials/EventsSpecials": {
-    "id": "app\\home\\page.tsx -> ../components/EventsSpecials/EventsSpecials",
-    "files": [
-      "static/chunks/_app-pages-browser_src_app_components_EventsSpecials_EventsSpecials_tsx.js"
-    ]
-  },
-  "app\\home\\page.tsx -> ../components/Footer/Footer": {
-    "id": "app\\home\\page.tsx -> ../components/Footer/Footer",
-    "files": [
-      "static/chunks/_app-pages-browser_src_app_components_Footer_Footer_tsx.js"
-    ]
-  },
-  "app\\home\\page.tsx -> ../components/Navigation/BottomNav": {
-    "id": "app\\home\\page.tsx -> ../components/Navigation/BottomNav",
-    "files": [
-      "static/chunks/_app-pages-browser_src_app_components_Navigation_BottomNav_tsx.js"
-    ]
   }
 }

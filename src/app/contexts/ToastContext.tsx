@@ -5,7 +5,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 interface Toast {
   id: string;
   message: string;
-  type: 'success' | 'error' | 'info' | 'warning';
+  type: 'success' | 'error' | 'info' | 'warning' | 'sage';
   duration?: number;
 }
 
@@ -43,6 +43,8 @@ export function ToastProvider({ children }: ToastProviderProps) {
     switch (type) {
       case 'success':
         return 'bg-sage/95 border-sage/30 text-white';
+      case 'sage':
+        return 'bg-sage/95 border-sage/30 text-white';
       case 'error':
         return 'bg-red-500/95 border-red-400/30 text-white';
       case 'warning':
@@ -56,6 +58,8 @@ export function ToastProvider({ children }: ToastProviderProps) {
     switch (type) {
       case 'success':
         return 'checkmark-circle';
+      case 'sage':
+        return 'information-circle';
       case 'error':
         return 'close-circle';
       case 'warning':

@@ -291,7 +291,7 @@ export default function RegisterPage() {
             {/* Offline Message */}
             {!isOnline && !error && (
               <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-center">
-                <p className="font-urbanist text-[14px] font-600 text-orange-600">You're offline. We'll try again when you're back online.</p>
+                <p className="font-urbanist text-[14px] font-600 text-orange-600">You&apos;re offline. We&apos;ll try again when you&apos;re back online.</p>
               </div>
             )}
 
