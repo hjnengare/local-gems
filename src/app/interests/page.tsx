@@ -549,12 +549,12 @@ function InterestsContent() {
                   <div className="text-center mb-6">
                     <div className={`inline-flex items-center gap-2 rounded-full px-4 py-2 mb-3 transition-colors duration-300 ${
                       hydratedSelected.length >= MIN_SELECTIONS
-                        ? 'bg-green-50 border border-green-200'
+                        ? 'bg-sage/10 border border-sage/30'
                         : 'bg-sage/10 border border-sage/20'
                     }`}>
                       <span
                         className={`font-urbanist text-sm font-600 ${
-                          hydratedSelected.length >= MIN_SELECTIONS ? 'text-green-700' : 'text-sage'
+                          hydratedSelected.length >= MIN_SELECTIONS ? 'text-sage' : 'text-sage'
                         }`}
                         aria-live="polite"
                         aria-atomic="true"
@@ -562,7 +562,7 @@ function InterestsContent() {
                         {hydratedSelected.length} of {MIN_SELECTIONS}-{MAX_SELECTIONS} selected
                       </span>
                       {hydratedSelected.length >= MIN_SELECTIONS && (
-                        <ion-icon name="checkmark-circle" style={{ color: "#15803d" }} size="small" />
+                        <ion-icon name="checkmark-circle" style={{ color: "hsl(148, 20%, 38%)" }} size="small" />
                       )}
                     </div>
                     <p
