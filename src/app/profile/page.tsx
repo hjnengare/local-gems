@@ -124,7 +124,7 @@ function ProfileContent() {
           <div className="max-w-4xl mx-auto space-y-6">
 
             {/* Profile Header Card */}
-            <div ref={headerRef} className="bg-off-white/90 backdrop-blur-sm rounded-3xl p-6 border border-sage/10 shadow-sm">
+            <div ref={headerRef} className="bg-off-white/90 backdrop-blur-sm p-6 border border-sage/10 shadow-sm">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-4">
                   <div className="relative">
@@ -162,7 +162,7 @@ function ProfileContent() {
             </div>
 
             {/* Stats Overview */}
-            <div ref={statsRef} className="bg-off-white/90 backdrop-blur-sm rounded-2xl p-5 border border-sage/10 shadow-sm">
+            <div ref={statsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-sage/10 shadow-sm">
               <h2 className="font-urbanist text-lg font-600 text-charcoal mb-4">Stats Overview</h2>
               <div className="grid grid-cols-3 gap-4">
                 <div className="text-center">
@@ -195,7 +195,7 @@ function ProfileContent() {
             </div>
 
             {/* Your Contributions */}
-            <div ref={contributionsRef} className="bg-off-white/90 backdrop-blur-sm rounded-2xl p-5 border border-sage/10 shadow-sm">
+            <div ref={contributionsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-sage/10 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-urbanist text-lg font-600 text-charcoal">Your Contributions</h2>
                 <button
@@ -241,13 +241,13 @@ function ProfileContent() {
             </div>
 
             {/* Your Achievements */}
-            <div ref={achievementsRef} className="bg-off-white/90 backdrop-blur-sm rounded-2xl p-5 border border-sage/10 shadow-sm">
+            <div ref={achievementsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-sage/10 shadow-sm">
               <h2 className="font-urbanist text-lg font-600 text-charcoal mb-4">Your Achievements</h2>
               <div className="space-y-3">
                 {userData.achievements.map((achievement) => (
                   <div
                     key={achievement.id}
-                    className={`flex items-center space-x-3 p-3 rounded-xl transition-all duration-200 ${
+                    className={`flex items-center space-x-3 p-3 transition-all duration-200 ${
                       achievement.earned ? "bg-sage/10 border border-sage/20" : "bg-gray-50 border border-gray-200 opacity-60"
                     }`}
                   >
@@ -279,9 +279,9 @@ function ProfileContent() {
             </div>
 
             {/* Account Settings */}
-            <div ref={settingsRef} className="bg-off-white/90 backdrop-blur-sm rounded-2xl p-5 border border-sage/10 shadow-sm">
+            <div ref={settingsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-sage/10 shadow-sm">
               <div className="space-y-2">
-                <button className="w-full flex items-center justify-between p-4 rounded-xl hover:bg-sage/5 transition-colors duration-200 group">
+                <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group">
                   <div className="flex items-center space-x-3">
                     <ion-icon name="settings-outline" style={{ color: "#6B7280", fontSize: "20px" }} />
                     <span className="font-urbanist text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
@@ -291,7 +291,7 @@ function ProfileContent() {
                   <ion-icon name="chevron-forward" style={{ color: "#9CA3AF", fontSize: "16px" }} />
                 </button>
 
-                <button className="w-full flex items-center justify-between p-4 rounded-xl hover:bg-sage/5 transition-colors duration-200 group">
+                <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group">
                   <div className="flex items-center space-x-3">
                     <ion-icon name="notifications-outline" style={{ color: "#6B7280", fontSize: "20px" }} />
                     <span className="font-urbanist text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
@@ -301,7 +301,7 @@ function ProfileContent() {
                   <ion-icon name="chevron-forward" style={{ color: "#9CA3AF", fontSize: "16px" }} />
                 </button>
 
-                <button className="w-full flex items-center justify-between p-4 rounded-xl hover:bg-sage/5 transition-colors duration-200 group">
+                <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group">
                   <div className="flex items-center space-x-3">
                     <ion-icon name="lock-closed-outline" style={{ color: "#6B7280", fontSize: "20px" }} />
                     <span className="font-urbanist text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
@@ -313,7 +313,7 @@ function ProfileContent() {
 
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center justify-between p-4 rounded-xl hover:bg-coral/5 transition-colors duration-200 group"
+                  className="w-full flex items-center justify-between p-4 hover:bg-coral/5 transition-colors duration-200 group"
                 >
                   <div className="flex items-center space-x-3">
                     <ion-icon name="log-out-outline" style={{ color: "#FF6B6B", fontSize: "20px" }} />
@@ -330,7 +330,7 @@ function ProfileContent() {
             <div className="pt-4">
               <Link
                 href="/home"
-                className="w-full bg-sage/10 hover:bg-sage/15 rounded-2xl p-4 font-urbanist text-base font-600 text-sage hover:text-sage/80 transition-all duration-300 flex items-center justify-center space-x-2 border border-sage/20"
+                className="w-full bg-sage/10 hover:bg-sage/15 p-4 font-urbanist text-base font-600 text-sage hover:text-sage/80 transition-all duration-300 flex items-center justify-center space-x-2 border border-sage/20"
               >
                 <ion-icon name="chevron-back" style={{ fontSize: "18px" }} />
                 <span>Back</span>
