@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { getServerSupabase } from "@/app/lib/supabase/server";
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
-  const supabase = getServerSupabase();
+  const supabase = await getServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
@@ -51,8 +53,40 @@ export async function POST(req: Request) {
     });
 
     if (error) {
-      console.error('Error replacing user interests:', error);
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      // If function doesn't exist, fall back to manual transaction
+      if (error.message?.includes('function') || error.message?.includes('does not exist')) {
+        console.warn('replace_user_interests function not found, using fallback method');
+
+        // Manual transaction: delete then insert
+        const { error: deleteError } = await supabase
+          .from('user_interests')
+          .delete()
+          .eq('user_id', user.id);
+
+        if (deleteError) {
+          console.error('Error deleting user interests:', deleteError);
+          return NextResponse.json({ error: deleteError.message }, { status: 400 });
+        }
+
+        if (validSelections.length > 0) {
+          const rows = validSelections.map(interest_id => ({
+            user_id: user.id,
+            interest_id
+          }));
+
+          const { error: insertError } = await supabase
+            .from('user_interests')
+            .insert(rows);
+
+          if (insertError) {
+            console.error('Error inserting user interests:', insertError);
+            return NextResponse.json({ error: insertError.message }, { status: 400 });
+          }
+        }
+      } else {
+        console.error('Error replacing user interests:', error);
+        return NextResponse.json({ error: error.message }, { status: 400 });
+      }
     }
 
     return NextResponse.json({
@@ -70,7 +104,7 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-  const supabase = getServerSupabase();
+  const supabase = await getServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
