@@ -46,6 +46,24 @@ export async function POST(req: Request) {
 
     const validSelections = cleaned;
 
+    // Short-circuit if no changes needed
+    const { data: existing } = await supabase
+      .from('user_interests')
+      .select('interest_id')
+      .eq('user_id', user.id);
+
+    const current = new Set((existing ?? []).map(r => r.interest_id));
+    const next = new Set(validSelections);
+    const same = current.size === next.size && [...current].every(x => next.has(x));
+
+    if (same) {
+      return NextResponse.json({
+        ok: true,
+        message: 'No changes needed',
+        selections: validSelections
+      });
+    }
+
     // Use atomic replace function for true transactional behavior
     const { error } = await supabase.rpc('replace_user_interests', {
       p_user_id: user.id,
@@ -80,6 +98,10 @@ export async function POST(req: Request) {
 
           if (insertError) {
             console.error('Error inserting user interests:', insertError);
+            // Handle FK violation explicitly
+            if (insertError.code === '23503') {
+              return NextResponse.json({ error: 'Invalid interest id(s).' }, { status: 400 });
+            }
             return NextResponse.json({ error: insertError.message }, { status: 400 });
           }
         }

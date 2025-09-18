@@ -20,7 +20,11 @@
       "WebFetch(domain:unsplash.com)",
       "WebSearch",
       "Bash(npm run typecheck:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(curl:*)",
+      "Bash(git reset:*)",
+      "Bash(start http://localhost:3002/register)",
+      "Bash(start \"http://localhost:3002/subcategories?interests=food-drink,arts-culture\")"
     ],
     "deny": [],
     "ask": []

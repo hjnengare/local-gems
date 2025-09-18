@@ -200,10 +200,37 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../src/app/api/interests/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/interests">> = Specific
+  const handler = {} as typeof import("../../src/app/api/interests/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/subcategories/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/subcategories">> = Specific
+  const handler = {} as typeof import("../../src/app/api/subcategories/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../src/app/api/user/interests/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/user/interests">> = Specific
   const handler = {} as typeof import("../../src/app/api/user/interests/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/user/subcategories/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/user/subcategories">> = Specific
+  const handler = {} as typeof import("../../src/app/api/user/subcategories/route.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check
