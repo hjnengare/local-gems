@@ -105,7 +105,7 @@ export default function RegisterPage() {
       color = "text-yellow-500";
     } else if (score === 4) {
       feedback = "Strong - Perfect! 🎉";
-      color = "text-green-500";
+      color = "text-sage";
     }
 
     return { score, feedback, checks, color };
@@ -323,7 +323,7 @@ export default function RegisterPage() {
             <div className="relative group">
               <div className={`absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 transition-colors duration-300 z-10 ${
                 getEmailError() ? 'text-red-500' :
-                email && !getEmailError() && emailTouched ? 'text-green-500' :
+                email && !getEmailError() && emailTouched ? 'text-sage' :
                 'text-charcoal/40 group-focus-within:text-sage'
               }`}>
                 <ion-icon name={
@@ -340,7 +340,7 @@ export default function RegisterPage() {
                 onBlur={() => setEmailTouched(true)}
                 className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
                   getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
-                  email && !getEmailError() && emailTouched ? 'border-green-300 focus:border-green-500 focus:ring-green-500/20' :
+                  email && !getEmailError() && emailTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
                 disabled={submitting || isLoading}
@@ -355,7 +355,7 @@ export default function RegisterPage() {
               </p>
             )}
             {email && !getEmailError() && emailTouched && (
-              <p className="text-xs text-green-600 flex items-center gap-1 mt-1" role="status">
+              <p className="text-xs text-sage flex items-center gap-1 mt-1" role="status">
                 <ion-icon name="checkmark-circle" style={{ fontSize: '12px' }} />
                 Email looks good!
               </p>
@@ -364,7 +364,7 @@ export default function RegisterPage() {
             {/* Password with enhanced styling */}
             <div className="relative group">
               <div className={`absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 transition-colors duration-300 z-10 ${
-                passwordStrength.score >= 3 && passwordTouched ? 'text-green-500' :
+                passwordStrength.score >= 3 && passwordTouched ? 'text-sage' :
                 passwordStrength.score > 0 && passwordStrength.score < 3 ? 'text-orange-500' :
                 'text-charcoal/40 group-focus-within:text-sage'
               }`}>
@@ -381,7 +381,7 @@ export default function RegisterPage() {
                 onChange={(e) => handlePasswordChange(e.target.value)}
                 onBlur={() => setPasswordTouched(true)}
                 className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
-                  passwordStrength.score >= 3 && passwordTouched ? 'border-green-300 focus:border-green-500 focus:ring-green-500/20' :
+                  passwordStrength.score >= 3 && passwordTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   passwordStrength.score > 0 && passwordStrength.score < 3 ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
                   'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
@@ -415,7 +415,7 @@ export default function RegisterPage() {
                             ? 'bg-orange-400'
                             : level === 3
                             ? 'bg-yellow-400'
-                            : 'bg-green-400'
+                            : 'bg-sage'
                           : 'bg-gray-200'
                       }`}
                     />
@@ -481,15 +481,15 @@ export default function RegisterPage() {
             {/* Registration progress indicator */}
             <div className="text-center space-y-2 pt-2">
               <div className="flex items-center justify-center gap-4 text-xs">
-                <div className={`flex items-center gap-1 ${email && !getEmailError() ? 'text-green-600' : 'text-gray-400'}`}>
+                <div className={`flex items-center gap-1 ${email && !getEmailError() ? 'text-sage' : 'text-gray-400'}`}>
                   <ion-icon name={email && !getEmailError() ? "checkmark-circle" : "ellipse-outline"} style={{ fontSize: '14px' }}></ion-icon>
                   <span>Email</span>
                 </div>
-                <div className={`flex items-center gap-1 ${passwordStrength.score >= 3 ? 'text-green-600' : 'text-gray-400'}`}>
+                <div className={`flex items-center gap-1 ${passwordStrength.score >= 3 ? 'text-sage' : 'text-gray-400'}`}>
                   <ion-icon name={passwordStrength.score >= 3 ? "checkmark-circle" : "ellipse-outline"} style={{ fontSize: '14px' }}></ion-icon>
                   <span>Strong Password</span>
                 </div>
-                <div className={`flex items-center gap-1 ${consent ? 'text-green-600' : 'text-gray-400'}`}>
+                <div className={`flex items-center gap-1 ${consent ? 'text-sage' : 'text-gray-400'}`}>
                   <ion-icon name={consent ? "checkmark-circle" : "ellipse-outline"} style={{ fontSize: '14px' }}></ion-icon>
                   <span>Terms</span>
                 </div>

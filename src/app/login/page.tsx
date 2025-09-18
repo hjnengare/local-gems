@@ -148,7 +148,7 @@ export default function LoginPage() {
             <div className="relative group">
               <div className={`absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 transition-colors duration-300 z-10 ${
                 getEmailError() ? 'text-red-500' :
-                email && !getEmailError() ? 'text-green-500' :
+                email && !getEmailError() ? 'text-sage' :
                 'text-charcoal/40 group-focus-within:text-sage'
               }`}>
                 <ion-icon name={
@@ -168,7 +168,7 @@ export default function LoginPage() {
                 onBlur={() => setEmailTouched(true)}
                 className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
                   getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
-                  email && !getEmailError() ? 'border-green-300 focus:border-green-500 focus:ring-green-500/20' :
+                  email && !getEmailError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
                 disabled={isSubmitting || isLoading}
@@ -183,7 +183,7 @@ export default function LoginPage() {
               </p>
             )}
             {email && !getEmailError() && emailTouched && (
-              <p className="text-xs text-green-600 flex items-center gap-1 mt-1" role="status">
+              <p className="text-xs text-sage flex items-center gap-1 mt-1" role="status">
                 <ion-icon name="checkmark-circle" style={{ fontSize: '12px' }} />
                 Email looks good!
               </p>
@@ -193,7 +193,7 @@ export default function LoginPage() {
             <div className="relative group">
               <div className={`absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 transition-colors duration-300 z-10 ${
                 getPasswordError() ? 'text-red-500' :
-                password && !getPasswordError() ? 'text-green-500' :
+                password && !getPasswordError() ? 'text-sage' :
                 'text-charcoal/40 group-focus-within:text-sage'
               }`}>
                 <ion-icon name={
@@ -213,7 +213,7 @@ export default function LoginPage() {
                 onBlur={() => setPasswordTouched(true)}
                 className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
                   getPasswordError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
-                  password && !getPasswordError() ? 'border-green-300 focus:border-green-500 focus:ring-green-500/20' :
+                  password && !getPasswordError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
                 disabled={isSubmitting || isLoading}
@@ -239,7 +239,7 @@ export default function LoginPage() {
               </p>
             )}
             {password && !getPasswordError() && passwordTouched && (
-              <p className="text-xs text-green-600 flex items-center gap-1 mt-1" role="status">
+              <p className="text-xs text-sage flex items-center gap-1 mt-1" role="status">
                 <ion-icon name="checkmark-circle" style={{ fontSize: '12px' }} />
                 Password looks good!
               </p>
