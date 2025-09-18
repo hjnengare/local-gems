@@ -255,7 +255,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-6 sm:py-8 relative overflow-hidden">
+    <div ref={containerRef} className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-6 pb-16 sm:py-8 sm:pb-12 relative overflow-hidden">
       {/* Back button with entrance animation */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
