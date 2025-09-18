@@ -98,7 +98,8 @@ export async function POST(req: Request) {
       });
     }
 
-    // Manual transaction: delete then insert
+    // Use upsert to handle concurrent requests gracefully
+    // First, delete all existing entries for this user
     const { error: deleteError } = await supabase
       .from('user_deal_breakers')
       .delete()
@@ -109,23 +110,28 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: deleteError.message }, { status: 400 });
     }
 
+    // Then insert new selections using upsert to handle race conditions
     if (validSelections.length > 0) {
       const rows = validSelections.map(deal_breaker_id => ({
         user_id: user.id,
-        deal_breaker_id
+        deal_breaker_id,
+        created_at: new Date().toISOString()
       }));
 
-      const { error: insertError } = await supabase
+      const { error: upsertError } = await supabase
         .from('user_deal_breakers')
-        .insert(rows);
+        .upsert(rows, {
+          onConflict: 'user_id,deal_breaker_id',
+          ignoreDuplicates: false
+        });
 
-      if (insertError) {
-        console.error('Error inserting user deal-breakers:', insertError);
+      if (upsertError) {
+        console.error('Error upserting user deal-breakers:', upsertError);
         // Handle FK violation explicitly
-        if (insertError.code === '23503') {
+        if (upsertError.code === '23503') {
           return NextResponse.json({ error: 'Invalid deal-breaker id(s).' }, { status: 400 });
         }
-        return NextResponse.json({ error: insertError.message }, { status: 400 });
+        return NextResponse.json({ error: upsertError.message }, { status: 400 });
       }
     }
 

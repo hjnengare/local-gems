@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createServerSupabase } from "../../lib/supabase/server";
+import { getServerSupabase } from "../../lib/supabase/server";
 
 // Fallback subcategories data
 const FALLBACK_SUBCATEGORIES = [
@@ -56,7 +56,7 @@ const FALLBACK_SUBCATEGORIES = [
 
 export async function GET(req: Request) {
   try {
-    const supabase = await createServerSupabase();
+    const supabase = await getServerSupabase();
     const url = new URL(req.url);
     const idsParam = url.searchParams.get("interests");
     const ids = idsParam
