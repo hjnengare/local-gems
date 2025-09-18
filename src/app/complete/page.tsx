@@ -26,7 +26,6 @@ const styles = `
   .delay-200 { animation-delay: 0.2s; }
   .delay-400 { animation-delay: 0.4s; }
   .delay-600 { animation-delay: 0.6s; }
-  .rounded-3px { border-radius: 3px; }
 
   @media (prefers-reduced-motion: reduce) {
     .animate-fade-in-up, .float-anim { animation: none !important; }
@@ -95,10 +94,10 @@ export default function CompletePage() {
         className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-14 relative overflow-hidden"
         style={{
           // CSS variables for consistent design tokens
-          "--coral": "#d67469",
-          "--sage": "#749176",
-          "--charcoal": "#211e1d",
-          "--off-white": "#f2e3da",
+          "--coral": "hsl(16, 100%, 66%)",
+          "--sage": "hsl(148, 20%, 38%)",
+          "--charcoal": "hsl(0, 0%, 25%)",
+          "--off-white": "hsl(0, 0%, 98%)",
         } as React.CSSProperties}
       >
       {/* Lightweight decorative elements */}
@@ -138,7 +137,7 @@ export default function CompletePage() {
           href="/home"
           data-testid="onboarding-complete-cta"
           aria-label="Go to Home"
-          className="group inline-block w-full md:w-1/4 bg-sage text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3px shadow-lg transition-[transform,background-color,box-shadow] duration-300 hover:scale-[1.03] hover:bg-coral focus:bg-coral focus:outline-none focus:ring-4 focus:ring-coral/30 focus:ring-offset-2"
+          className="group inline-block w-full md:w-1/4 bg-sage text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3 shadow-lg transition-[transform,background-color,box-shadow] duration-300 hover:scale-[1.03] hover:bg-coral focus:bg-coral focus:outline-none focus:ring-4 focus:ring-coral/30 focus:ring-offset-2"
         >
           Go to Home
         </Link>
