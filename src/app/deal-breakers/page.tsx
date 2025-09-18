@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -11,28 +11,71 @@ interface DealBreaker {
   icon: string; // Ionicon name
 }
 
-const dealBreakers: DealBreaker[] = [
-  { id: "trust",        label: "Trust",        icon: "shield-checkmark-outline" },
-  { id: "punctuality",  label: "Punctuality",  icon: "time-outline" },
-  { id: "friendliness", label: "Friendliness", icon: "happy-outline" },
-  { id: "pricing",      label: "Pricing",      icon: "pricetag-outline" },
-];
 
 export default function DealBreakersPage() {
+  const [catalog, setCatalog] = useState<DealBreaker[]>([]);
   const [selected, setSelected] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   const { user, updateUser } = useAuth();
-  // Remove unused variable
+
+  // Load catalog and user selections on mount
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+
+        // Load catalog
+        const catalogRes = await fetch('/api/deal-breakers');
+        if (catalogRes.ok) {
+          const catalogData = await catalogRes.json();
+          setCatalog(catalogData.dealBreakers ?? []);
+        }
+
+        // Load user selections
+        const userRes = await fetch('/api/user/deal-breakers');
+        if (userRes.ok) {
+          const userData = await userRes.json();
+          setSelected(userData.dealBreakers ?? []);
+        }
+      } catch (error) {
+        console.error('Error loading deal-breakers data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  // Save selections to API
+  const saveSelections = useCallback(async (selections: string[]) => {
+    try {
+      await fetch('/api/user/deal-breakers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ selections })
+      });
+    } catch (error) {
+      console.error('Error saving deal-breakers:', error);
+    }
+  }, []);
 
   const toggle = useCallback((id: string) => {
     setSelected(prev => {
       const on = prev.includes(id);
-      if (on) return prev.filter(x => x !== id);
-      if (prev.length >= 3) return prev; // pick 2–3
-      return [...prev, id];
+      const next = on
+        ? prev.filter(x => x !== id)
+        : prev.length >= 3
+          ? prev  // pick 2–3 max
+          : [...prev, id];
+
+      // Optimistically save selections
+      saveSelections(next);
+      return next;
     });
-  }, []);
+  }, [saveSelections]);
 
   const canContinue = useMemo(() =>
     selected.length >= 2 && selected.length <= 3,
@@ -87,7 +130,14 @@ export default function DealBreakersPage() {
 
         {/* Deal Breakers Grid */}
         <div className="grid grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12 justify-items-center">
-          {dealBreakers.map((item) => {
+          {loading ? (
+            // Loading state
+            <div className="col-span-2 text-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sage mx-auto mb-4"></div>
+              <p className="font-urbanist text-charcoal/70">Loading deal-breakers...</p>
+            </div>
+          ) : (
+            catalog.map((item) => {
             const isOn = selected.includes(item.id);
 
             return (
@@ -127,7 +177,8 @@ export default function DealBreakersPage() {
                 </div>
               </button>
             );
-          })}
+            })
+          )}
         </div>
 
         {/* Continue button */}

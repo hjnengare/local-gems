@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   onboarding_step text DEFAULT 'start',
   interests_count int DEFAULT 0,
   last_interests_updated timestamptz,
+  dealbreakers text[],
   created_at timestamptz DEFAULT now(),
   updated_at timestamptz DEFAULT now()
 );
@@ -170,3 +171,66 @@ INSERT INTO public.interests (id, name) VALUES
   ('family-pets', 'Family & Pets'),
   ('shopping-lifestyle', 'Shopping & Lifestyle')
 ON CONFLICT (id) DO NOTHING;
+
+-- 17. Deal-breakers catalog tables
+CREATE TABLE IF NOT EXISTS public.deal_breaker_categories (
+  id text PRIMARY KEY,       -- e.g., 'global'
+  name text NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.deal_breakers (
+  id text PRIMARY KEY,       -- 'trust', 'punctuality'...
+  label text NOT NULL,
+  icon text NOT NULL,        -- 'shield-checkmark-outline' etc.
+  category_id text NOT NULL REFERENCES public.deal_breaker_categories(id) ON DELETE CASCADE
+);
+
+-- 18. RLS for deal-breakers catalog (read-only for everyone)
+ALTER TABLE public.deal_breaker_categories ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.deal_breakers ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "read categories" ON public.deal_breaker_categories FOR SELECT USING (true);
+CREATE POLICY "read deal breakers" ON public.deal_breakers FOR SELECT USING (true);
+
+-- 19. User deal-breakers join table
+CREATE TABLE IF NOT EXISTS public.user_deal_breakers (
+  user_id uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  deal_breaker_id text NOT NULL REFERENCES public.deal_breakers(id) ON DELETE RESTRICT,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  PRIMARY KEY (user_id, deal_breaker_id)
+);
+
+-- 20. RLS for user deal-breakers
+ALTER TABLE public.user_deal_breakers ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "read own udb"
+  ON public.user_deal_breakers FOR SELECT
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "insert own udb"
+  ON public.user_deal_breakers FOR INSERT
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "delete own udb"
+  ON public.user_deal_breakers FOR DELETE
+  USING (auth.uid() = user_id);
+
+-- 21. Performance index for user deal-breakers
+CREATE INDEX IF NOT EXISTS user_deal_breakers_user_id_idx
+  ON public.user_deal_breakers (user_id);
+
+-- 22. Seed deal-breaker categories
+INSERT INTO public.deal_breaker_categories (id, name)
+VALUES ('global', 'Global')
+ON CONFLICT (id) DO UPDATE SET name = excluded.name;
+
+-- 23. Seed deal-breakers data
+INSERT INTO public.deal_breakers (id, label, icon, category_id) VALUES
+  ('trust',        'Trust',        'shield-checkmark-outline', 'global'),
+  ('punctuality',  'Punctuality',  'time-outline',             'global'),
+  ('friendliness', 'Friendliness', 'happy-outline',            'global'),
+  ('pricing',      'Pricing',      'pricetag-outline',         'global')
+ON CONFLICT (id) DO UPDATE
+  SET label = excluded.label,
+      icon  = excluded.icon,
+      category_id = excluded.category_id;
