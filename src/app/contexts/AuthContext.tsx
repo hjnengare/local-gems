@@ -157,19 +157,55 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       // Update user profile in Supabase if profile data is being updated
       if (userData.profile) {
+        // Prepare profile updates - only update fields that exist in the profiles table
+        const profileUpdates: Record<string, any> = {
+          updated_at: new Date().toISOString()
+        };
+
+        // Only update onboarding_step if provided
+        if (userData.profile.onboarding_step) {
+          profileUpdates.onboarding_step = userData.profile.onboarding_step;
+        }
+
+        // Update the profiles table with valid fields only
         const { error } = await supabase
           .from('profiles')
-          .update({
-            onboarding_step: userData.profile.onboarding_step,
-            onboarding_complete: userData.profile.onboarding_complete,
-            interests: userData.profile.interests,
-            sub_interests: userData.profile.sub_interests,
-            dealbreakers: userData.profile.dealbreakers,
-            updated_at: new Date().toISOString()
-          })
+          .update(profileUpdates)
           .eq('user_id', user.id);
 
         if (error) throw error;
+
+        // Handle interests separately using the dedicated API
+        if (userData.profile.interests && Array.isArray(userData.profile.interests)) {
+          try {
+            const response = await fetch('/api/user/interests', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ interests: userData.profile.interests })
+            });
+            if (!response.ok) {
+              console.warn('Failed to update interests:', await response.text());
+            }
+          } catch (interestError) {
+            console.warn('Error updating interests:', interestError);
+          }
+        }
+
+        // Handle subcategories separately using the dedicated API
+        if (userData.profile.sub_interests && Array.isArray(userData.profile.sub_interests)) {
+          try {
+            const response = await fetch('/api/user/subcategories', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ subcategories: userData.profile.sub_interests })
+            });
+            if (!response.ok) {
+              console.warn('Failed to update subcategories:', await response.text());
+            }
+          } catch (subcatError) {
+            console.warn('Error updating subcategories:', subcatError);
+          }
+        }
       }
 
       // Update local user state

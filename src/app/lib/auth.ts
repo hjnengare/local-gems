@@ -185,19 +185,44 @@ export class AuthService {
   }
 
   private static async createUserProfile(userId: string) {
-    const supabase = this.getClient();
     // Profile creation is handled by the database trigger when user signs up
-    // Just verify the profile exists and update onboarding_step if needed
-    const { error } = await supabase
-      .from('profiles')
-      .upsert([
-        {
-          user_id: userId,
-          onboarding_step: 'interests'
-        }
-      ], { onConflict: 'user_id' });
+    // This method just waits and verifies the profile was created
+    const supabase = this.getClient();
 
-    if (error) throw error;
+    // Wait a moment for the trigger to create the profile
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    try {
+      // Check if profile exists
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('user_id')
+        .eq('user_id', userId)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        // Real error, not just "not found"
+        throw error;
+      }
+
+      if (!data) {
+        // Profile doesn't exist, try to create it manually
+        const { error: insertError } = await supabase
+          .from('profiles')
+          .insert([{
+            user_id: userId,
+            onboarding_step: 'interests'
+          }]);
+
+        if (insertError) {
+          console.warn('Manual profile creation failed:', insertError);
+          // Don't throw - the trigger might have created it in the meantime
+        }
+      }
+    } catch (error) {
+      console.warn('Profile verification failed:', error);
+      // Don't throw - profile creation failures shouldn't break registration
+    }
   }
 
   private static async getUserProfile(userId: string) {
