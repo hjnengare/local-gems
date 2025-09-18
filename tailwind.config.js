@@ -80,6 +80,7 @@ module.exports = {
       },
       borderRadius: {
         3: '3px',
+        6: '6px',
       },
       transitionTimingFunction: {
         'cubic-in': 'cubic-bezier(0.51, 0.03, 0.64, 0.28)',

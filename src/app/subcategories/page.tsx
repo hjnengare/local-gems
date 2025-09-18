@@ -418,7 +418,7 @@ function SubcategoriesContent() {
                             aria-pressed={isSelected}
                             aria-label={`${subcategory.label}${isSelected ? ' (selected)' : isDisabled ? ' (maximum reached)' : ''}`}
                             className={`
-                              relative w-full py-3 md:py-4 px-3 md:px-4 rounded-3 font-urbanist text-xs md:text-sm font-600 text-center transition-all duration-200 ease-out
+                              relative w-full py-3 md:py-4 px-3 md:px-4 rounded-6 font-urbanist text-xs md:text-sm font-600 text-center transition-all duration-200 ease-out
                               focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2
                               min-h-[44px] disabled:focus:ring-gray-300
                               ${animatingIds.has(subcategory.id) ? 'animate-micro-bounce' : ''}
@@ -449,7 +449,7 @@ function SubcategoriesContent() {
               <div className="pt-6">
                 <button
                   className={`
-                    group block w-full text-white font-urbanist text-sm md:text-base font-600 py-3.5 md:py-4 px-6 md:px-8 rounded-3 shadow-lg transition-all duration-300 relative text-center min-h-[52px]
+                    group block w-full text-white font-urbanist text-sm md:text-base font-600 py-3.5 md:py-4 px-6 md:px-8 rounded-6 shadow-lg transition-all duration-300 relative text-center min-h-[52px]
                     ${canProceed
                       ? "bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2 animate-pulse-soft"
                       : "bg-gray-200 text-charcoal/40 cursor-not-allowed"
@@ -467,7 +467,7 @@ function SubcategoriesContent() {
                     <ion-icon name="arrow-forward" size="small" />
                   </span>
                   {canProceed && (
-                    <span className="pointer-events-none absolute inset-0 rounded-3 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <span className="pointer-events-none absolute inset-0 rounded-6 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   )}
                 </button>
               </div>
