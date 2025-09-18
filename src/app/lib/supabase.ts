@@ -1,7 +1,7 @@
-import { createClient } from './supabase/client'
+import { getBrowserSupabase } from './supabase/client'
 
 // Create the client-side Supabase instance
-export const supabase = createClient()
+export const supabase = getBrowserSupabase()
 
 // Database types
 export interface Profile {

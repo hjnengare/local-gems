@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '../lib/supabase/client';
+import { getBrowserSupabase } from '../lib/supabase/client';
 import { AuthService } from '../lib/auth';
 import type { AuthUser } from '../lib/types/database';
 
@@ -27,7 +27,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const supabase = createClient();
+  const supabase = getBrowserSupabase();
 
   // Initialize auth state
   useEffect(() => {

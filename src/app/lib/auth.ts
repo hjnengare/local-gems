@@ -1,9 +1,9 @@
-import { createClient } from './supabase/client';
+import { getBrowserSupabase } from './supabase/client';
 import type { AuthUser, SignUpData, SignInData, AuthError } from './types/database';
 
 export class AuthService {
   private static getClient() {
-    return createClient();
+    return getBrowserSupabase();
   }
 
   static async signUp({ email, password }: SignUpData): Promise<{ user: AuthUser | null; error: AuthError | null }> {
