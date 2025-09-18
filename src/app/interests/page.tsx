@@ -59,6 +59,7 @@ const styles = `
   .delay-1200 { animation-delay: 1.2s; }
   .delay-1400 { animation-delay: 1.4s; }
   .delay-1600 { animation-delay: 1.6s; }
+  .rounded-3px { border-radius: 3px; }
 `;
 
 // Detect reduced motion preference
@@ -99,7 +100,7 @@ const InterestTile = ({ id, name, selected, disabled, onToggle }: InterestTilePr
       aria-pressed={selected}
       aria-label={`${name}${selected ? ' (selected)' : disabled ? ' (maximum reached)' : ''}`}
       className={`
-        h-12 rounded-xl border-2 font-600 text-sm transition-all duration-200 min-h-[44px]
+        h-12 rounded-3px border-2 font-600 text-sm transition-all duration-200 min-h-[44px]
         focus:outline-none focus:ring-4 focus:ring-sage/25 focus:ring-offset-1
         ${isAnimating ? 'animate-bubbly' : ''}
         ${selected
@@ -120,7 +121,7 @@ const InterestTile = ({ id, name, selected, disabled, onToggle }: InterestTilePr
 
 // Loading skeleton component
 const TileSkeleton = () => (
-  <div className="h-12 rounded-xl bg-gray-200/60 animate-pulse" />
+  <div className="h-12 rounded-3px bg-gray-200/60 animate-pulse" />
 );
 
 interface Interest {
@@ -630,7 +631,7 @@ function InterestsContent() {
                     {/* Next Button */}
                     <button
                       className={`
-                        group block w-full text-white font-urbanist text-sm md:text-base font-600 py-3.5 md:py-4 px-6 md:px-8 rounded-2xl md:rounded-full shadow-lg transition-all duration-300 relative text-center
+                        group block w-full text-white font-urbanist text-sm md:text-base font-600 py-3.5 md:py-4 px-6 md:px-8 rounded-3px shadow-lg transition-all duration-300 relative text-center
                         ${canProceed
                           ? "bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
                           : "bg-gray-200 text-charcoal/40 cursor-not-allowed"
@@ -648,7 +649,7 @@ function InterestsContent() {
                         <ion-icon name="arrow-forward" size="small" />
                       </span>
                       {canProceed && (
-                        <span className="pointer-events-none absolute inset-0 rounded-2xl md:rounded-full bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <span className="pointer-events-none absolute inset-0 rounded-3px bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       )}
                     </button>
 

@@ -5,6 +5,11 @@ import { useState, useCallback, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 
+// CSS styles for consistent button radius
+const styles = `
+  .rounded-3px { border-radius: 3px; }
+`;
+
 interface DealBreaker {
   id: string;
   label: string;
@@ -93,7 +98,9 @@ export default function DealBreakersPage() {
   }, [canContinue, user, router, selected, updateUser]);
 
   return (
-    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+    <>
+      <style dangerouslySetInnerHTML={{ __html: styles }} />
+      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
       {/* Back button - top left */}
       <div className="absolute top-6 left-6 z-20">
         <Link
@@ -186,7 +193,7 @@ export default function DealBreakersPage() {
           <button
             onClick={handleNext}
             disabled={!canContinue}
-            className={`group block w-full py-5 md:w-1/4 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full text-center font-urbanist text-6 md:text-5 font-600 transition-all duration-300 relative overflow-hidden
+            className={`group block w-full py-5 md:w-1/4 md:py-6 px-8 md:px-10 rounded-3px text-center font-urbanist text-6 md:text-5 font-600 transition-all duration-300 relative overflow-hidden
                         ${canContinue
                           ? "bg-gradient-to-r from-sage to-sage/90 text-white hover:scale-105 shadow-lg  focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
                           : "bg-light-gray/50 text-charcoal/40 cursor-not-allowed"}`}
@@ -210,6 +217,7 @@ export default function DealBreakersPage() {
           <p className="font-urbanist text-8 font-400 text-charcoal/50">Step 3 of 4</p>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

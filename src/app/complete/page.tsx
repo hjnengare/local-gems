@@ -26,6 +26,7 @@ const styles = `
   .delay-200 { animation-delay: 0.2s; }
   .delay-400 { animation-delay: 0.4s; }
   .delay-600 { animation-delay: 0.6s; }
+  .rounded-3px { border-radius: 3px; }
 
   @media (prefers-reduced-motion: reduce) {
     .animate-fade-in-up, .float-anim { animation: none !important; }
@@ -137,7 +138,7 @@ export default function CompletePage() {
           href="/home"
           data-testid="onboarding-complete-cta"
           aria-label="Go to Home"
-          className="group inline-block w-full md:w-1/4 bg-sage text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3 md:rounded-full shadow-lg transition-[transform,background-color,box-shadow] duration-300 hover:scale-[1.03] hover:bg-coral focus:bg-coral focus:outline-none focus:ring-4 focus:ring-coral/30 focus:ring-offset-2"
+          className="group inline-block w-full md:w-1/4 bg-sage text-white font-urbanist text-6 md:text-5 font-600 py-5 md:py-6 px-8 md:px-10 rounded-3px shadow-lg transition-[transform,background-color,box-shadow] duration-300 hover:scale-[1.03] hover:bg-coral focus:bg-coral focus:outline-none focus:ring-4 focus:ring-coral/30 focus:ring-offset-2"
         >
           Go to Home
         </Link>
