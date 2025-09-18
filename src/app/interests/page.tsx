@@ -38,11 +38,19 @@ const styles = `
     80% { transform: scale(1.05) rotate(1deg); }
     100% { transform: scale(1) rotate(0deg); }
   }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-4px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+  }
   .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
   .animate-scale-in { animation: scaleIn 0.6s ease-out forwards; }
   .animate-line { animation: slideInLine 1.2s ease-out 1.1s forwards; }
   .animate-bounce { animation: bounce 0.6s ease-out; }
   .animate-bubbly { animation: bubbly 0.7s ease-out; }
+  .animate-shake { animation: shake 0.6s ease; }
   .delay-200 { animation-delay: 0.2s; }
   .delay-400 { animation-delay: 0.4s; }
   .delay-600 { animation-delay: 0.6s; }
@@ -146,6 +154,7 @@ function InterestsContent() {
   const [isOnline, setIsOnline] = useState(true);
   const [displayedText, setDisplayedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
+  const [animatingIds, setAnimatingIds] = useState<Set<string>>(new Set());
   const hasLoadedInterests = useRef(false);
   const offlineQueue = useRef<string[]>([]);
   const analyticsTracked = useRef({
@@ -293,6 +302,22 @@ function InterestsContent() {
     }
   }, [mounted]);
 
+  // Animation trigger helper
+  const triggerBounce = useCallback((id: string, ms = 700) => {
+    setAnimatingIds(prev => {
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
+    setTimeout(() => {
+      setAnimatingIds(prev => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+    }, ms); // match .animate-bubbly 0.7s
+  }, []);
+
   // Analytics tracking and prefetching
   useEffect(() => {
     const count = selectedInterests.length;
@@ -369,6 +394,9 @@ function InterestsContent() {
   const handleInterestToggle = useCallback(async (interestId: string) => {
     const isCurrentlySelected = selectedInterests.includes(interestId);
 
+    // Always bounce on click (unless disabled below)
+    triggerBounce(interestId);
+
     // If trying to select but already at max, prevent with feedback
     if (!isCurrentlySelected && selectedInterests.length >= MAX_SELECTIONS) {
       showToast(`Maximum ${MAX_SELECTIONS} interests allowed`, 'warning', 2000);
@@ -406,7 +434,7 @@ function InterestsContent() {
       // Don't revert - keep the optimistic update and let user continue
       // The save will be retried on next interaction or page navigation
     }
-  }, [selectedInterests, setSelectedInterests, saveInterests, showToast]);
+  }, [selectedInterests, setSelectedInterests, saveInterests, showToast, triggerBounce]);
 
   /* -------- Require login for interests selection --------
      User must be authenticated to access this page */
@@ -578,7 +606,8 @@ function InterestsContent() {
                           // Prevent hydration warnings for class differences if any linger
                           suppressHydrationWarning
                         >
-                          <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                          {/* Animator wrapper gets the bounce so Tailwind scale on the button doesn't override transform */}
+                          <div className={`absolute inset-0 flex flex-col items-center justify-center p-4 ${animatingIds.has(interest.id) ? 'animate-bubbly' : ''}`}>
                             <span className="font-urbanist text-7 md:text-6 font-600 text-center leading-tight break-words hyphens-auto">
                               {interest.name}
                             </span>

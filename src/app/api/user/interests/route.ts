@@ -16,35 +16,43 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid payload - selections must be an array" }, { status: 400 });
     }
 
-    // Validate that selections are not empty strings
-    const validSelections = selections.filter(selection => selection && selection.trim());
+    // Clean and dedupe selections
+    const cleaned = Array.from(
+      new Set(
+        (selections ?? [])
+          .filter((s: string) => s && s.trim())
+          .map((s: string) => s.trim())
+      )
+    );
 
-    // Replace the set (delete + insert in a transaction)
-    const { error: delErr } = await supabase
-      .from("user_interests")
-      .delete()
-      .eq("user_id", user.id);
+    // Validate that all interest IDs exist in the interests table
+    if (cleaned.length > 0) {
+      const { data: known, error: knownErr } = await supabase
+        .from('interests')
+        .select('id')
+        .in('id', cleaned);
 
-    if (delErr) {
-      console.error('Error deleting user interests:', delErr);
-      return NextResponse.json({ error: delErr.message }, { status: 400 });
+      if (knownErr) {
+        console.error('Error validating interest IDs:', knownErr);
+        return NextResponse.json({ error: knownErr.message }, { status: 400 });
+      }
+
+      if ((known?.length ?? 0) !== cleaned.length) {
+        return NextResponse.json({ error: 'One or more interest IDs are invalid' }, { status: 400 });
+      }
     }
 
-    if (validSelections.length > 0) {
-      const rows = validSelections.map((interest_id) => ({
-        user_id: user.id,
-        interest_id,
-        created_at: new Date().toISOString()
-      }));
+    const validSelections = cleaned;
 
-      const { error: insErr } = await supabase
-        .from("user_interests")
-        .insert(rows);
+    // Use atomic replace function for true transactional behavior
+    const { error } = await supabase.rpc('replace_user_interests', {
+      p_user_id: user.id,
+      p_interest_ids: validSelections
+    });
 
-      if (insErr) {
-        console.error('Error inserting user interests:', insErr);
-        return NextResponse.json({ error: insErr.message }, { status: 400 });
-      }
+    if (error) {
+      console.error('Error replacing user interests:', error);
+      return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
     return NextResponse.json({
