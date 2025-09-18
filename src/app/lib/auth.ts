@@ -177,18 +177,16 @@ export class AuthService {
   }
 
   private static async createUserProfile(userId: string) {
+    // Profile creation is handled by the database trigger when user signs up
+    // Just verify the profile exists and update onboarding_step if needed
     const { error } = await supabase
       .from('profiles')
-      .insert([
+      .upsert([
         {
-          id: userId,
-          onboarding_step: 'interests',
-          onboarding_complete: false,
-          interests: [],
-          sub_interests: [],
-          dealbreakers: []
+          user_id: userId,
+          onboarding_step: 'interests'
         }
-      ]);
+      ], { onConflict: 'user_id' });
 
     if (error) throw error;
   }
@@ -197,19 +195,18 @@ export class AuthService {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('*')
-        .eq('id', userId)
+        .select('user_id, onboarding_step, interests_count, last_interests_updated, created_at, updated_at')
+        .eq('user_id', userId)
         .single();
 
       if (error || !data) return undefined;
 
       return {
-        id: data.id,
+        id: data.user_id,
         onboarding_step: data.onboarding_step,
-        onboarding_complete: data.onboarding_complete,
-        interests: data.interests || [],
-        sub_interests: data.sub_interests || [],
-        dealbreakers: data.dealbreakers || [],
+        onboarding_complete: data.onboarding_step === 'complete',
+        interests_count: data.interests_count || 0,
+        last_interests_updated: data.last_interests_updated,
         created_at: data.created_at,
         updated_at: data.updated_at
       };

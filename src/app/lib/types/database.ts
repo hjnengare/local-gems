@@ -11,6 +11,8 @@ export interface Profile {
   id: string;
   onboarding_step: string;
   onboarding_complete: boolean;
+  interests_count: number;
+  last_interests_updated?: string;
   created_at: string;
   updated_at: string;
 }
