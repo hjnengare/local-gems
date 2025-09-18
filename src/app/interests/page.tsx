@@ -467,8 +467,11 @@ function InterestsContent() {
     console.log('Analytics: Skip button clicked', { selections: selectedInterests.length });
 
     try {
-      // Navigate to subcategories without selections
-      router.push('/subcategories');
+      // Navigate to subcategories, include any current selections as URL params
+      const interestParams = selectedInterests.length > 0
+        ? `?interests=${selectedInterests.join(',')}`
+        : '';
+      router.push(`/subcategories${interestParams}`);
     } catch (error) {
       console.error("Error skipping:", error);
       setIsNavigating(false);
@@ -486,7 +489,7 @@ function InterestsContent() {
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
 
-      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-6 sm:py-8 relative overflow-hidden">
+      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-6 pb-24 sm:py-8 sm:pb-20 md:pb-16 relative overflow-hidden">
 
         {/* Back button */}
         <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">

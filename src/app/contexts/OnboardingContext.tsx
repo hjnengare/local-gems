@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuth } from './AuthContext';
 import { useToast } from './ToastContext';
 
@@ -11,10 +12,16 @@ interface Interest {
   icon?: string;
 }
 
+interface Subcategory {
+  id: string;
+  label: string;
+  interest_id: string;
+}
+
 interface OnboardingContextType {
   // Data
   interests: Interest[];
-  subInterests: Interest[];
+  subInterests: Subcategory[];
   selectedInterests: string[];
   selectedSubInterests: string[];
   selectedDealbreakers: string[];
@@ -48,89 +55,77 @@ const ONBOARDING_STEPS = [
   'complete'
 ];
 
-// Dummy data for interests
-const DUMMY_INTERESTS: Interest[] = [
-  { id: 'food', name: 'Food & Dining', description: 'Restaurants, cafes, and culinary experiences', icon: 'restaurant' },
-  { id: 'entertainment', name: 'Entertainment', description: 'Movies, shows, and nightlife', icon: 'musical-notes' },
-  { id: 'shopping', name: 'Shopping', description: 'Retail stores and markets', icon: 'bag' },
-  { id: 'health', name: 'Health & Wellness', description: 'Gyms, spas, and medical services', icon: 'fitness' },
-  { id: 'services', name: 'Services', description: 'Professional and personal services', icon: 'construct' },
-  { id: 'automotive', name: 'Automotive', description: 'Car services and repairs', icon: 'car' },
-  { id: 'home', name: 'Home & Garden', description: 'Home improvement and gardening', icon: 'home' },
-  { id: 'beauty', name: 'Beauty & Personal Care', description: 'Salons and personal care services', icon: 'cut' }
-];
-
-// Dummy data for subcategories
-const DUMMY_SUB_INTERESTS: Interest[] = [
-  // Food subcategories
-  { id: 'restaurants', name: 'Restaurants', description: 'Fine dining and casual restaurants' },
-  { id: 'cafes', name: 'Cafes & Coffee Shops', description: 'Coffee shops and casual cafes' },
-  { id: 'fast-food', name: 'Fast Food', description: 'Quick service restaurants' },
-  { id: 'bakeries', name: 'Bakeries', description: 'Bakeries and pastry shops' },
-
-  // Entertainment subcategories
-  { id: 'movies', name: 'Movie Theaters', description: 'Cinemas and movie theaters' },
-  { id: 'bars', name: 'Bars & Pubs', description: 'Drinking establishments' },
-  { id: 'clubs', name: 'Nightclubs', description: 'Dance clubs and nightlife' },
-  { id: 'concerts', name: 'Live Music', description: 'Concert venues and live music' },
-
-  // Shopping subcategories
-  { id: 'clothing', name: 'Clothing Stores', description: 'Fashion and apparel stores' },
-  { id: 'electronics', name: 'Electronics', description: 'Electronic goods and gadgets' },
-  { id: 'grocery', name: 'Grocery Stores', description: 'Supermarkets and grocery stores' },
-  { id: 'specialty', name: 'Specialty Shops', description: 'Unique and specialty retail' },
-
-  // Health subcategories
-  { id: 'gyms', name: 'Gyms & Fitness', description: 'Fitness centers and gyms' },
-  { id: 'spas', name: 'Spas & Wellness', description: 'Spas and wellness centers' },
-  { id: 'medical', name: 'Medical Services', description: 'Healthcare and medical services' },
-  { id: 'dental', name: 'Dental Care', description: 'Dental offices and services' }
+// Fallback data in case API fails
+const FALLBACK_INTERESTS: Interest[] = [
+  { id: 'food-drink', name: 'Food & Drink', description: 'Restaurants, cafes, and culinary experiences', icon: 'restaurant' },
+  { id: 'beauty-wellness', name: 'Beauty & Wellness', description: 'Gyms, spas, and personal care services', icon: 'cut' },
+  { id: 'home-services', name: 'Home & Services', description: 'Home improvement and professional services', icon: 'home' },
+  { id: 'outdoors-adventure', name: 'Outdoors & Adventure', description: 'Outdoor activities and adventures', icon: 'bicycle' },
+  { id: 'nightlife-entertainment', name: 'Nightlife & Entertainment', description: 'Movies, shows, and nightlife', icon: 'musical-notes' },
+  { id: 'arts-culture', name: 'Arts & Culture', description: 'Museums, galleries, and cultural experiences', icon: 'color-palette' },
+  { id: 'family-pets', name: 'Family & Pets', description: 'Family activities and pet services', icon: 'heart' },
+  { id: 'shopping-lifestyle', name: 'Shopping & Lifestyle', description: 'Retail stores and lifestyle services', icon: 'bag' }
 ];
 
 export function OnboardingProvider({ children }: OnboardingProviderProps) {
   const { user, updateUser } = useAuth();
   const { showToast } = useToast();
+  const router = useRouter();
   const [interests, setInterests] = useState<Interest[]>([]);
-  const [subInterests, setSubInterests] = useState<Interest[]>([]);
+  const [subInterests, setSubInterests] = useState<Subcategory[]>([]);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [selectedSubInterests, setSelectedSubInterests] = useState<string[]>([]);
   const [selectedDealbreakers, setSelectedDealbreakers] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const currentStep = user?.onboardingStep || 'interests';
+  const currentStep = user?.profile?.onboarding_step || 'interests';
 
   const loadInterests = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
-      // Simulate loading delay
-      await new Promise(resolve => setTimeout(resolve, 300));
-      setInterests(DUMMY_INTERESTS);
+
+      // Load from catalog API
+      const response = await fetch('/api/interests');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.interests && Array.isArray(data.interests)) {
+          setInterests(data.interests);
+          return;
+        }
+      }
+
+      // Fallback to static data if API fails
+      console.warn('Interests API failed, using fallback data');
+      setInterests(FALLBACK_INTERESTS);
     } catch (error) {
       console.error('Error loading interests:', error);
       setError('Failed to load interests');
+      // Use fallback data even on error
+      setInterests(FALLBACK_INTERESTS);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  const loadSubInterests = useCallback(async (parentIds?: string[]) => {
+  const loadSubInterests = useCallback(async (interestIds: string[]) => {
     try {
       setIsLoading(true);
       setError(null);
-      // Simulate loading delay
-      await new Promise(resolve => setTimeout(resolve, 300));
-      // Filter subcategories based on selected interests (dummy logic)
-      let filteredSubInterests = DUMMY_SUB_INTERESTS;
-      if (parentIds && parentIds.length > 0) {
-        // For demo purposes, show all subcategories regardless of parent
-        filteredSubInterests = DUMMY_SUB_INTERESTS;
-      }
-      setSubInterests(filteredSubInterests);
+
+      const qs = interestIds.length ? `?interests=${interestIds.join(",")}` : "";
+      const res = await fetch(`/api/subcategories${qs}`, { cache: "no-store" });
+      if (!res.ok) throw new Error("Failed to load subcategories");
+      const { subcategories } = await res.json();
+
+      // Set subcategories directly - they should be {id,label,interest_id}
+      setSubInterests(subcategories);
+      console.log("loaded subInterests", subcategories);
     } catch (error) {
       console.error('Error loading sub-interests:', error);
       setError('Failed to load sub-interests');
+      setSubInterests([]);
     } finally {
       setIsLoading(false);
     }
@@ -167,32 +162,43 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
       const nextStepName = getNextStep(currentStep);
 
       // Save current step data
-      const updates: Record<string, unknown> = {
-        onboardingStep: nextStepName
+      const profileUpdates: Record<string, unknown> = {
+        onboarding_step: nextStepName
       };
 
       if (currentStep === 'interests') {
-        updates.interests = selectedInterests;
+        profileUpdates.interests = selectedInterests;
       } else if (currentStep === 'subcategories') {
-        updates.subInterests = selectedSubInterests;
+        profileUpdates.sub_interests = selectedSubInterests;
       } else if (currentStep === 'deal-breakers') {
-        updates.dealbreakers = selectedDealbreakers;
+        profileUpdates.dealbreakers = selectedDealbreakers;
       }
 
-      await updateUser(updates);
-
-      // Note: User selections are now saved locally via updateUser
+      await updateUser({ profile: profileUpdates });
 
       // Show success toast for step completion
       const completionMessage = getStepCompletionMessage(currentStep);
       showToast(completionMessage, 'success', 3000);
+
+      // Navigate to the next step
+      if (nextStepName === 'complete') {
+        router.push('/home');
+      } else if (nextStepName === 'subcategories' && currentStep === 'interests') {
+        // Pass selected interests as URL params to subcategories
+        const interestParams = selectedInterests.length > 0
+          ? `?interests=${selectedInterests.join(',')}`
+          : '';
+        router.push(`/subcategories${interestParams}`);
+      } else {
+        router.push(`/${nextStepName}`);
+      }
     } catch (error) {
       console.error('Error proceeding to next step:', error);
       setError('Failed to save progress');
     } finally {
       setIsLoading(false);
     }
-  }, [user, currentStep, selectedInterests, selectedSubInterests, selectedDealbreakers, updateUser, showToast, getStepCompletionMessage]);
+  }, [user, currentStep, selectedInterests, selectedSubInterests, selectedDealbreakers, updateUser, showToast, getStepCompletionMessage, router]);
 
   const completeOnboarding = useCallback(async () => {
     if (!user) return;
@@ -203,11 +209,13 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
 
       // Mark onboarding as complete with all final data
       await updateUser({
-        onboardingComplete: true,
-        onboardingStep: 'complete',
-        interests: selectedInterests,
-        subInterests: selectedSubInterests,
-        dealbreakers: selectedDealbreakers
+        profile: {
+          onboarding_complete: true,
+          onboarding_step: 'complete',
+          interests: selectedInterests,
+          sub_interests: selectedSubInterests,
+          dealbreakers: selectedDealbreakers
+        }
       });
 
       // Note: All selections are now saved locally via updateUser
