@@ -155,13 +155,62 @@ create table public.interests (
   created_at timestamptz default now()
 );
 
--- User selections
+-- User profiles (automatically created for each auth user)
+create table public.profiles (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  display_name text,
+  avatar_url text,
+  locale text default 'en-ZA',
+  onboarding_step text default 'start',          -- e.g., start | interests | subs | done
+  interests_count int default 0,
+  last_interests_updated timestamptz,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- User interest selections (join table)
 create table public.user_interests (
   user_id uuid references auth.users(id) on delete cascade,
   interest_id text references public.interests(id) on delete cascade,
   created_at timestamptz default now(),
   primary key (user_id, interest_id)
 );
+
+-- Automatically create profile when auth user is created
+create or replace function public.handle_new_user()
+returns trigger language plpgsql security definer as $$
+begin
+  insert into public.profiles (user_id)
+  values (new.id)
+  on conflict (user_id) do nothing;
+  return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
+after insert on auth.users
+for each row execute function public.handle_new_user();
+
+-- Auto-update profile metadata when interests change
+create or replace function public.sync_profile_interest_meta()
+returns trigger language plpgsql as $$
+begin
+  update public.profiles
+     set interests_count = (
+           select count(*) from public.user_interests ui where ui.user_id = coalesce(new.user_id, old.user_id)
+         ),
+         last_interests_updated = now(),
+         updated_at = now()
+   where user_id = coalesce(new.user_id, old.user_id);
+  return null;
+end;
+$$;
+
+drop trigger if exists user_interests_after_change on public.user_interests;
+create trigger user_interests_after_change
+after insert or delete on public.user_interests
+for each row execute function public.sync_profile_interest_meta();
 
 -- Seed data matching frontend IDs
 insert into public.interests (id, name) values
@@ -175,10 +224,26 @@ insert into public.interests (id, name) values
   ('shopping-lifestyle', 'Shopping & Lifestyle');
 ```
 
-### 4. Performance Index
+### 4. Additional RLS Policies for Profiles
+```sql
+-- RLS for profiles table
+alter table public.profiles enable row level security;
+
+create policy "read own profile" on public.profiles
+  for select using (auth.uid() = user_id);
+
+create policy "update own profile" on public.profiles
+  for update using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+```
+
+### 5. Performance Indexes
 ```sql
 create index if not exists user_interests_user_id_idx
   on public.user_interests(user_id);
+
+create index if not exists profiles_onboarding_step_idx
+  on public.profiles(onboarding_step);
 ```
 
 ## Benefits
@@ -194,10 +259,17 @@ create index if not exists user_interests_user_id_idx
 - ✅ **Input Validation**: Early rejection of malformed requests
 - ✅ **Error Handling**: Clear error messages for debugging
 
+### Architecture
+- ✅ **Clean Separation**: Interests in `user_interests`, metadata in `profiles`
+- ✅ **Automatic Profile Creation**: DB triggers ensure profiles always exist
+- ✅ **Denormalized Metadata**: Fast UI queries without joins
+- ✅ **Auto-sync**: Triggers keep profile metadata up-to-date
+
 ### System
 - ✅ **Reliability**: Reduced race conditions and edge cases
-- ✅ **Performance**: Single RPC call instead of multiple operations
+- ✅ **Performance**: Single RPC call + automatic metadata updates
 - ✅ **Maintainability**: Cleaner code with proper separation of concerns
+- ✅ **Scalability**: No "missing profile" edge cases to handle in app code
 
 ## Testing Recommendations
 

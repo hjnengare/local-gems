@@ -1,47 +1,7 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from './supabase/client'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('Missing Supabase environment variables - authentication will not work')
-}
-
-// Validate URL format
-const isValidUrl = (url: string) => {
-  try {
-    new URL(url)
-    return true
-  } catch {
-    return false
-  }
-}
-
-if (supabaseUrl && !isValidUrl(supabaseUrl)) {
-  console.error('Invalid Supabase URL format:', supabaseUrl)
-}
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true,
-    flowType: 'implicit' // Changed from pkce to implicit for easier setup
-  },
-  global: {
-    headers: {
-      'X-Client-Info': 'local-gems-web'
-    }
-  },
-  db: {
-    schema: 'public'
-  },
-  realtime: {
-    params: {
-      eventsPerSecond: 10
-    }
-  }
-})
+// Create the client-side Supabase instance
+export const supabase = createClient()
 
 // Database types
 export interface Profile {
@@ -76,7 +36,7 @@ export const createProfile = async (userId: string) => {
     .from('profiles')
     .insert([
       {
-        id: userId,
+        user_id: userId,
         onboarding_step: 'interests',
         onboarding_complete: false,
         interests: [],
@@ -96,7 +56,7 @@ export const getProfile = async (userId: string) => {
   const { data, error } = await supabase
     .from('profiles')
     .select('*')
-    .eq('id', userId)
+    .eq('user_id', userId)
     .single()
     .abortSignal(AbortSignal.timeout(5000)) // 5 second timeout
 
@@ -108,7 +68,7 @@ export const updateProfile = async (userId: string, updates: Partial<Profile>) =
   const { data, error } = await supabase
     .from('profiles')
     .update(updates)
-    .eq('id', userId)
+    .eq('user_id', userId)
     .select()
     .single()
     .abortSignal(AbortSignal.timeout(5000))

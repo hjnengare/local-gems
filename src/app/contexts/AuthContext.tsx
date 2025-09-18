@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '../lib/supabase';
+import { createClient } from '../lib/supabase/client';
 import { AuthService } from '../lib/auth';
 import type { AuthUser } from '../lib/types/database';
 
@@ -27,6 +27,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const supabase = createClient();
 
   // Initialize auth state
   useEffect(() => {
@@ -56,7 +57,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [supabase]);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
@@ -166,7 +167,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             dealbreakers: userData.profile.dealbreakers,
             updated_at: new Date().toISOString()
           })
-          .eq('id', user.id);
+          .eq('user_id', user.id);
 
         if (error) throw error;
       }

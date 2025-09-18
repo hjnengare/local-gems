@@ -1,8 +1,13 @@
-import { supabase } from './supabase';
+import { createClient } from './supabase/client';
 import type { AuthUser, SignUpData, SignInData, AuthError } from './types/database';
 
 export class AuthService {
+  private static getClient() {
+    return createClient();
+  }
+
   static async signUp({ email, password }: SignUpData): Promise<{ user: AuthUser | null; error: AuthError | null }> {
+    const supabase = this.getClient();
     try {
       // Basic validation
       if (!email?.trim() || !password?.trim()) {
@@ -85,6 +90,7 @@ export class AuthService {
   }
 
   static async signIn({ email, password }: SignInData): Promise<{ user: AuthUser | null; error: AuthError | null }> {
+    const supabase = this.getClient();
     try {
       if (!email?.trim() || !password?.trim()) {
         return {
@@ -137,6 +143,7 @@ export class AuthService {
   }
 
   static async signOut(): Promise<{ error: AuthError | null }> {
+    const supabase = this.getClient();
     try {
       const { error } = await supabase.auth.signOut();
 
@@ -156,6 +163,7 @@ export class AuthService {
   }
 
   static async getCurrentUser(): Promise<AuthUser | null> {
+    const supabase = this.getClient();
     try {
       const { data: { user } } = await supabase.auth.getUser();
 
@@ -177,6 +185,7 @@ export class AuthService {
   }
 
   private static async createUserProfile(userId: string) {
+    const supabase = this.getClient();
     // Profile creation is handled by the database trigger when user signs up
     // Just verify the profile exists and update onboarding_step if needed
     const { error } = await supabase
@@ -192,6 +201,7 @@ export class AuthService {
   }
 
   private static async getUserProfile(userId: string) {
+    const supabase = this.getClient();
     try {
       const { data, error } = await supabase
         .from('profiles')
