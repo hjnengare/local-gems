@@ -12,24 +12,10 @@ import { FEATURED_REVIEWS, TOP_REVIEWERS, BUSINESSES_OF_THE_MONTH } from "../dat
 
 // Dynamic imports for heavy components with optimized loading
 const EventsSpecials = dynamic(() => import("../components/EventsSpecials/EventsSpecials"), {
-  loading: () => (
-    <div className="px-4 sm:px-6 md:px-8 mb-8 md:mb-16">
-      <div className="max-w-[1300px] mx-auto flex items-center justify-center py-16">
-        <KlioLoader size="lg" text="Loading events & specials..." />
-      </div>
-    </div>
-  ),
   ssr: false, // Disable SSR for heavy components
 });
 
 const CommunityHighlights = dynamic(() => import("../components/CommunityHighlights/CommunityHighlights"), {
-  loading: () => (
-    <div className="px-4 sm:px-6 md:px-8 mb-8 md:mb-16">
-      <div className="max-w-[1300px] mx-auto flex items-center justify-center py-16">
-        <KlioLoader size="lg" text="Loading community highlights..." />
-      </div>
-    </div>
-  ),
   ssr: false,
 });
 

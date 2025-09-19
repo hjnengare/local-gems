@@ -32,17 +32,20 @@ export default function EventBanner({
             alt={alt || title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
+            className="object-cover transition-transform duration-500 md:group-hover:scale-105 rounded-t-[6px]"
             priority={false}
           />
           {/* Subtle overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/10 via-transparent to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-300" />
           {/* Silver shimmer effect on hover */}
-          <div className="absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform skew-x-12 group-hover:left-full transition-transform duration-700 ease-out" />
+          <div className="absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform skew-x-12 md:group-hover:left-full transition-transform duration-700 ease-out" />
         </>
       ) : (
-        <div className="h-full w-full bg-gradient-to-br from-sage/20 to-coral/10 flex items-center justify-center group-hover:from-sage/30 group-hover:to-coral/20 transition-all duration-300">
-          <EventIcon iconName={icon} />
+        <div className="h-full w-full bg-sage/10 flex items-center justify-center text-sage rounded-t-[6px]">
+          <ion-icon
+            name="image-outline"
+            class="text-4xl md:text-5xl text-sage/70"
+          />
         </div>
       )}
 

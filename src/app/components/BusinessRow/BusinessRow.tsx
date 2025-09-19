@@ -55,12 +55,12 @@ export default function BusinessRow({
         <ScrollableSection>
           <div className="flex gap-6">
             {loading ? (
-              // KLIO loading state
-              <div className="w-full flex items-center justify-center py-12">
-                <KlioLoader
-                  size="lg"
-                  text={`Loading ${title.toLowerCase()}...`}
-                />
+              // Minimal loading state
+              <div className="w-full flex items-center justify-center py-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 border-2 border-sage/30 border-t-sage rounded-full animate-spin"></div>
+                  <span className="font-urbanist text-sm text-charcoal/60">Loading {title.toLowerCase()}...</span>
+                </div>
               </div>
             ) : error ? (
               // Error state

@@ -102,7 +102,7 @@ function BusinessCard({ business }: { business: Business }) {
                   width={400}
                   height={320}
                   sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className="h-[360px] md:h-[320px] lg:h-[280px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
+                  className="h-[360px] md:h-[320px] lg:h-[280px] w-full object-cover transition-transform duration-500 md:group-hover:scale-105 rounded-t-[6px]"
                   priority={false}
                   loading="lazy"
                   quality={85}
@@ -119,10 +119,10 @@ function BusinessCard({ business }: { business: Business }) {
             </motion.div>
 
             {/* overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/20 via-transparent to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-300" />
 
             {/* shimmer effect */}
-            <div className="absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform skew-x-12 group-hover:left-full transition-transform duration-700 ease-out" />
+            <div className="absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform skew-x-12 md:group-hover:left-full transition-transform duration-700 ease-out" />
 
             {/* verified badge */}
             {business.verified && (
@@ -143,14 +143,14 @@ function BusinessCard({ business }: { business: Business }) {
             <div
               className={`absolute right-2 top-1/2 transform -translate-y-1/2 z-20 flex flex-col gap-2 transition-all duration-300 ease-out
             ${isDesktop
-                ? "hidden sm:flex translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
+                ? "hidden sm:flex translate-x-12 opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100"
                 : showActions
                 ? "flex translate-x-0 opacity-100"
                 : "flex translate-x-12 opacity-0 pointer-events-none"
               }`}
             >
               <button
-                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
+                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleWriteReview();
@@ -159,7 +159,7 @@ function BusinessCard({ business }: { business: Business }) {
                 <ion-icon name="create-outline" class="text-base text-charcoal" />
               </button>
               <button
-                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
+                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleBookmark();
@@ -168,7 +168,7 @@ function BusinessCard({ business }: { business: Business }) {
                 <ion-icon name="heart-outline" class="text-base text-charcoal" />
               </button>
               <button
-                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
+                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleShare();
@@ -181,18 +181,18 @@ function BusinessCard({ business }: { business: Business }) {
 
           <div className="p-5 relative">
             <div className="mb-1">
-              <h3 className="font-urbanist text-base md:text-lg font-600 text-charcoal transition-colors duration-200 group-hover:text-sage">
+              <h3 className="font-urbanist text-base md:text-lg font-600 text-charcoal transition-colors duration-200 md:group-hover:text-sage">
                 <Link
                   href={business.href || "#"}
                   prefetch={true}
-                  className="hover:underline decoration-2 underline-offset-2"
+                  className="md:hover:underline decoration-2 underline-offset-2"
                 >
                   {business.name}
                 </Link>
               </h3>
             </div>
 
-            <p className="mb-3 font-urbanist text-sm font-400 text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
+            <p className="mb-3 font-urbanist text-sm font-400 text-charcoal/70 transition-colors duration-200 md:group-hover:text-charcoal/80">
               {business.category} - {business.location}
             </p>
 
