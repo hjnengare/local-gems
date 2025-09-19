@@ -181,7 +181,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             const response = await fetch('/api/user/interests', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ interests: userData.profile.interests })
+              body: JSON.stringify({ selections: userData.profile.interests })
             });
             if (!response.ok) {
               console.warn('Failed to update interests:', await response.text());

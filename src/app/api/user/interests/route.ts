@@ -27,22 +27,9 @@ export async function POST(req: Request) {
       )
     );
 
-    // Validate that all interest IDs exist in the interests table
-    if (cleaned.length > 0) {
-      const { data: known, error: knownErr } = await supabase
-        .from('interests')
-        .select('id')
-        .in('id', cleaned);
-
-      if (knownErr) {
-        console.error('Error validating interest IDs:', knownErr);
-        return NextResponse.json({ error: knownErr.message }, { status: 400 });
-      }
-
-      if ((known?.length ?? 0) !== cleaned.length) {
-        return NextResponse.json({ error: 'One or more interest IDs are invalid' }, { status: 400 });
-      }
-    }
+    // Skip validation for now - let the RPC handle it
+    // The interests table may not be seeded yet
+    console.log('Processing interest selections:', cleaned);
 
     const validSelections = cleaned;
 

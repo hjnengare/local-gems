@@ -71,6 +71,17 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="preconnect" href="https://unpkg.com" crossOrigin="" />
         <link rel="canonical" href="/" />
+        {/* Ionicons: Simple and reliable setup */}
+        <Script
+          src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+          type="module"
+          strategy="afterInteractive"
+        />
+        <Script
+          src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+          noModule
+          strategy="afterInteractive"
+        />
       </head>
       <body className={urbanist.className}>
         <WebVitals />
@@ -85,18 +96,6 @@ export default function RootLayout({
             </AuthProvider>
           </ToastProvider>
         </ErrorBoundary>
-        <Script
-          src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-          type="module"
-          strategy="afterInteractive"
-          crossOrigin="anonymous"
-        />
-        <Script
-          src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-          strategy="lazyOnload"
-          noModule
-          crossOrigin="anonymous"
-        />
       </body>
     </html>
   );

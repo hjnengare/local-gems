@@ -8,12 +8,14 @@ import { useToast } from "../contexts/ToastContext";
 import { motion } from "framer-motion";
 import FadeInUp from "../components/Animations/FadeInUp";
 import PremiumHover from "../components/Animations/PremiumHover";
+import { usePrefersReducedMotion } from "../utils/hooks/usePrefersReducedMotion";
 
 // CSS styles for consistent button radius
 const styles = `
 `;
 
 export default function RegisterPage() {
+  const prefersReduced = usePrefersReducedMotion();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -261,7 +263,7 @@ export default function RegisterPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div ref={containerRef} className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-6 pb-24 sm:py-8 sm:pb-20 md:pb-16 relative overflow-hidden">
+      <div ref={containerRef} data-reduced={prefersReduced} className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-6 pb-24 sm:py-8 sm:pb-20 md:pb-16 relative overflow-hidden">
       {/* Back button with entrance animation */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}

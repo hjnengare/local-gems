@@ -171,7 +171,7 @@ export default function LeaderboardPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="bg-off-white/95 backdrop-blur-xl rounded-3xl shadow-xl border border-white/30 p-6 md:p-8 mb-12 relative overflow-hidden"
+          className="bg-off-white/95 backdrop-blur-xl shadow-xl border border-white/30 p-6 md:p-8 mb-12 relative overflow-hidden"
         >
           {/* Card decorative elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
@@ -328,7 +328,7 @@ export default function LeaderboardPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="bg-off-white/95 backdrop-blur-xl rounded-3xl shadow-xl border border-white/30 p-6 md:p-8 mb-8 relative overflow-hidden"
+          className="bg-off-white/95 backdrop-blur-xl  shadow-xl border border-white/30 p-6 md:p-8 mb-8 relative overflow-hidden"
         >
           {/* Card decorative elements */}
           <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl"></div>

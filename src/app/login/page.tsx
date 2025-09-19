@@ -127,8 +127,8 @@ export default function LoginPage() {
           >
             <p className="font-urbanist text-[14px] font-600 text-sage mb-2">Demo Login Credentials</p>
             <p className="font-urbanist text-xs text-charcoal/70">
-              Email: <span className="font-mono bg-white px-2 py-1 rounded">test@example.com</span> |
-              Password: <span className="font-mono bg-white px-2 py-1 rounded">password123</span>
+              Email: <span className="font-mono bg-white px-2 py-1 rounded">name@domain.com</span> |
+              Password: <span className="font-mono bg-white px-2 py-1 rounded">your-set-Passw0rd</span>
             </p>
           </motion.div>
         </FadeInUp>

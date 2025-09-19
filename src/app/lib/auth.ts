@@ -61,13 +61,7 @@ export class AuthService {
         };
       }
 
-      // Create user profile
-      try {
-        await this.createUserProfile(data.user.id);
-      } catch (profileError) {
-        console.warn('Failed to create user profile:', profileError);
-        // Don't fail registration if profile creation fails
-      }
+      // Profile will be created by database trigger, no need to create manually
 
       return {
         user: {
@@ -184,46 +178,7 @@ export class AuthService {
     }
   }
 
-  private static async createUserProfile(userId: string) {
-    // Profile creation is handled by the database trigger when user signs up
-    // This method just waits and verifies the profile was created
-    const supabase = this.getClient();
-
-    // Wait a moment for the trigger to create the profile
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    try {
-      // Check if profile exists
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('user_id')
-        .eq('user_id', userId)
-        .single();
-
-      if (error && error.code !== 'PGRST116') {
-        // Real error, not just "not found"
-        throw error;
-      }
-
-      if (!data) {
-        // Profile doesn't exist, try to create it manually
-        const { error: insertError } = await supabase
-          .from('profiles')
-          .insert([{
-            user_id: userId,
-            onboarding_step: 'interests'
-          }]);
-
-        if (insertError) {
-          console.warn('Manual profile creation failed:', insertError);
-          // Don't throw - the trigger might have created it in the meantime
-        }
-      }
-    } catch (error) {
-      console.warn('Profile verification failed:', error);
-      // Don't throw - profile creation failures shouldn't break registration
-    }
-  }
+  // Removed createUserProfile - database trigger handles profile creation
 
   private static async getUserProfile(userId: string) {
     const supabase = this.getClient();

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useToast } from "../contexts/ToastContext";
+import { usePrefersReducedMotion } from "../utils/hooks/usePrefersReducedMotion";
 
 // Lightweight CSS animations
 const styles = `
@@ -61,9 +62,6 @@ const styles = `
   .delay-1600 { animation-delay: 1.6s; }
 `;
 
-// Detect reduced motion preference
-const prefersReduced = typeof window !== 'undefined' &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Reusable Interest Tile Component
 interface InterestTileProps {
@@ -148,6 +146,7 @@ function useMounted() {
 
 function InterestsContent() {
   const mounted = useMounted();
+  const prefersReduced = usePrefersReducedMotion();
 
   const [isNavigating, setIsNavigating] = useState(false);
   const [hasPrefetched, setHasPrefetched] = useState(false);
