@@ -357,15 +357,13 @@ function SubcategoriesContent() {
 
           {/* Selection Counter */}
           <div className="text-center mb-6">
-            <div className={`inline-flex items-center gap-2 rounded-full px-4 py-2 mb-3 transition-colors duration-300 ${
-              hydratedSelected.length >= MIN_SELECTIONS
-                ? 'bg-sage/10 border border-sage/30'
-                : 'bg-sage/10 border border-sage/20'
-            }`}>
+            <div className={`inline-flex items-center gap-2 rounded-full px-4 py-2 mb-3 transition-colors duration-300 ${hydratedSelected.length >= MIN_SELECTIONS
+              ? 'bg-sage/10 border border-sage/30'
+              : 'bg-sage/10 border border-sage/20'
+              }`}>
               <span
-                className={`font-urbanist text-sm font-600 ${
-                  hydratedSelected.length >= MIN_SELECTIONS ? 'text-sage' : 'text-sage'
-                }`}
+                className={`font-urbanist text-sm font-600 ${hydratedSelected.length >= MIN_SELECTIONS ? 'text-sage' : 'text-sage'
+                  }`}
                 aria-live="polite"
                 aria-atomic="true"
               >
@@ -382,8 +380,8 @@ function SubcategoriesContent() {
               {hydratedSelected.length < MIN_SELECTIONS
                 ? `Select ${MIN_SELECTIONS - hydratedSelected.length} more to continue`
                 : hydratedSelected.length === MAX_SELECTIONS
-                ? "Perfect! You've selected the maximum"
-                : "Great! You can continue or select more"
+                  ? "Perfect! You've selected the maximum"
+                  : "Great! You can continue or select more"
               }
             </p>
           </div>
@@ -418,26 +416,50 @@ function SubcategoriesContent() {
                             aria-pressed={isSelected}
                             aria-label={`${subcategory.label}${isSelected ? ' (selected)' : isDisabled ? ' (maximum reached)' : ''}`}
                             className={`
-                              relative w-full py-3 md:py-4 px-3 md:px-4 rounded-6 font-urbanist text-xs md:text-sm font-600 text-center transition-all duration-200 ease-out
-                              focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2
-                              min-h-[44px] disabled:focus:ring-gray-300
-                              ${animatingIds.has(subcategory.id) ? 'animate-micro-bounce' : ''}
-                              ${isSelected
-                                ? "bg-coral border-2 border-coral text-white shadow-md hover:bg-coral/90"
+                                  relative w-full py-3 md:py-4 px-3 md:px-4
+                                  font-urbanist text-xs md:text-sm font-600 text-center
+                                  transition-all duration-200 ease-out
+                                  min-h-[44px]
+                                  rounded-full
+                                  focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2
+                                  disabled:cursor-not-allowed disabled:opacity-60
+                                  ${animatingIds.has(subcategory.id) ? 'animate-micro-bounce' : ''}
+
+                                  ${isSelected
+                                ? [
+
+                                  "text-white shadow-md",
+                                  "bg-gradient-to-r from-sage to-coral",
+                                  "border-0",
+                                  "ring-1 ring-white/20",
+                                  "hover:from-sage/90 hover:to-coral/90"
+                                ].join(" ")
                                 : isDisabled
-                                ? "bg-gray-100 border-2 border-gray-200 text-gray-400 cursor-not-allowed opacity-60"
-                                : "bg-white border-2 border-sage text-charcoal hover:border-sage hover:bg-sage/5 hover:scale-[1.02]"
+                                  ? [
+
+                                    "bg-gray-100 border-2 border-gray-200 text-gray-400"
+                                  ].join(" ")
+                                  : [
+                                    "bg-white border-2 border-sage text-charcoal",
+                                    "hover:border-sage hover:bg-sage/5 hover:scale-[1.02]"
+                                  ].join(" ")
                               }
-                            `}
+  `}
                             style={{ animationDelay: `${(idx % 3) * 50}ms` }}
                           >
                             <span className="truncate">{subcategory.label}</span>
+
                             {isSelected && (
                               <div className="absolute top-1 right-1">
-                                <ion-icon name="checkmark-circle" size="small" style={{ color: "white" }} />
+                                <ion-icon
+                                  name="checkmark-circle"
+                                  size="small"
+                                  style={{ filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.15))" }}
+                                />
                               </div>
                             )}
                           </button>
+
                         );
                       })}
                     </div>
@@ -452,7 +474,7 @@ function SubcategoriesContent() {
                     group block w-full text-white font-urbanist text-sm md:text-base font-600 py-3.5 md:py-4 px-6 md:px-8 rounded-6 shadow-lg transition-all duration-300 relative text-center min-h-[52px]
                     ${canProceed
                       ? "bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2 animate-pulse-soft"
-                      : "bg-gray-200 text-charcoal/40 cursor-not-allowed"
+                      : "bg-off-white/90 text-charcoal/40 cursor-not-allowed"
                     }
                   `}
                   onClick={handleNext}
