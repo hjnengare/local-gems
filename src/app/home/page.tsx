@@ -4,6 +4,7 @@ import { memo } from "react";
 import dynamic from "next/dynamic";
 import Header from "../components/Header/Header";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
+import KlioLoader from "../components/KlioLoader/KlioLoader";
 import { useScrollRevealMultiple } from "../hooks/useScrollReveal";
 import { useBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";
@@ -13,8 +14,8 @@ import { FEATURED_REVIEWS, TOP_REVIEWERS, BUSINESSES_OF_THE_MONTH } from "../dat
 const EventsSpecials = dynamic(() => import("../components/EventsSpecials/EventsSpecials"), {
   loading: () => (
     <div className="px-4 sm:px-6 md:px-8 mb-8 md:mb-16">
-      <div className="max-w-[1300px] mx-auto">
-        <div className="animate-pulse bg-sage/10 rounded-2xl h-64"></div>
+      <div className="max-w-[1300px] mx-auto flex items-center justify-center py-16">
+        <KlioLoader size="lg" text="Loading events & specials..." />
       </div>
     </div>
   ),
@@ -24,8 +25,8 @@ const EventsSpecials = dynamic(() => import("../components/EventsSpecials/Events
 const CommunityHighlights = dynamic(() => import("../components/CommunityHighlights/CommunityHighlights"), {
   loading: () => (
     <div className="px-4 sm:px-6 md:px-8 mb-8 md:mb-16">
-      <div className="max-w-[1300px] mx-auto">
-        <div className="animate-pulse bg-coral/10 rounded-2xl h-64"></div>
+      <div className="max-w-[1300px] mx-auto flex items-center justify-center py-16">
+        <KlioLoader size="lg" text="Loading community highlights..." />
       </div>
     </div>
   ),
@@ -72,7 +73,7 @@ export default function Home() {
       <Header />
 
       {/* Main content */}
-      <div className="pt-[124px] md:pt-[144px] pb-24 md:pb-6 relative z-10">
+      <div className="pt-4 pb-24 md:pb-6 relative z-10">
       
         {/* Business Rows with Enhanced CSS Scroll Animations */}
         <div className="scroll-reveal stagger-1" data-scroll-reveal>

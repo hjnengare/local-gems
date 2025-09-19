@@ -38,7 +38,7 @@ export function useBusinesses(options: UseBusinessesOptions = {}) {
       const data = await response.json();
       console.log('[useBusinesses] Response data:', data);
 
-      setBusinesses(data.businesses || []);
+      setBusinesses(data.data || []);
     } catch (err) {
       console.error('Error fetching businesses:', err);
       setError(err instanceof Error ? err.message : 'Failed to fetch businesses');
@@ -101,7 +101,7 @@ export function useBusiness(id?: string) {
         }
 
         const data = await response.json();
-        const businesses = data.businesses || [];
+        const businesses = data.data || [];
         const foundBusiness = businesses.find((b: Business) => b.id === id);
 
         setBusiness(foundBusiness || null);

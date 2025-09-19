@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import BusinessCard, { Business } from "../BusinessCard/BusinessCard";
 import ScrollableSection from "../ScrollableSection/ScrollableSection";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
+import KlioLoader from "../KlioLoader/KlioLoader";
 
 export default function BusinessRow({
   title,
@@ -54,25 +55,13 @@ export default function BusinessRow({
         <ScrollableSection>
           <div className="flex gap-6">
             {loading ? (
-              // Loading skeleton
-              Array.from({ length: 6 }, (_, index) => (
-                <div
-                  key={`skeleton-${index}`}
-                  className="snap-start snap-always w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%] flex-shrink-0 bg-off-white rounded-[6px] overflow-hidden shadow-sm animate-pulse"
-                >
-                  <div className="h-[360px] md:h-[320px] lg:h-[280px] bg-gray-200 rounded-t-[6px]" />
-                  <div className="p-5 space-y-3">
-                    <div className="h-4 bg-gray-200 rounded w-3/4" />
-                    <div className="h-3 bg-gray-200 rounded w-1/2" />
-                    <div className="h-3 bg-gray-200 rounded w-2/3" />
-                    <div className="flex gap-2">
-                      <div className="h-6 bg-gray-200 rounded w-16" />
-                      <div className="h-6 bg-gray-200 rounded w-16" />
-                      <div className="h-6 bg-gray-200 rounded w-16" />
-                    </div>
-                  </div>
-                </div>
-              ))
+              // KLIO loading state
+              <div className="w-full flex items-center justify-center py-12">
+                <KlioLoader
+                  size="lg"
+                  text={`Loading ${title.toLowerCase()}...`}
+                />
+              </div>
             ) : error ? (
               // Error state
               <div className="w-full text-center py-12">
