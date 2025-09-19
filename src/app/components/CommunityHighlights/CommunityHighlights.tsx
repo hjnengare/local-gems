@@ -52,8 +52,8 @@ export default function CommunityHighlights({
         <div className="absolute bottom-20 left-10 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-xl" />
       </div>
       
-      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10 py-8 sm:py-12 md:py-16 pb-16">
-        <div className="mb-12 flex flex-wrap items-center justify-between gap-[18px]">
+      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10 py-6 sm:py-12 md:py-16 pb-8 sm:pb-16">
+        <div className="mb-6 sm:mb-12 flex flex-wrap items-center justify-between gap-[18px]">
           <h2 className="font-urbanist text-xl font-800 text-charcoal relative">
             {title}
             <div className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-sage to-coral rounded-full" />
@@ -69,8 +69,8 @@ export default function CommunityHighlights({
         </div>
 
         {/* Top Reviewers Subsection */}
-        <div className="mt-12 sm:mt-14 md:mt-16">
-          <div className="mb-8 flex flex-wrap items-center justify-between gap-[18px]">
+        <div className="mt-8 sm:mt-14 md:mt-16">
+          <div className="mb-4 sm:mb-8 flex flex-wrap items-center justify-between gap-[18px]">
             <h3 className="font-urbanist text-base font-700 text-charcoal relative">
               Top Reviewers This Month In Claremont
             </h3>
@@ -92,8 +92,8 @@ export default function CommunityHighlights({
 
         {/* Businesses of the Month Subsection */}
         {businessesOfTheMonth && businessesOfTheMonth.length > 0 && (
-          <div className="mt-12 sm:mt-14 md:mt-16">
-            <div className="mb-8 flex flex-wrap items-center justify-between gap-[18px]">
+          <div className="mt-8 sm:mt-14 md:mt-16">
+            <div className="mb-4 sm:mb-8 flex flex-wrap items-center justify-between gap-[18px]">
               <h3 className="font-urbanist text-base font-700 text-charcoal relative">
                 Businesses of the Month
               </h3>

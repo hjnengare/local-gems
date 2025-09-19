@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Review, Reviewer } from "../../data/communityHighlightsData";
 import ProfilePicture from "./ProfilePicture";
 import ReviewerStats from "./ReviewerStats";
@@ -18,12 +18,48 @@ interface ReviewerCardProps {
 export default function ReviewerCard({ review, reviewer, variant = "review" }: ReviewerCardProps) {
   const reviewerData = reviewer || review?.reviewer;
   const idForSnap = useMemo(() => `reviewer-${reviewerData?.id}`, [reviewerData?.id]);
+  const [showActions, setShowActions] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Check if we're on desktop after component mounts
+  useEffect(() => {
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 640);
+    };
+
+    checkIsDesktop();
+    window.addEventListener('resize', checkIsDesktop);
+
+    return () => window.removeEventListener('resize', checkIsDesktop);
+  }, []);
+
+  // Handle click outside to close actions on mobile
+  useEffect(() => {
+    if (!isDesktop && showActions) {
+      const handleClickOutside = (e: MouseEvent) => {
+        const target = e.target as HTMLElement;
+        if (!target.closest(`#${idForSnap}`)) {
+          setShowActions(false);
+        }
+      };
+
+      document.addEventListener('click', handleClickOutside);
+      return () => document.removeEventListener('click', handleClickOutside);
+    }
+  }, [showActions, isDesktop, idForSnap]);
+
+  const toggleActions = () => {
+    // Only toggle on mobile
+    if (!isDesktop) {
+      setShowActions(!showActions);
+    }
+  };
 
   if (variant === "reviewer" || reviewer) {
     return (
       <li id={idForSnap} className="snap-start w-[280px] sm:w-[320px] flex-shrink-0">
         <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] group cursor-pointer">
-          <div className="relative overflow-hidden rounded-t-[6px]">
+          <div className="relative overflow-hidden rounded-t-[6px]" onClick={toggleActions}>
             <Image
               src={reviewerData?.profilePicture || '/placeholder-avatar.jpg'}
               alt={reviewerData?.name || 'User avatar'}
@@ -53,15 +89,30 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
               <span className="font-urbanist text-sm font-700">{reviewerData?.rating.toFixed(1)}</span>
             </span>
 
-            {/* Card Actions - slide in from right on hover - hidden on mobile */}
-            <div className="hidden sm:flex absolute right-2 bottom-2 z-20 flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-out">
-              <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200">
+            {/* Card Actions - mobile: show on click, desktop: show on hover */}
+            <div className={`absolute right-2 bottom-2 z-20 flex-col gap-2 transition-all duration-300 ease-out
+              ${isDesktop
+                ? 'hidden sm:flex translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100'
+                : showActions
+                  ? 'flex translate-x-0 opacity-100'
+                  : 'flex translate-x-12 opacity-0 pointer-events-none'
+              }`}>
+              <button
+                className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <ion-icon name="person-add-outline" class="text-charcoal" style={{fontSize: '24px'}} />
               </button>
-              <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200">
+              <button
+                className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <ion-icon name="chatbubble-outline" class="text-charcoal" style={{fontSize: '24px'}} />
               </button>
-              <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200">
+              <button
+                className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <ion-icon name="share-outline" class="text-charcoal" style={{fontSize: '24px'}} />
               </button>
             </div>
@@ -129,7 +180,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
 
   return (
     <li className="snap-start w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[320px]">
-      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] group cursor-pointer h-[280px] flex flex-col relative overflow-hidden">
+      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] group cursor-pointer h-[280px] flex flex-col relative overflow-hidden" onClick={toggleActions}>
         <div className="flex items-start gap-4 mb-4">
           <div className="relative">
             <ProfilePicture
@@ -155,15 +206,30 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
             />
           </div>
 
-          {/* Card Actions - slide in from right on hover - hidden on mobile */}
-          <div className="hidden sm:flex absolute right-4 top-4 z-20 flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-out">
-            <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100">
+          {/* Card Actions - mobile: show on click, desktop: show on hover */}
+          <div className={`absolute right-4 top-4 z-20 flex-col gap-2 transition-all duration-300 ease-out
+            ${isDesktop
+              ? 'hidden sm:flex translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100'
+              : showActions
+                ? 'flex translate-x-0 opacity-100'
+                : 'flex translate-x-12 opacity-0 pointer-events-none'
+            }`}>
+            <button
+              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
+              onClick={(e) => e.stopPropagation()}
+            >
               <ion-icon name="person-add-outline" class="text-charcoal" style={{fontSize: '20px'}} />
             </button>
-            <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100">
+            <button
+              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
+              onClick={(e) => e.stopPropagation()}
+            >
               <ion-icon name="chatbubble-outline" class="text-charcoal" style={{fontSize: '20px'}} />
             </button>
-            <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100">
+            <button
+              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
+              onClick={(e) => e.stopPropagation()}
+            >
               <ion-icon name="share-outline" class="text-charcoal" style={{fontSize: '20px'}} />
             </button>
           </div>

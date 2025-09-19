@@ -24,7 +24,7 @@ export default function BusinessRow({
     router.push(href);
   };
   return (
-    <section ref={sectionRef} className="pb-16 sm:pt-2 bg-gradient-to-b from-off-white to-off-white/95 relative" aria-label="businesses" data-section>
+    <section ref={sectionRef} className="pb-8 sm:pb-16 sm:pt-2 bg-gradient-to-b from-off-white to-off-white/95 relative" aria-label="businesses" data-section>
       {/* Subtle section decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 right-20 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl" />
@@ -32,7 +32,7 @@ export default function BusinessRow({
       </div>
       
       <div className="container mx-auto max-w-[1300px] px-4 relative z-10">
-        <div ref={titleRef} className="mb-12 flex flex-wrap items-center justify-between gap-[18px]">
+        <div ref={titleRef} className="mb-6 sm:mb-12 flex flex-wrap items-center justify-between gap-[18px]">
           <h2 className="font-urbanist text-xl font-800 text-charcoal relative">
             {title}
             <div className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-sage to-coral rounded-full" />

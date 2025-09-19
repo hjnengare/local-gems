@@ -61,8 +61,26 @@ function BusinessCard({ business }: { business: Business }) {
     return () => window.removeEventListener('resize', checkIsDesktop);
   }, [router, reviewRoute]);
 
+  // Handle click outside to close actions on mobile
+  useEffect(() => {
+    if (!isDesktop && showActions) {
+      const handleClickOutside = (e: MouseEvent) => {
+        const target = e.target as HTMLElement;
+        if (!target.closest(`#${idForSnap}`)) {
+          setShowActions(false);
+        }
+      };
+
+      document.addEventListener('click', handleClickOutside);
+      return () => document.removeEventListener('click', handleClickOutside);
+    }
+  }, [showActions, isDesktop, idForSnap]);
+
   const toggleActions = () => {
-    setShowActions(!showActions);
+    // Only toggle on mobile
+    if (!isDesktop) {
+      setShowActions(!showActions);
+    }
   };
 
   const handleWriteReview = () => {
@@ -122,8 +140,14 @@ function BusinessCard({ business }: { business: Business }) {
             <span className="font-urbanist text-sm font-700">{business.totalRating.toFixed(1)}</span>
           </span>
 
-          {/* Simple card actions - slide in from right on hover - hidden on mobile */}
-          <div className="hidden sm:flex absolute right-2 top-1/2 transform -translate-y-1/2 z-20 flex-col gap-2 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-out">
+          {/* Card actions - mobile: show on click, desktop: show on hover */}
+          <div className={`absolute right-2 top-1/2 transform -translate-y-1/2 z-20 flex flex-col gap-2 transition-all duration-300 ease-out
+            ${isDesktop
+              ? 'hidden sm:flex translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100'
+              : showActions
+                ? 'flex translate-x-0 opacity-100'
+                : 'flex translate-x-12 opacity-0 pointer-events-none'
+            }`}>
             <button
               className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
               onClick={(e) => {

@@ -33,8 +33,8 @@ export default function EventsSpecials({
         <div className="absolute bottom-20 right-10 w-24 h-24 bg-gradient-to-br from-sage/8 to-transparent rounded-full blur-xl" />
       </div>
       
-      <div className="container mx-auto max-w-[1300px] px-4 relative z-10 pt-16 pb-8">
-        <div ref={titleRef} className="mb-12 flex flex-wrap items-center justify-between gap-[18px]">
+      <div className="container mx-auto max-w-[1300px] px-4 relative z-10 pt-8 sm:pt-16 pb-6 sm:pb-8">
+        <div ref={titleRef} className="mb-6 sm:mb-12 flex flex-wrap items-center justify-between gap-[18px]">
           <h2 className="font-urbanist text-xl font-800 text-charcoal relative">
             {title}
             <div className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-sage to-coral rounded-full" />
