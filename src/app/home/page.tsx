@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import Header from "../components/Header/Header";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
 import { useScrollRevealMultiple } from "../hooks/useScrollReveal";
-import { TRENDING_BUSINESSES, NEARBY_FAVORITES } from "../data/businessData";
+import { useBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";
 import { FEATURED_REVIEWS, TOP_REVIEWERS, BUSINESSES_OF_THE_MONTH } from "../data/communityHighlightsData";
 
@@ -53,6 +53,10 @@ export default function Home() {
   // Initialize scroll reveal for all data-scroll-reveal elements
   useScrollRevealMultiple({ staggerDelay: 150 });
 
+  // Fetch businesses data
+  const { businesses: forYouBusinesses, loading: forYouLoading, error: forYouError } = useBusinesses({ limit: 12 });
+  const { businesses: trendingBusinesses, loading: trendingLoading, error: trendingError } = useTrendingBusinesses(12);
+
   return (
     <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative overflow-hidden">
       {/* Static background layers */}
@@ -72,11 +76,23 @@ export default function Home() {
       
         {/* Business Rows with Enhanced CSS Scroll Animations */}
         <div className="scroll-reveal stagger-1" data-scroll-reveal>
-          <MemoizedBusinessRow title="For You" businesses={TRENDING_BUSINESSES} cta="View All Trending" />
+          <MemoizedBusinessRow
+            title="For You"
+            businesses={forYouBusinesses}
+            loading={forYouLoading}
+            error={forYouError}
+            cta="View All"
+          />
         </div>
 
         <div className="scroll-reveal-right stagger-2" data-scroll-reveal>
-          <MemoizedBusinessRow title="Trending Now" businesses={NEARBY_FAVORITES} cta="View All Favorites" />
+          <MemoizedBusinessRow
+            title="Trending Now"
+            businesses={trendingBusinesses}
+            loading={trendingLoading}
+            error={trendingError}
+            cta="View All Trending"
+          />
         </div>
 
         <div className="scroll-reveal-left stagger-3" data-scroll-reveal>

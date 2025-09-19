@@ -1,5 +1,38 @@
 @import "tailwindcss";
 
+/* Enhanced Snap Scrolling */
+.horizontal-scroll {
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  /* Better scrolling physics on iOS */
+  overscroll-behavior-x: contain;
+}
+
+/* Enhanced snap points */
+.snap-start {
+  scroll-snap-align: start;
+}
+
+.snap-always {
+  scroll-snap-stop: always;
+}
+
+/* Mobile-specific enhancements */
+@media (max-width: 640px) {
+  .horizontal-scroll {
+    /* More aggressive snapping on mobile */
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 1rem;
+    scroll-padding-right: 1rem;
+  }
+
+  /* Ensure cards fully snap into view */
+  .snap-start {
+    scroll-snap-align: center;
+  }
+}
+
 @theme reference {
   --color-hoockers-green: hsl(148, 20%, 38%);
   --color-hoockers-green-20: hsl(148, 20%, 38%, 0.2);

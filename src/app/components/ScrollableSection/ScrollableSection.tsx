@@ -79,11 +79,15 @@ export default function ScrollableSection({
     <div className="relative overflow-hidden">
       <div
         ref={scrollRef}
-        className={`horizontal-scroll flex snap-x gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6 ${className}`}
+        className={`horizontal-scroll flex snap-x snap-mandatory gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6 ${className}`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
-          WebkitScrollbar: { display: 'none' }
+          WebkitScrollbar: { display: 'none' },
+          scrollSnapType: 'x mandatory',
+          scrollBehavior: 'smooth',
+          // Enhanced mobile scroll physics
+          WebkitOverflowScrolling: 'touch'
         }}
       >
         {children}
