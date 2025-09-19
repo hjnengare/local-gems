@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface CardProps {
   id: string;
@@ -23,6 +24,8 @@ export default function Card({
   href,
   variant = 'default'
 }: CardProps) {
+  const [imgError, setImgError] = useState(false);
+
   const cardVariantClasses = {
     default: 'bg-white border border-light-gray',
     trending: 'bg-pale-spring-bud border border-hoockers-green',
@@ -42,17 +45,18 @@ export default function Card({
     `}>
       <Link href={href} className="block p-4">
         <div className="relative w-full h-32 mb-3 rounded-6 overflow-hidden bg-cultured-1">
-          {image ? (
+          {image && !imgError ? (
             <Image
               src={image}
               alt={title}
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              onError={() => setImgError(true)}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-web">
-              <ion-icon name="restaurant-outline" size="large"></ion-icon>
+              <ion-icon name="image-outline" size="large"></ion-icon>
             </div>
           )}
           {rating && (

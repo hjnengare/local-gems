@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import Stars from "../Stars/Stars";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
 import { BusinessOfTheMonth } from "../../data/communityHighlightsData";
 
 export default function BusinessOfTheMonthCard({ business }: { business: BusinessOfTheMonth }) {
   const idForSnap = useMemo(() => `business-month-${business.id}`, [business.id]);
+  const [imgError, setImgError] = useState(false);
   
   const getBadgeStyle = (badge: string) => {
     switch (badge) {
@@ -40,16 +41,26 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
     <li id={idForSnap} className="snap-start w-[280px] sm:w-[320px] flex-shrink-0">
       <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] group cursor-pointer">
         <div className="relative overflow-hidden rounded-t-[6px]">
-          <Image
-            src={business.image}
-            alt={business.alt}
-            width={400}
-            height={320}
-            className="h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
-            priority={false}
-            loading="lazy"
-            quality={85}
-          />
+          {!imgError ? (
+            <Image
+              src={business.image}
+              alt={business.alt}
+              width={400}
+              height={320}
+              className="h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
+              priority={false}
+              loading="lazy"
+              quality={85}
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <div className="h-[200px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[6px]">
+              <ion-icon
+                name="image-outline"
+                class="text-4xl md:text-5xl text-sage/70"
+              />
+            </div>
+          )}
           
           {/* Subtle overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-charcoal/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

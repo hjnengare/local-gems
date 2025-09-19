@@ -20,6 +20,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
   const idForSnap = useMemo(() => `reviewer-${reviewerData?.id}`, [reviewerData?.id]);
   const [showActions, setShowActions] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   // Check if we're on desktop after component mounts
   useEffect(() => {
@@ -60,15 +61,25 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
       <li id={idForSnap} className="snap-start snap-always w-[280px] sm:w-[320px] flex-shrink-0">
         <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] group cursor-pointer">
           <div className="relative overflow-hidden rounded-t-[6px]" onClick={toggleActions}>
-            <Image
-              src={reviewerData?.profilePicture || '/placeholder-avatar.jpg'}
-              alt={reviewerData?.name || 'User avatar'}
-              width={400}
-              height={320}
-              className="h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
-              priority={false}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            />
+            {!imgError && reviewerData?.profilePicture ? (
+              <Image
+                src={reviewerData.profilePicture}
+                alt={reviewerData?.name || 'User avatar'}
+                width={400}
+                height={320}
+                className="h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
+                priority={false}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <div className="h-[200px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[6px]">
+                <ion-icon
+                  name="person-outline"
+                  class="text-4xl md:text-5xl text-sage/70"
+                />
+              </div>
+            )}
             
             {/* Subtle overlay gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-charcoal/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface ProfilePictureProps {
   src: string;
@@ -7,12 +8,14 @@ interface ProfilePictureProps {
   badge?: "top" | "verified" | "local";
 }
 
-export default function ProfilePicture({ 
-  src, 
-  alt, 
-  size = "md", 
-  badge 
+export default function ProfilePicture({
+  src,
+  alt,
+  size = "md",
+  badge
 }: ProfilePictureProps) {
+  const [imgError, setImgError] = useState(false);
+
   const sizeClasses = {
     sm: "w-10 h-10",
     md: "w-12 h-12",
@@ -50,14 +53,24 @@ export default function ProfilePicture({
     }
   };
 
-  // If no src provided, just return the badge
-  if (!src && badge) {
+  // If no src provided or error occurred, show placeholder
+  if (!src || imgError) {
     return (
-      <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-        <ion-icon
-          name={getBadgeIcon(badge)}
-          class={`text-lg ${getBadgeColor(badge)}`}
-        />
+      <div className="relative inline-block">
+        <div className={`${sizeClasses[size]} rounded-full bg-sage/10 flex items-center justify-center border-2 border-white shadow-md`}>
+          <ion-icon
+            name="person-outline"
+            class={`${size === 'sm' ? 'text-lg' : size === 'md' ? 'text-xl' : 'text-2xl'} text-sage/70`}
+          />
+        </div>
+        {badge && (
+          <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
+            <ion-icon
+              name={getBadgeIcon(badge)}
+              class={`text-[14px] ${getBadgeColor(badge)}`}
+            />
+          </div>
+        )}
       </div>
     );
   }
@@ -71,6 +84,7 @@ export default function ProfilePicture({
         height={getSizeNumber(size)}
         className={`${sizeClasses[size]} rounded-full object-cover border-2 border-white shadow-md`}
         unoptimized={src.includes('dicebear.com')}
+        onError={() => setImgError(true)}
       />
       
       {badge && (
