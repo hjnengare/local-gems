@@ -69,7 +69,8 @@ export default function Header({ showSearch = true, showProfile = true }) {
             <div ref={searchWrapRef} className="mt-3 sm:mt-4">
               <SearchInput
                 variant="header"
-                placeholder="Search photos… err, places 😄"
+                placeholder="Discover exceptional local experiences, premium dining, and hidden gems..."
+                mobilePlaceholder="Search places, coffee, yoga…"
                 onSearch={(q) => console.log("search:", q)}
                 onFilterClick={openFilters}
                 onFocusOpenFilters={openFilters}

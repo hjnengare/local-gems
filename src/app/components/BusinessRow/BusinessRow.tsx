@@ -29,7 +29,7 @@ export default function BusinessRow({
     router.push(href);
   };
   return (
-    <section ref={sectionRef} className="pb-8 sm:pb-16 sm:pt-2 bg-gradient-to-b from-off-white to-off-white/95 relative" aria-label="businesses" data-section>
+    <section ref={sectionRef} className="pb-4 sm:pb-6 sm:pt-2 bg-gradient-to-b from-off-white to-off-white/95 relative" aria-label="businesses" data-section>
       {/* Subtle section decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 right-20 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl" />

@@ -84,6 +84,7 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
             value={searchQuery}
             onChange={handleInputChange}
             onFocus={onFocusOpenFilters}
+            onTouchStart={onFocusOpenFilters}
             placeholder={ph}
             className={`w-full bg-off-white/75 border border-sage/30 rounded-full
               ${showFilter && onFilterClick ? "pl-12 pr-12 sm:pl-14 sm:pr-12" : "pl-12 pr-4"}
@@ -91,8 +92,7 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
               font-urbanist font-500 text-charcoal placeholder-charcoal/40
               focus:outline-none focus:ring-4 focus:ring-sage/20 focus:border-sage/60
               transition-all duration-300 hover:border-sage/50
-              truncate lg:whitespace-normal lg:overflow-visible lg:text-clip`}  // ellipsis on small, full on lg
-            autoFocus={variant === "header"}
+              truncate lg:truncate-none`}  // truncate on small, full text on lg
             aria-label="Search"
           />
         </div>

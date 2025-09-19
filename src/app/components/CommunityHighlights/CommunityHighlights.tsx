@@ -52,7 +52,7 @@ export default function CommunityHighlights({
         <div className="absolute bottom-20 left-10 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-xl" />
       </div>
       
-      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10 py-6 sm:py-12 md:py-16 pb-8 sm:pb-16">
+      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10 pt-4 sm:pt-6 pb-8 sm:pb-16">
         <div className="mb-6 sm:mb-12 flex flex-wrap items-center justify-between gap-[18px]">
           <h2 className="font-urbanist text-xl font-800 text-charcoal relative">
             {title}
