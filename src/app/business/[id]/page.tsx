@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
+import { useToast } from "../../contexts/ToastContext";
 
 // Dynamic imports for premium animations
 const FadeInUp = dynamic(() => import("../../components/Animations/FadeInUp"), {
@@ -16,6 +17,11 @@ const PremiumHover = dynamic(() => import("../../components/Animations/PremiumHo
 
 export default function BusinessProfilePage() {
   // const [activeTab, setActiveTab] = useState("overview");
+  const { showToast } = useToast();
+
+  const handleWriteReviewClick = () => {
+    showToast("Opening review form... Get ready to share your experience! ✨", "sage", 3000);
+  };
 
   // Mock data - in real app this would come from params and API
   const business = {
@@ -97,17 +103,17 @@ export default function BusinessProfilePage() {
         </div>
       </motion.header>
 
-      <div className="max-w-4xl mx-auto px-4 py-6 relative z-10">
+      <div className="w-full max-w-full px-4 md:max-w-4xl md:px-4 mx-auto py-4 md:py-6 relative z-10">
         {/* Premium Business Header */}
         <FadeInUp delay={0.2}>
-          <PremiumHover scale={1.02} shadowIntensity="medium" duration={0.4}>
-            <div className="bg-off-white/90 backdrop-blur-lg rounded-3xl shadow-xl border border-sage/10 p-8 mb-8 relative overflow-hidden">
+          <PremiumHover scale={1.02} shadowIntensity="light" duration={0.4}>
+            <div className="bg-off-white rounded-6 shadow-sm border border-sage/10 p-4 md:p-6 mb-4 md:mb-6 relative overflow-hidden">
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
 
               <div className="relative z-10">
-                <div className="flex flex-col lg:flex-row items-start lg:items-center space-y-6 lg:space-y-0 lg:space-x-8">
+                <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
                   {/* Business Photo/Icon Section */}
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
@@ -117,7 +123,7 @@ export default function BusinessProfilePage() {
                   >
                     <div className="relative group">
                       {business.image ? (
-                        <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-2xl overflow-hidden ring-4 ring-sage/20 group-hover:ring-sage/40 transition-all duration-500">
+                        <div className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-6 overflow-hidden ring-2 ring-sage/20 group-hover:ring-sage/40 transition-all duration-500">
                           <Image
                             src={business.image}
                             alt={`${business.name} photo`}
@@ -130,12 +136,12 @@ export default function BusinessProfilePage() {
                           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 group-hover:translate-x-full"></div>
                         </div>
                       ) : (
-                        <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-2xl bg-gradient-to-br from-sage/20 to-coral/20 flex items-center justify-center ring-4 ring-sage/20 group-hover:ring-sage/40 transition-all duration-500">
+                        <div className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-6 bg-gradient-to-br from-sage/20 to-coral/20 flex items-center justify-center ring-2 ring-sage/20 group-hover:ring-sage/40 transition-all duration-500">
                           <motion.div
                             whileHover={{ rotate: 10, scale: 1.1 }}
                             transition={{ duration: 0.3 }}
                           >
-                            <ion-icon name="restaurant" style={{ fontSize: '4rem', color: 'var(--sage)' }} />
+                            <ion-icon name="business" style={{ fontSize: '3rem', color: 'var(--sage)' }} />
                           </motion.div>
                         </div>
                       )}
@@ -143,12 +149,12 @@ export default function BusinessProfilePage() {
                   </motion.div>
 
                   {/* Business Info */}
-                  <div className="flex-1 text-center lg:text-left">
+                  <div className="flex-1 text-center md:text-left">
                     <motion.h2
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.5, duration: 0.6 }}
-                      className="font-urbanist text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-4"
+                      className="font-urbanist text-lg md:text-xl lg:text-2xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-3 md:mb-4"
                     >
                       {business.name}
                     </motion.h2>
@@ -158,7 +164,7 @@ export default function BusinessProfilePage() {
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.6, duration: 0.6 }}
-                      className="flex items-center justify-center lg:justify-start space-x-2 mb-6"
+                      className="flex items-center justify-center md:justify-start space-x-2 mb-4 md:mb-6"
                     >
                       <motion.div
                         animate={{ rotate: [0, 10, -10, 0] }}
@@ -175,7 +181,7 @@ export default function BusinessProfilePage() {
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.7, duration: 0.6 }}
-                      className="grid grid-cols-3 gap-6"
+                      className="grid grid-cols-3 gap-3 md:gap-6"
                     >
                       {[
                         { label: "Trust", value: business.trust, color: "sage" },
@@ -218,8 +224,8 @@ export default function BusinessProfilePage() {
 
         {/* Specials & Events */}
         <FadeInUp delay={0.4}>
-          <PremiumHover scale={1.01} shadowIntensity="soft" duration={0.3}>
-            <div className="bg-off-white/90 backdrop-blur-lg rounded-3xl shadow-xl border border-sage/10 p-8 mb-8 relative overflow-hidden">
+          <PremiumHover scale={1.01} shadowIntensity="light" duration={0.3}>
+            <div className="bg-off-white rounded-6 shadow-sm border border-sage/10 p-4 md:p-6 mb-4 md:mb-6 relative overflow-hidden">
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl"></div>
 
@@ -228,7 +234,7 @@ export default function BusinessProfilePage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5, duration: 0.6 }}
-                  className="font-urbanist text-xl font-600 text-charcoal mb-6 flex items-center"
+                  className="font-urbanist text-lg md:text-xl font-600 text-charcoal mb-4 md:mb-6 flex items-center"
                 >
                   <motion.div
                     animate={{ rotate: [0, 5, -5, 0] }}
@@ -240,7 +246,7 @@ export default function BusinessProfilePage() {
                   Specials & Events
                 </motion.h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   {business.specials.map((special, index) => (
                     <motion.div
                       key={special.id}
@@ -248,13 +254,13 @@ export default function BusinessProfilePage() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.6 + (index * 0.1), duration: 0.5 }}
                       whileHover={{ scale: 1.03, y: -5 }}
-                      className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-2xl p-6 border border-sage/10 group hover:border-sage/30 transition-all duration-300"
+                      className="bg-off-white rounded-6 p-4 md:p-6 border border-sage/10 group hover:border-sage/30 transition-all duration-300"
                     >
                       <div className="flex items-center space-x-4">
                         <motion.div
                           whileHover={{ rotate: [0, -10, 10, 0] }}
                           transition={{ duration: 0.6 }}
-                          className="w-16 h-16 bg-gradient-to-br from-sage/20 to-sage/10 rounded-2xl flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300"
+                          className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-sage/20 to-sage/10 rounded-6 flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300"
                         >
                           <ion-icon
                             name={special.icon}
@@ -280,18 +286,18 @@ export default function BusinessProfilePage() {
 
         {/* Reviews */}
         <FadeInUp delay={0.6}>
-          <PremiumHover scale={1.01} shadowIntensity="soft" duration={0.3}>
-            <div className="bg-off-white/90 backdrop-blur-lg rounded-3xl shadow-xl border border-sage/10 p-8 mb-8 relative overflow-hidden">
+          <PremiumHover scale={1.01} shadowIntensity="light" duration={0.3}>
+            <div className="bg-off-white rounded-6 shadow-sm border border-sage/10 p-4 md:p-6 mb-4 md:mb-6 relative overflow-hidden">
               {/* Decorative elements */}
               <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
 
               <div className="relative z-10">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 md:mb-6 space-y-4 md:space-y-0">
                   <motion.h3
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.7, duration: 0.6 }}
-                    className="font-urbanist text-xl font-600 text-charcoal flex items-center"
+                    className="font-urbanist text-lg md:text-xl font-600 text-charcoal flex items-center"
                   >
                     <motion.div
                       animate={{ scale: [1, 1.1, 1] }}
@@ -312,6 +318,7 @@ export default function BusinessProfilePage() {
                   >
                     <Link
                       href={`/business/${business.name.toLowerCase().replace(/[^a-z0-9]/g, '')}/review`}
+                      onClick={handleWriteReviewClick}
                       className="inline-flex items-center space-x-2 bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-sm font-600 py-3 px-6 rounded-full hover:shadow-lg transition-all duration-300 group"
                     >
                       <ion-icon name="create-outline" size="small" />
@@ -327,7 +334,7 @@ export default function BusinessProfilePage() {
                   </motion.div>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-4 md:space-y-6">
                   {business.reviews.map((review, index) => (
                     <motion.div
                       key={review.id}
@@ -335,7 +342,7 @@ export default function BusinessProfilePage() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.9 + (index * 0.1), duration: 0.5 }}
                       whileHover={{ scale: 1.01, x: 10 }}
-                      className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-2xl p-6 border border-sage/5 hover:border-sage/20 transition-all duration-300 group"
+                      className="bg-off-white rounded-6 p-4 md:p-6 border border-sage/10 hover:border-sage/30 transition-all duration-300 group"
                     >
                       <div className="flex items-start space-x-4">
                         {/* Avatar */}

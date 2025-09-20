@@ -5,6 +5,7 @@ import Image from "next/image";
 import React, { useMemo, useState, useEffect, memo } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useToast } from "../../contexts/ToastContext";
 import Stars from "../Stars/Stars";
 import PercentileChip from "../PercentileChip/PercentileChip";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
@@ -36,6 +37,7 @@ type Business = {
 
 function BusinessCard({ business }: { business: Business }) {
   const router = useRouter();
+  const { showToast } = useToast();
   const idForSnap = useMemo(() => `business-${business.id}`, [business.id]);
 
   const [showActions, setShowActions] = useState(false);
@@ -75,7 +77,10 @@ function BusinessCard({ business }: { business: Business }) {
     if (!isDesktop) setShowActions(!showActions);
   };
 
-  const handleWriteReview = () => router.push(reviewRoute);
+  const handleWriteReview = () => {
+    showToast(`Opening review form for ${business.name}... 📝`, "sage", 3000);
+    router.push(reviewRoute);
+  };
   const handleBookmark = () => console.log("Bookmark clicked:", business.name);
   const handleShare = () => console.log("Share clicked:", business.name);
 
