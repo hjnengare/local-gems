@@ -33,6 +33,11 @@ const Footer = dynamic(() => import("../components/Footer/Footer"), {
   ssr: false,
 });
 
+const MarketingToast = dynamic(() => import("../components/Notifications/MarketingToast"), {
+  loading: () => null,
+  ssr: false,
+});
+
 // Memoized BusinessRow component
 const MemoizedBusinessRow = memo(BusinessRow);
 
@@ -59,7 +64,7 @@ export default function Home() {
       <Header />
 
       {/* Main content */}
-      <div className="pt-4 pb-24 md:pb-6 relative z-10">
+      <div className="pt-4 pb-32 md:pb-6 relative z-10">
       
         {/* Business Rows with Enhanced CSS Scroll Animations */}
         <div className="scroll-reveal stagger-1" data-scroll-reveal>
@@ -109,6 +114,9 @@ export default function Home() {
 
       {/* Bottom Navigation */}
       <BottomNav />
+
+      {/* Marketing Toast Notifications */}
+      <MarketingToast />
     </div>
   );
 }
