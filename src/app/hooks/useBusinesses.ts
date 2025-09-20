@@ -95,16 +95,16 @@ export function useBusiness(id?: string) {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`/api/businesses?limit=1`);
+        const response = await fetch(`/api/businesses/${id}`);
         if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error('Business not found');
+          }
           throw new Error('Failed to fetch business');
         }
 
         const data = await response.json();
-        const businesses = data.data || [];
-        const foundBusiness = businesses.find((b: Business) => b.id === id);
-
-        setBusiness(foundBusiness || null);
+        setBusiness(data.data || null);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch business');
         console.error('Error fetching business:', err);

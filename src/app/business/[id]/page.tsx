@@ -4,7 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
+import { useParams } from "next/navigation";
 import { useToast } from "../../contexts/ToastContext";
+import { useBusiness } from "../../hooks/useBusinesses";
 
 // Dynamic imports for premium animations
 const FadeInUp = dynamic(() => import("../../components/Animations/FadeInUp"), {
@@ -16,44 +18,86 @@ const PremiumHover = dynamic(() => import("../../components/Animations/PremiumHo
 });
 
 export default function BusinessProfilePage() {
-  // const [activeTab, setActiveTab] = useState("overview");
+  const params = useParams();
   const { showToast } = useToast();
+  const { business, loading, error } = useBusiness(params?.id as string);
 
   const handleWriteReviewClick = () => {
     showToast("Opening review form... Get ready to share your experience! ✨", "sage", 3000);
   };
 
-  // Mock data - in real app this would come from params and API
-  const business = {
-    name: "Mama's Kitchen",
-    rating: 4.8,
-    image: "/images/product-01.jpg", // Business photo
-    trust: 95,
-    punctuality: 89,
-    friendliness: 92,
-    specials: [
-      { id: 1, name: "2 for 1 Pizza", description: "Every day", icon: "pizza" },
-      { id: 2, name: "Jazz Night", description: "Mondays", icon: "musical-notes" }
-    ],
-    reviews: [
-      {
-        id: 1,
-        author: "Jess",
-        rating: 5,
-        text: "Loved the pizza, staff were so friendly. Food came fast & trustworthy. @on time @friendly",
-        date: "Feb 2023",
-        tags: ["trustworthy", "on time", "friendly"]
-      },
-      {
-        id: 2,
-        author: "Hilario",
-        rating: 4,
-        text: "Terrible anything but food came fast. @on time",
-        date: "March 2023",
-        tags: ["on time"]
-      }
-    ]
-  };
+  if (loading) {
+    return (
+      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="text-center"
+        >
+          <div className="w-12 h-12 mx-auto mb-4">
+            <div className="w-full h-full border-4 border-sage border-t-transparent rounded-full animate-spin"></div>
+          </div>
+          <h1 className="font-urbanist text-xl font-700 text-charcoal mb-2">
+            Loading Business
+          </h1>
+          <p className="font-urbanist text-sm font-400 text-charcoal/70">
+            Please wait while we fetch the details...
+          </p>
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (error || !business) {
+    return (
+      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="text-center"
+        >
+          <div className="w-16 h-16 mx-auto mb-4 bg-coral/20 rounded-full flex items-center justify-center">
+            <ion-icon name="business" style={{ fontSize: '2rem', color: 'var(--coral)' }} />
+          </div>
+          <h1 className="font-urbanist text-xl font-700 text-charcoal mb-2">
+            Business Not Found
+          </h1>
+          <p className="font-urbanist text-sm font-400 text-charcoal/70 mb-6">
+            {error || "The business you're looking for doesn't exist."}
+          </p>
+          <Link
+            href="/home"
+            className="inline-flex items-center space-x-2 bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-sm font-600 py-3 px-6 rounded-full hover:shadow-lg transition-all duration-300"
+          >
+            <ion-icon name="arrow-back-outline" size="small" />
+            <span>Back to Home</span>
+          </Link>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Mock reviews for now - will be replaced with real review data later
+  const mockReviews = [
+    {
+      id: 1,
+      author: "Jess",
+      rating: 5,
+      text: "Loved the experience, staff were so friendly. Service was fast & trustworthy. @on time @friendly",
+      date: "Feb 2023",
+      tags: ["trustworthy", "on time", "friendly"]
+    },
+    {
+      id: 2,
+      author: "Hilario",
+      rating: 4,
+      text: "Great place but could be better. Food came fast though. @on time",
+      date: "March 2023",
+      tags: ["on time"]
+    }
+  ];
 
   return (
     <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
@@ -317,7 +361,7 @@ export default function BusinessProfilePage() {
                     whileTap={{ scale: 0.95 }}
                   >
                     <Link
-                      href={`/business/${business.name.toLowerCase().replace(/[^a-z0-9]/g, '')}/review`}
+                      href={`/business/${business.slug || business.id}/review`}
                       onClick={handleWriteReviewClick}
                       className="inline-flex items-center space-x-2 bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-sm font-600 py-3 px-6 rounded-full hover:shadow-lg transition-all duration-300 group"
                     >
@@ -335,7 +379,7 @@ export default function BusinessProfilePage() {
                 </div>
 
                 <div className="space-y-4 md:space-y-6">
-                  {business.reviews.map((review, index) => (
+                  {mockReviews.map((review, index) => (
                     <motion.div
                       key={review.id}
                       initial={{ opacity: 0, y: 20 }}

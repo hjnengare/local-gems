@@ -28,7 +28,7 @@ export default function WriteReviewPage() {
   const router = useRouter();
   const params = useParams();
   const { user, isLoading: authLoading } = useAuth();
-  const { business, loading: businessLoading } = useBusiness(undefined, params?.id as string);
+  const { business, loading: businessLoading } = useBusiness(params?.id as string);
   const { submitting, submitReview } = useReviewSubmission();
 
   const [overallRating, setOverallRating] = useState(0);
